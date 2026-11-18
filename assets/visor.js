@@ -820,7 +820,9 @@ function pintarFicha(st) {
     st.l.includes(t.linea) && Math.hypot(t.x - st._x, t.z - st._z) < 2500).length;
   const etiqueta = st.l.length > 1 ? 'Correspondencia' : 'Estación';
   const huella = estado.huellas?.[st.id];
-  const anden = huella?.andenes?.[0];
+  const anden = huella?.andenes?.length
+    ? huella.andenes.reduce((a, b) => (a.area >= b.area ? a : b))
+    : null;
   const medida = anden
     ? `<span class="ficha__meta">Andén ${Math.round(anden.largo)} × ${Math.round(anden.ancho)} m · ${
         anden.real ? 'planta dibujada en OSM' : 'trazado sobre la vía'}</span>`

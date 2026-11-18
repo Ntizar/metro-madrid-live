@@ -147,6 +147,8 @@ def main():
             "area": h["area"], "osm": h["id"], "nombre": h["nombre"],
             "ref": h["ref"], "nivel": h["nivel"], "sub": h["sub"], "real": True,
         }
+        if h["tipo"] == "anden" and h["area"] < 250:
+            continue   # trozo suelto, no un andén completo
         if h["tipo"] == "recinto":
             if not e["recinto"] or h["area"] > e["recinto"]["area"]:
                 e["recinto"] = reg
