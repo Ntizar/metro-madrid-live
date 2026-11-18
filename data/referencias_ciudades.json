@@ -1,0 +1,436 @@
+[
+ {
+  "modelo": "auber",
+  "huella_m": 1008.7,
+  "fondo_m": 1113.2,
+  "alto_m": 50.0,
+  "niveles": 5,
+  "separacion_m": [
+   11.0,
+   9.0,
+   5.0,
+   13.5
+  ],
+  "vertices": 80512
+ },
+ {
+  "modelo": "basarab",
+  "huella_m": 172.2,
+  "fondo_m": 124.0,
+  "alto_m": 14.5,
+  "niveles": 2,
+  "separacion_m": [
+   6.0
+  ],
+  "vertices": 3679
+ },
+ {
+  "modelo": "berlin_hauptbahnhof",
+  "huella_m": 457.7,
+  "fondo_m": 401.1,
+  "alto_m": 26.5,
+  "niveles": 4,
+  "separacion_m": [
+   7.5,
+   5.0,
+   3.5
+  ],
+  "vertices": 9413
+ },
+ {
+  "modelo": "berri_uqam",
+  "huella_m": 330.3,
+  "fondo_m": 213.8,
+  "alto_m": 30.5,
+  "niveles": 5,
+  "separacion_m": [
+   4.0,
+   6.5,
+   7.5,
+   5.0
+  ],
+  "vertices": 6631
+ },
+ {
+  "modelo": "bloor_yonge",
+  "huella_m": 197.7,
+  "fondo_m": 182.6,
+  "alto_m": 17.0,
+  "niveles": 2,
+  "separacion_m": [
+   6.0
+  ],
+  "vertices": 2850
+ },
+ {
+  "modelo": "catalunya",
+  "huella_m": 464.6,
+  "fondo_m": 420.9,
+  "alto_m": 21.0,
+  "niveles": 3,
+  "separacion_m": [
+   7.0,
+   5.5
+  ],
+  "vertices": 30018
+ },
+ {
+  "modelo": "chatelet",
+  "huella_m": 504.9,
+  "fondo_m": 605.3,
+  "alto_m": 29.0,
+  "niveles": 4,
+  "separacion_m": [
+   5.5,
+   9.0,
+   7.0
+  ],
+  "vertices": 20007
+ },
+ {
+  "modelo": "collblanc",
+  "huella_m": 167.6,
+  "fondo_m": 116.4,
+  "alto_m": 58.5,
+  "niveles": 4,
+  "separacion_m": [
+   7.0,
+   30.0,
+   11.5
+  ],
+  "vertices": 34203
+ },
+ {
+  "modelo": "deak_ferenc_ter",
+  "huella_m": 364.0,
+  "fondo_m": 163.0,
+  "alto_m": 42.0,
+  "niveles": 4,
+  "separacion_m": [
+   14.0,
+   16.5,
+   3.5
+  ],
+  "vertices": 4961
+ },
+ {
+  "modelo": "denfert",
+  "huella_m": 362.2,
+  "fondo_m": 346.2,
+  "alto_m": 19.0,
+  "niveles": 3,
+  "separacion_m": [
+   3.5,
+   3.5
+  ],
+  "vertices": 20267
+ },
+ {
+  "modelo": "duomo",
+  "huella_m": 287.7,
+  "fondo_m": 143.0,
+  "alto_m": 26.0,
+  "niveles": 4,
+  "separacion_m": [
+   6.5,
+   4.5,
+   7.5
+  ],
+  "vertices": 8968
+ },
+ {
+  "modelo": "etoile",
+  "huella_m": 358.3,
+  "fondo_m": 238.2,
+  "alto_m": 33.0,
+  "niveles": 4,
+  "separacion_m": [
+   12.0,
+   8.0,
+   5.5
+  ],
+  "vertices": 60506
+ },
+ {
+  "modelo": "fridhemsplan",
+  "huella_m": 321.7,
+  "fondo_m": 384.7,
+  "alto_m": 32.0,
+  "niveles": 3,
+  "separacion_m": [
+   13.5,
+   4.5
+  ],
+  "vertices": 5255
+ },
+ {
+  "modelo": "jean_talon",
+  "huella_m": 205.5,
+  "fondo_m": 229.1,
+  "alto_m": 24.0,
+  "niveles": 2,
+  "separacion_m": [
+   5.5
+  ],
+  "vertices": 3595
+ },
+ {
+  "modelo": "lionel_groulx",
+  "huella_m": 166.7,
+  "fondo_m": 23.5,
+  "alto_m": 21.0,
+  "niveles": 2,
+  "separacion_m": [
+   5.0
+  ],
+  "vertices": 1321
+ },
+ {
+  "modelo": "montparnasse",
+  "huella_m": 329.8,
+  "fondo_m": 364.6,
+  "alto_m": 22.0,
+  "niveles": 3,
+  "separacion_m": [
+   4.5,
+   3.5
+  ],
+  "vertices": 11420
+ },
+ {
+  "modelo": "nation",
+  "huella_m": 309.2,
+  "fondo_m": 221.3,
+  "alto_m": 29.0,
+  "niveles": 4,
+  "separacion_m": [
+   12.0,
+   7.0,
+   6.5
+  ],
+  "vertices": 89166
+ },
+ {
+  "modelo": "odenplan",
+  "huella_m": 435.9,
+  "fondo_m": 298.2,
+  "alto_m": 36.5,
+  "niveles": 3,
+  "separacion_m": [
+   10.0,
+   6.0
+  ],
+  "vertices": 2497
+ },
+ {
+  "modelo": "oxford_circus",
+  "huella_m": 242.1,
+  "fondo_m": 188.6,
+  "alto_m": 25.0,
+  "niveles": 2,
+  "separacion_m": [
+   16.0
+  ],
+  "vertices": 24225
+ },
+ {
+  "modelo": "passeig_de_gracia",
+  "huella_m": 410.2,
+  "fondo_m": 548.0,
+  "alto_m": 20.5,
+  "niveles": 3,
+  "separacion_m": [
+   4.5,
+   4.5
+  ],
+  "vertices": 11697
+ },
+ {
+  "modelo": "pasteur",
+  "huella_m": 132.9,
+  "fondo_m": 179.5,
+  "alto_m": 15.0,
+  "niveles": 2,
+  "separacion_m": [
+   4.0
+  ],
+  "vertices": 4588
+ },
+ {
+  "modelo": "pl_clichy",
+  "huella_m": 175.7,
+  "fondo_m": 153.8,
+  "alto_m": 15.0,
+  "niveles": 2,
+  "separacion_m": [
+   4.0
+  ],
+  "vertices": 23310
+ },
+ {
+  "modelo": "reaumur_sebastopol",
+  "huella_m": 180.7,
+  "fondo_m": 180.6,
+  "alto_m": 17.0,
+  "niveles": 3,
+  "separacion_m": [
+   3.5,
+   5.0
+  ],
+  "vertices": 2828
+ },
+ {
+  "modelo": "republique",
+  "huella_m": 308.5,
+  "fondo_m": 197.0,
+  "alto_m": 21.0,
+  "niveles": 3,
+  "separacion_m": [
+   9.0,
+   9.0
+  ],
+  "vertices": 69753
+ },
+ {
+  "modelo": "sheppard_yonge",
+  "huella_m": 226.4,
+  "fondo_m": 241.7,
+  "alto_m": 19.0,
+  "niveles": 2,
+  "separacion_m": [
+   6.5
+  ],
+  "vertices": 8726
+ },
+ {
+  "modelo": "snowdon",
+  "huella_m": 223.1,
+  "fondo_m": 61.8,
+  "alto_m": 32.0,
+  "niveles": 3,
+  "separacion_m": [
+   5.0,
+   18.5
+  ],
+  "vertices": 2396
+ },
+ {
+  "modelo": "spadina",
+  "huella_m": 242.5,
+  "fondo_m": 403.7,
+  "alto_m": 14.1,
+  "niveles": 3,
+  "separacion_m": [
+   4.5,
+   5.0
+  ],
+  "vertices": 6176
+ },
+ {
+  "modelo": "st_george",
+  "huella_m": 191.7,
+  "fondo_m": 24.5,
+  "alto_m": 19.0,
+  "niveles": 2,
+  "separacion_m": [
+   4.0
+  ],
+  "vertices": 3613
+ },
+ {
+  "modelo": "ste_anne",
+  "huella_m": 86.8,
+  "fondo_m": 84.0,
+  "alto_m": 24.5,
+  "niveles": 2,
+  "separacion_m": [
+   21.0
+  ],
+  "vertices": 13779
+ },
+ {
+  "modelo": "strasbourg_st_denis",
+  "huella_m": 166.4,
+  "fondo_m": 166.4,
+  "alto_m": 20.0,
+  "niveles": 3,
+  "separacion_m": [
+   6.5,
+   4.5
+  ],
+  "vertices": 3836
+ },
+ {
+  "modelo": "t-centralen",
+  "huella_m": 759.7,
+  "fondo_m": 633.6,
+  "alto_m": 56.5,
+  "niveles": 7,
+  "separacion_m": [
+   15.0,
+   4.5,
+   8.0,
+   7.5,
+   5.5,
+   4.5
+  ],
+  "vertices": 34710
+ },
+ {
+  "modelo": "termini",
+  "huella_m": 213.2,
+  "fondo_m": 260.5,
+  "alto_m": 33.0,
+  "niveles": 3,
+  "separacion_m": [
+   8.0,
+   7.0
+  ],
+  "vertices": 13624
+ },
+ {
+  "modelo": "trocadero",
+  "huella_m": 244.3,
+  "fondo_m": 254.4,
+  "alto_m": 26.0,
+  "niveles": 3,
+  "separacion_m": [
+   12.0,
+   10.5
+  ],
+  "vertices": 23531
+ },
+ {
+  "modelo": "union",
+  "huella_m": 172.6,
+  "fondo_m": 73.2,
+  "alto_m": 13.5,
+  "niveles": 2,
+  "separacion_m": [
+   5.5
+  ],
+  "vertices": 5444
+ },
+ {
+  "modelo": "universitate",
+  "huella_m": 240.0,
+  "fondo_m": 56.4,
+  "alto_m": 21.5,
+  "niveles": 2,
+  "separacion_m": [
+   5.0
+  ],
+  "vertices": 6394
+ },
+ {
+  "modelo": "waterfront",
+  "huella_m": 460.1,
+  "fondo_m": 348.6,
+  "alto_m": 21.5,
+  "niveles": 2,
+  "separacion_m": [
+   8.0
+  ],
+  "vertices": 4055
+ }
+]

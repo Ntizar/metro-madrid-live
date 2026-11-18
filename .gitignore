@@ -6,3 +6,5 @@ __pycache__/
 data/fuentes/
 # material de trabajo: los esquemas axonometricos del autor, no se publican
 esquemas/
+# modelos de otras ciudades: referencia de modelado, no se publican
+referencias/
