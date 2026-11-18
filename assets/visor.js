@@ -325,6 +325,7 @@ function construirRed() {
   });
   pozos.instanceMatrix.needsUpdate = true;
   pozos.renderOrder = 8;
+  pozos.visible = false;   // se conserva solo como referencia; el andén manda
   escena.add(pozos);
 
   // las estaciones se dibujan como puntos de tamaño fijo en píxeles: a 20 km de altura
@@ -376,6 +377,94 @@ function construirRed() {
   estado.discos = puntosEst;
   estado._posEst = posEst;
   estado._matEst = matEst;
+
+  // ——— huellas reales: cada estación se dibuja con la planta de su andén, a su
+  // tamaño y con su orientación. 60 salen dibujadas en OSM; el resto se trazan
+  // sobre la vía, que da la dirección y la posición exactas.
+  const huellas = estado.huellas || {};
+  const vRelleno = [], vContorno = [], vVestibulo = [];
+  let andenesDibujados = 0, reales = 0;
+
+  function poligono(pts, y, destino) {
+    const n = pts.length;
+    if (n < 3) return;
+    let cx = 0, cz = 0;
+    for (const [x, z] of pts) { cx += x; cz += z; }
+    cx /= n; cz /= n;
+    for (let i = 0; i < n; i++) {
+      const [x1, z1] = pts[i], [x2, z2] = pts[(i + 1) % n];
+      destino.push(cx, y, cz, x1, y, z1, x2, y, z2);
+    }
+  }
+
+  function contorno(pts, y, destino) {
+    const n = pts.length;
+    for (let i = 0; i < n; i++) {
+      const [x1, z1] = pts[i], [x2, z2] = pts[(i + 1) % n];
+      destino.push(x1, y, z1, x2, y, z2);
+    }
+  }
+
+  for (const st of stations) {
+    const h = huellas[st.id];
+    if (!h) continue;
+    const cota = -st._prof * EXAG;
+    st._andenes = [];
+    for (const a of h.andenes || []) {
+      const pts = a.pts.map(([la, lo]) => aMundo(la, lo));
+      poligono(pts, cota + 0.6, vRelleno);
+      contorno(pts, cota + 1.2, vContorno);
+      st._andenes.push({ pts, cota, largo: a.largo, ancho: a.ancho, real: a.real });
+      andenesDibujados++;
+      if (a.real) reales++;
+    }
+    if (h.recinto) {
+      const pts = h.recinto.pts.map(([la, lo]) => aMundo(la, lo));
+      contorno(pts, 1.5, vVestibulo);
+    }
+  }
+
+  function malla(puntos, color, opacidad) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(puntos, 3));
+    const m = new THREE.MeshBasicMaterial({
+      color, transparent: true, opacity: opacidad, side: THREE.DoubleSide,
+      depthWrite: false, depthTest: true,
+    });
+    const mesh = new THREE.Mesh(g, m);
+    mesh.renderOrder = 6;
+    mesh.frustumCulled = false;
+    escena.add(mesh);
+    return mesh;
+  }
+  function lineas(puntos, color, opacidad) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(puntos, 3));
+    const l = new THREE.LineSegments(g, new THREE.LineBasicMaterial({
+      color, transparent: true, opacity: opacidad, depthWrite: false,
+    }));
+    l.renderOrder = 7;
+    l.frustumCulled = false;
+    escena.add(l);
+    return l;
+  }
+
+  const mallaAndenes = malla(vRelleno, 0xffffff, 0.30);
+  const bordeAndenes = lineas(vContorno, 0xffffff, 0.8);
+  const bordeVestibulo = lineas(vVestibulo, 0xcfd8e6, 0.22);
+  estado._huellas = { mallaAndenes, bordeAndenes, bordeVestibulo };
+  console.info(`huellas: ${andenesDibujados} andenes (${reales} dibujados en OSM)`);
+
+  // contorno grueso de la estación elegida
+  const focoGeo = new THREE.BufferGeometry();
+  const focoLinea = new THREE.LineSegments(focoGeo, new THREE.LineBasicMaterial({
+    color: 0xffffff, transparent: true, opacity: 0.95, depthTest: false,
+  }));
+  focoLinea.renderOrder = 14;
+  focoLinea.frustumCulled = false;
+  focoLinea.visible = false;
+  escena.add(focoLinea);
+  estado._focoLinea = focoLinea;
 
   // trenes: puntos de tamaño constante en pantalla (visibles a cualquier zoom)
   const nMax = 1400;
@@ -633,6 +722,10 @@ function seleccionar(st) {
 
 // vuelo a la estación: se planta la cámara a su altura, mirando el pozo en tres cuartos
 function enfocarEstacion(st) {
+  // la niebla del modo túnel se come el andén: aquí se abre
+  escena.fog.density = 0.000012;
+  document.querySelectorAll('[data-vista]').forEach((x) => x.classList.remove('is-active'));
+  document.querySelector('[data-vista="plano"]')?.classList.add('is-active');
   if (!estado._vistaGeneral) {
     estado._vistaGeneral = {
       pos: camara.position.clone(),
@@ -640,9 +733,12 @@ function enfocarEstacion(st) {
     };
   }
   const y = -st._prof * EXAG;
-  const d = 1150;
-  const pos = new THREE.Vector3(st._x + d * 0.42, y + d * 0.78, st._z + d * 0.86);
-  const tgt = new THREE.Vector3(st._x, y - d * 0.16, st._z);
+  // la cámara se planta a media altura del túnel y a ~420 m: a esa distancia el
+  // andén (90-110 m) ocupa media pantalla y se lee su orientación
+  const d = 430;
+  // vista en tres cuartos alta: se lee la planta del andén, no su canto
+  const pos = new THREE.Vector3(st._x + d * 0.30, y + d * 0.95, st._z + d * 0.52);
+  const tgt = new THREE.Vector3(st._x, y, st._z);
   // la ficha ocupa la izquierda: se desplaza el encuadre para que la estación
   // quede centrada en el trozo de mapa que sigue viéndose
   const panel = $('#panel');
@@ -664,11 +760,31 @@ function enfocarEstacion(st) {
   marcador.visible = true;
   estado._foco = new THREE.Vector3(st._x, y, st._z);
   estado._estacion = st;
+
+  // contorno de la estación elegida, encima de todo
+  const focoLinea = estado._focoLinea;
+  const puntos = [];
+  for (const a of st._andenes || []) {
+    const n = a.pts.length;
+    for (let i = 0; i < n; i++) {
+      const [x1, z1] = a.pts[i], [x2, z2] = a.pts[(i + 1) % n];
+      puntos.push(x1, a.cota + 2, z1, x2, a.cota + 2, z2);
+    }
+  }
+  if (focoLinea && puntos.length) {
+    focoLinea.geometry.dispose();
+    focoLinea.geometry = new THREE.BufferGeometry();
+    focoLinea.geometry.setAttribute('position', new THREE.Float32BufferAttribute(puntos, 3));
+    focoLinea.visible = true;
+  } else {
+    focoLinea.visible = false;
+  }
   if (estado._matEst) estado._matEst.uniforms.foco.value.copy(estado._foco);
 }
 
 function cerrarFicha() {
   marcador.visible = false;
+  if (estado._focoLinea) estado._focoLinea.visible = false;
   estado.seleccion = null;
   pintarFicha(null);
   actualizarLineasUI();
@@ -703,6 +819,12 @@ function pintarFicha(st) {
   const cercanos = estado.trenes.filter((t) =>
     st.l.includes(t.linea) && Math.hypot(t.x - st._x, t.z - st._z) < 2500).length;
   const etiqueta = st.l.length > 1 ? 'Correspondencia' : 'Estación';
+  const huella = estado.huellas?.[st.id];
+  const anden = huella?.andenes?.[0];
+  const medida = anden
+    ? `<span class="ficha__meta">Andén ${Math.round(anden.largo)} × ${Math.round(anden.ancho)} m · ${
+        anden.real ? 'planta dibujada en OSM' : 'trazado sobre la vía'}</span>`
+    : '';
   const tags = ficha?.tags?.length
     ? `<ul class="ficha__tags">${ficha.tags.map((t) => `<li class="tag">${t}</li>`).join('')}</ul>`
     : '';
@@ -713,6 +835,7 @@ function pintarFicha(st) {
   f.innerHTML = `
     <strong class="ficha__nombre">${st.n}</strong>
     <span class="ficha__meta">${etiqueta} · pozo de ${Math.round(st._prof)} m (estimado)</span>
+    ${medida}
     ${ficha && ficha.n !== st.n ? `<span class="ficha__meta">En el esquema: ${ficha.n}</span>` : ''}
     <div class="ficha__lineas">${st.l.map((id) => {
       const m = estado.lineas.get(id)?.meta;
@@ -853,6 +976,31 @@ $('#abrir-panel').addEventListener('click', () => {
 
 // ————————————————————————————— bucle —————————————————————————————
 let ultimoTick = 0;
+// barra de escala honesta: metros por píxel a la altura del punto que se mira
+function ajustarEscala() {
+  const el = $('#escala');
+  if (!el) return;
+  const d = camara.position.distanceTo(controles.target);
+  if (d > 26000) { el.hidden = true; return; }
+  const altoMundo = 2 * d * Math.tan(THREE.MathUtils.degToRad(camara.fov / 2));
+  const mPorPx = altoMundo / innerHeight;
+  const opciones = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000];
+  let m = opciones[0];
+  for (const o of opciones) if (o / mPorPx <= 130) m = o;
+  el.hidden = false;
+  el.querySelector('i').style.width = (m / mPorPx).toFixed(0) + 'px';
+  el.querySelector('span').textContent = m >= 1000 ? m / 1000 + ' km' : m + ' m';
+}
+
+function ajustarHuellas() {
+  const h = estado._huellas;
+  if (!h) return;
+  const d = camara.position.distanceTo(controles.target);
+  h.mallaAndenes.visible = d < 9000;
+  h.bordeAndenes.visible = d < 9000;
+  h.bordeVestibulo.visible = d < 3000;
+}
+
 function animar(ahora) {
   requestAnimationFrame(animar);
   const dt = ahora - ultimoTick;
@@ -894,6 +1042,8 @@ function animar(ahora) {
 
   actualizarEtiquetas();
   controles.update();
+  ajustarHuellas();
+  ajustarEscala();
   renderer.render(escena, camara);
 }
 
@@ -904,12 +1054,14 @@ async function iniciar() {
   aviso.textContent = 'Cargando la red…';
   document.body.appendChild(aviso);
 
-  const [datos, fichas] = await Promise.all([
+  const [datos, fichas, huellas] = await Promise.all([
     fetch('data/metro.json').then((r) => r.json()),
     fetch('data/estaciones.json').then((r) => r.json()).catch(() => ({})),
+    fetch('data/estaciones_osm.json').then((r) => r.json()).catch(() => ({})),
   ]);
   estado.datos = datos;
   estado.fichas = fichas;
+  estado.huellas = huellas;
 
   // centro y bbox
   let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;

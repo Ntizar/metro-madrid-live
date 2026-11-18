@@ -16,6 +16,15 @@ moviéndose en el subsuelo. Diseño con el sistema **Aurora**.
 - **Profundidad**: no es un dato oficial. Cada línea tiene una profundidad estimada y la escala
   vertical está exagerada ×200 (a escala real, 30 m de túnel no se ven en 50 km de ciudad).
 
+## Las estaciones, a escala
+
+Cada estación se dibuja con **la planta de su andén**: largo, ancho y orientación reales.
+
+- 60 andenes salen **dibujados en OSM** (polígono real, con sus 116 × 7 m o 129 × 5 m).
+- Los 182 restantes no están dibujados en OSM: se trazan **sobre la vía**, que da la posición y el ángulo exactos, con el largo estándar del perfil de la línea (110 m en las de gálibo ancho, 90 en las estrechas, 60 en el Ramal). La ficha dice cuál es cuál, sin disimularlo.
+- Aparecen al acercarte (a menos de 9 km de la cámara) y desaparecen en la vista general para no ensuciar el plano.
+- La barra de escala de abajo a la derecha es lo que convierte «tamaño real» en algo comprobable.
+
 ## Cómo se usa
 
 - **Corte del terreno**: deja la superficie opaca o la atraviesa para ver el subsuelo.
@@ -38,6 +47,15 @@ Rebuild de datos:
 ```bash
 python3 scripts/build_datos.py    # necesita data/gtfs/ (GTFS del CRTM)
 ```
+
+## Las estaciones, a escala
+
+Cada estación se dibuja con **la planta de su andén**: largo, ancho y orientación reales.
+
+- 60 andenes salen **dibujados en OSM** (polígono real, con sus 116 × 7 m o 129 × 5 m).
+- Los 182 restantes no están dibujados en OSM: se trazan **sobre la vía**, que da la posición y el ángulo exactos, con el largo estándar del perfil de la línea (110 m en las de gálibo ancho, 90 en las estrechas, 60 en el Ramal). La ficha dice cuál es cuál, sin disimularlo.
+- Aparecen al acercarte (a menos de 9 km de la cámara) y desaparecen en la vista general para no ensuciar el plano.
+- La barra de escala de abajo a la derecha es lo que convierte «tamaño real» en algo comprobable.
 
 ## Cómo se usa
 

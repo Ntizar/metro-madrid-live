@@ -124,6 +124,109 @@ def title(name):
     return " ".join(out)
 
 
+# --- vías reales de OSM: sirven para reconstruir los shapes que el GTFS trae vacíos ---
+OSM_VIAS = os.path.join(os.path.dirname(BASE), "data", "fuentes", "osm_vias.json")
+vias_osm = {}
+if os.path.exists(OSM_VIAS):
+    _d = json.load(open(OSM_VIAS, encoding="utf-8"))
+    for _e in _d["elements"]:
+        if not _e.get("geometry"):
+            continue
+        _ref = (_e.get("tags") or {}).get("ref") or ""
+        _ref = _ref.upper().replace("LÍNEA", "L").replace("LINEA", "L").strip()
+        if _ref.startswith("L") and _ref[1:].isdigit():
+            _ref = _ref[1:]
+        elif _ref in ("RAMAL", "R"):
+            _ref = "R"
+        _pts = [(round(_q["lat"], 6), round(_q["lon"], 6)) for _q in _e["geometry"]]
+        vias_osm.setdefault(_ref, []).append(_pts)
+    print(f"vías OSM: {sum(len(v) for v in vias_osm.values())} ways en {len(vias_osm)} líneas")
+
+
+def _encadenar(segs):
+    """une ways que comparten extremos en polilíneas continuas"""
+    usados = [False] * len(segs)
+    ramas = []
+    while not all(usados):
+        i = usados.index(False)
+        linea = segs[i][:]
+        usados[i] = True
+        crecio = True
+        while crecio:
+            crecio = False
+            for j, sg in enumerate(segs):
+                if usados[j]:
+                    continue
+                if sg[0] == linea[-1]:
+                    linea += sg[1:]
+                elif sg[-1] == linea[-1]:
+                    linea += sg[::-1][1:]
+                elif sg[-1] == linea[0]:
+                    linea = sg[:-1] + linea
+                elif sg[0] == linea[0]:
+                    linea = sg[::-1][:-1] + linea
+                else:
+                    continue
+                usados[j] = True
+                crecio = True
+            # el anillo ya se cerró: no hay que dar otra vuelta
+            if len(linea) > 20 and linea[0] == linea[-1]:
+                break
+        if len(linea) > 3:
+            ramas.append(linea)
+    return ramas
+
+
+def _proyectar(c, linea):
+    """punto más cercano de la polilínea y su índice"""
+    mejor, bj = 1e18, 0
+    for j, q in enumerate(linea):
+        d = (q[0] - c[0]) ** 2 + (q[1] - c[1]) ** 2
+        if d < mejor:
+            mejor, bj = d, j
+    return bj, mejor ** 0.5 * 111_320
+
+
+def reconstruir_shape(coords, ref):
+    """Trazado real de una línea que el GTFS trae sin geometría.
+
+    Las paradas dan el orden; las vías de OSM dan la curva. Entre dos paradas se
+    usa el trozo de vía que las une si existe y avanza en el mismo sentido; si no
+    (tramo sin mapear), se une con una recta suavizada.
+    """
+    ramas = _encadenar(vias_osm.get(ref, []))
+    if not ramas:
+        return None
+    rama = min(ramas, key=lambda r: sum(_proyectar(c, r)[1] for c in coords))
+    idx, dist = zip(*[_proyectar(c, rama) for c in coords])
+    dentro = [d < 300 for d in dist]
+
+    salida = []
+    for i, c in enumerate(coords):
+        if i == 0:
+            salida.append(rama[idx[0]] if dentro[0] else c)
+            continue
+        avanza = dentro[i] and dentro[i - 1] and idx[i] > idx[i - 1]
+        if avanza:
+            salida += rama[idx[i - 1] + 1: idx[i] + 1]
+        else:
+            a = salida[-1]
+            for k in range(1, 9):
+                t = k / 9
+                salida.append((a[0] + (c[0] - a[0]) * t, a[1] + (c[1] - a[1]) * t))
+            salida.append(c)
+    suave = [salida[0]]
+    for a, b in zip(salida, salida[1:]):
+        suave.append((a[0] * 0.75 + b[0] * 0.25, a[1] * 0.75 + b[1] * 0.25))
+        suave.append((a[0] * 0.25 + b[0] * 0.75, a[1] * 0.25 + b[1] * 0.75))
+    suave.append(salida[-1])
+    salida = [(round(x, 6), round(y, 6)) for x, y in suave]
+    if len(salida) > 320:
+        paso = len(salida) / 320
+        salida = [salida[int(i * paso)] for i in range(320)] + [salida[-1]]
+    return salida
+
+
 # --- patrones de servicio ---
 patterns = []
 line_stations = {}
@@ -141,6 +244,19 @@ for t in trips:
         continue
     sh = shapes_out[shape_index[sid]]
     pts, cum = sh["pts"], sh["cum"]
+    if len(pts) < 10:
+        # el GTFS del CRTM deja las líneas 12 y Ramal con 2-5 puntos: se rehace el trazado
+        nuevo_trazado = reconstruir_shape(
+            [(float(stops[x["stop_id"]]["stop_lat"]), float(stops[x["stop_id"]]["stop_lon"]))
+             for x in sts], short)
+        if nuevo_trazado:
+            pts = nuevo_trazado
+            cum = [0.0]
+            for a, b in zip(pts, pts[1:]):
+                dy = (a[0] - b[0]) * 111_320
+                dx = (a[1] - b[1]) * 111_320 * math.cos(math.radians(a[0]))
+                cum.append(cum[-1] + math.hypot(dx, dy))
+            sh["pts"], sh["cum"], sh["n"] = pts, cum, len(pts)
     coords = [(stops[x["stop_id"]]["stop_lat"], stops[x["stop_id"]]["stop_lon"])
               for x in sts]
     coords = [(float(a), float(b)) for a, b in coords]
@@ -153,6 +269,14 @@ for t in trips:
             if d < best:
                 best, bj = d, j
         s_on_shape.append(cum[bj])
+    # las líneas circulares repiten la primera parada al final: ahí se cierra el
+    # recorrido, y ninguna parada puede retroceder sobre el trazado
+    for _i in range(1, len(s_on_shape)):
+        if _i == len(s_on_shape) - 1 and abs(coords[_i][0] - coords[0][0]) < 1e-5 \
+                and abs(coords[_i][1] - coords[0][1]) < 1e-5:
+            s_on_shape[_i] = cum[-1]
+        elif s_on_shape[_i] <= s_on_shape[_i - 1]:
+            s_on_shape[_i] = s_on_shape[_i - 1] + 1.0
     # offsets temporales desde la salida
     t0 = hhmmss(sts[0]["departure_time"] or sts[0]["arrival_time"])
     offs = [hhmmss(x["arrival_time"] or x["departure_time"]) - t0 for x in sts]
