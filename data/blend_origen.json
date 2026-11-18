@@ -1,0 +1,114 @@
+{
+ "alonso_martinez": {
+  "caja": [
+   219.0,
+   162.6,
+   31.0
+  ],
+  "z": [
+   -26.0,
+   5.0
+  ],
+  "unidad": 1.0,
+  "tipo": "extrusion de dibujo vectorial",
+  "objetos": "path/rect/Text + materiales SVGMat"
+ },
+ "arguelles": {
+  "caja": [
+   232.1,
+   207.9,
+   40.0
+  ],
+  "z": [
+   -30.0,
+   10.0
+  ],
+  "unidad": 1.0,
+  "tipo": "extrusion de dibujo vectorial",
+  "objetos": "path/rect/Text + materiales SVGMat"
+ },
+ "av_america": {
+  "caja": [
+   377.4,
+   198.2,
+   48.0
+  ],
+  "z": [
+   -26.0,
+   22.0
+  ],
+  "unidad": 1.0,
+  "tipo": "extrusion de dibujo vectorial",
+  "objetos": "path/rect/Text + materiales SVGMat"
+ },
+ "cuatro_caminos": {
+  "caja": [
+   177.7,
+   232.6,
+   66.0
+  ],
+  "z": [
+   -58.0,
+   8.0
+  ],
+  "unidad": 1.0,
+  "tipo": "extrusion de dibujo vectorial",
+  "objetos": "path/rect/Text + materiales SVGMat"
+ },
+ "nnmm": {
+  "caja": [
+   383.1,
+   389.7,
+   40.0
+  ],
+  "z": [
+   -22.0,
+   18.0
+  ],
+  "unidad": 1.0,
+  "tipo": "extrusion de dibujo vectorial",
+  "objetos": "path/rect/Text + materiales SVGMat"
+ },
+ "opera": {
+  "caja": [
+   88.5,
+   108.9,
+   21.0
+  ],
+  "z": [
+   -12.0,
+   9.0
+  ],
+  "unidad": 1.0,
+  "tipo": "extrusion de dibujo vectorial",
+  "objetos": "path/rect/Text + materiales SVGMat"
+ },
+ "pl_castilla": {
+  "caja": [
+   444.6,
+   258.2,
+   34.0
+  ],
+  "z": [
+   -25.0,
+   9.0
+  ],
+  "unidad": 1.0,
+  "tipo": "extrusion de dibujo vectorial",
+  "objetos": "path/rect/Text + materiales SVGMat"
+ },
+ "sol": {
+  "caja": [
+   329.6,
+   467.9,
+   50.0
+  ],
+  "z": [
+   -28.0,
+   22.0
+  ],
+  "unidad": 1.0,
+  "tipo": "extrusion de dibujo vectorial",
+  "objetos": "path/rect/Text + materiales SVGMat"
+ }
+}

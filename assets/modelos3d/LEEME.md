@@ -18,6 +18,23 @@ usan colores planos, uno por línea.
 | opera.glb | Ópera | 88 × 109 | 21 |
 | sol.glb | Sol | 330 × 468 | 50 |
 
+## Qué son de verdad
+
+Abiertos los `.blend` originales (`referencias/blend/`, fuera del repo) se ve lo que son:
+**el dibujo axonométrico del autor extruido a 3D**, no un modelo arquitectónico. Los objetos
+se llaman `path`, `rect` y `Text`, los materiales son `SVGMat.*`, y 19 de las 49 mallas de
+Ópera tienen la planta de arriba idéntica a la de abajo (firma de una extrusión), con
+espesores de 1 m de mediana.
+
+Consecuencias, que conviene tener claras:
+
+- La escena está en **metros** (`unit_settings.scale_length = 1.0`): la escala es real.
+- Las **cotas relativas** entre niveles son coherentes (el dibujo baja 12 m en Ópera y 58 en
+  Cuatro Caminos desde la superficie), pero **no son un levantamiento**: son el resultado de
+  extruir un dibujo en perspectiva.
+- Por eso no sirve para medir anchos de andén ni alturas libres. Datos por estación en
+  `data/blend_origen.json`.
+
 ## Colocación
 
 Cada modelo se coloca en el punto de su estación (lat/lon del CRTM) y se gira y desplaza
