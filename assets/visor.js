@@ -1006,6 +1006,13 @@ function ajustarHuellas() {
   h.bordeAndenes.visible = d < 9000;
   h.bordeVestibulo.visible = d < 3000;
   if (estado._grupoModelos) estado._grupoModelos.visible = d < 2600;
+  if (estado._modelosReales) {
+    estado._modelosReales.visible = d < 4200;
+    // en las 8 estaciones con modelo del autor, el arquetipo sobra
+    for (const o of estado._modelosReales.children) {
+      o.visible = d < 4200;
+    }
+  }
   // con el modelo encendido, la planta plana sobra
   h.mallaAndenes.visible = estado._grupoModelos?.visible ? false : d < 9000;
 }
@@ -1023,8 +1030,12 @@ async function cargarModelos(tipologias) {
   estado._grupoModelos = grupo;
 
   // reparto de estaciones por prototipo
+  // las estaciones con modelo del autor no llevan arquetipo
+  const conModeloReal = new Set(Object.values(estado.modelos3d || {})
+    .map((m) => m.estacion).filter(Boolean));
   const porModelo = new Map();
   for (const st of estado.datos.stations) {
+    if (conModeloReal.has(st.id)) continue;
     const t = tipologias[st.id];
     if (!t) continue;
     const nombre = `estacion_${t.tipo}_${t.largo}`;
@@ -1100,6 +1111,48 @@ async function cargarModelos(tipologias) {
   return grupo;
 }
 
+// ——— los 8 intercambiadores con modelo 3D del autor (estacions.albertguillaumes.cat)
+// Se cargan al vuelo cuando la estación se acerca: son 8 ficheros de 0,4-3,3 MB.
+async function cargarModelosReales() {
+  const grupo = new THREE.Group();
+  grupo.name = 'modelosReales';
+  escena.add(grupo);
+  estado._modelosReales = grupo;
+  const loader = new GLTFLoader();
+  const porId = new Map();
+  for (const [nombre, m] of Object.entries(estado.modelos3d || {})) {
+    if (m.estacion) porId.set(m.estacion, { nombre, ...m });
+  }
+  for (const [id, m] of porId) {
+    const st = estado.datos.stations.find((x) => x.id === id);
+    if (!st) continue;
+    let gltf;
+    try {
+      gltf = await loader.loadAsync(`assets/modelos3d/${m.nombre}.glb`);
+    } catch { continue; }
+    const obj = gltf.scene;
+    // dx/dy son metros al este y al norte, calculados encajando el modelo con
+    // los túneles reales; en el visor la z crece hacia el sur
+    obj.position.set(st._x + (m.dx || 0), -st._prof * EXAG, st._z - (m.dy || 0));
+    obj.rotation.y = THREE.MathUtils.degToRad(-(m.ang || 0));
+    // la red entera va con la altura x200; el modelo se levanta lo justo para que
+    // se lean sus niveles sin convertirse en una torre
+    obj.scale.y = 18;
+    obj.userData.st = st;
+    obj.traverse((o) => {
+      if (o.isMesh) {
+        o.material.side = THREE.DoubleSide;
+        o.material.transparent = false;
+      }
+    });
+    grupo.add(obj);
+    st._modeloReal = obj;
+  }
+  grupo.visible = false;
+  console.info(`modelos del autor: ${grupo.children.length}`);
+  return grupo;
+}
+
 function animar(ahora) {
   requestAnimationFrame(animar);
   const dt = ahora - ultimoTick;
@@ -1153,16 +1206,18 @@ async function iniciar() {
   aviso.textContent = 'Cargando la red…';
   document.body.appendChild(aviso);
 
-  const [datos, fichas, huellas, tipologias] = await Promise.all([
+  const [datos, fichas, huellas, tipologias, modelos3d] = await Promise.all([
     fetch('data/metro.json').then((r) => r.json()),
     fetch('data/estaciones.json').then((r) => r.json()).catch(() => ({})),
     fetch('data/estaciones_osm.json').then((r) => r.json()).catch(() => ({})),
     fetch('data/estaciones_3d.json').then((r) => r.json()).catch(() => ({})),
+    fetch('data/modelos3d.json').then((r) => r.json()).catch(() => ({})),
   ]);
   estado.datos = datos;
   estado.fichas = fichas;
   estado.huellas = huellas;
   estado.tipologias = tipologias;
+  estado.modelos3d = modelos3d;
 
   // centro y bbox
   let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;
@@ -1182,6 +1237,7 @@ async function iniciar() {
   construirListaLineas();
   construirPerfil();
   await cargarModelos(tipologias);
+  await cargarModelosReales();
   await construirSuperficie({ minLat, maxLat, minLon, maxLon });
 
   estado.horaBase = horaMadridSegundos(new Date());
@@ -1200,6 +1256,7 @@ async function iniciar() {
     return { x: Math.round((_v3.x * 0.5 + 0.5) * innerWidth), y: Math.round((-_v3.y * 0.5 + 0.5) * innerHeight), n: st.n };
   };
   window.__cam = camara;
+  window.__ctrl = controles;
   controles.target.set(0, -1400, 0);
   irA([0, 15500, 17500], [0, -1400, 0], 2200);
   // el terreno se abre solo: de plano a corte geológico en 2,6 s
