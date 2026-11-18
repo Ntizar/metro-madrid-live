@@ -164,7 +164,7 @@ def main():
         c = (st["lat"], st["lon"])
         cerca = sorted(((metros(c, ((p[0] + q[0]) / 2, (p[1] + q[1]) / 2)), p, q, ang, ref)
                         for p, q, ang, ref in vias), key=lambda x: x[0])[:1]
-        if not cerca or cerca[0][0] > 420:
+        if not cerca or cerca[0][0] > 900:
             continue
         _, p, q, ang, _ref = cerca[0]
         # el andén se centra en el punto de la vía más cercano a la estación
