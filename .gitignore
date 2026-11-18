@@ -3,3 +3,4 @@ data/*.zip
 data/l3_overpass.json
 __pycache__/
 .DS_Store
+data/fuentes/

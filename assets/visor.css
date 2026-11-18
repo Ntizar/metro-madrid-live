@@ -187,3 +187,51 @@ html, body { height: 100%; margin: 0; overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .panel, .velo, .etiqueta { transition: none; }
 }
+
+/* ——— ficha de estación enriquecida ——— */
+.ficha__esquema {
+  display: block; width: 100%; margin-top: .4rem;
+  border: 1px solid var(--borde); border-radius: var(--nz-radio-md, 10px);
+  background: #fff; cursor: zoom-in;
+}
+.ficha__credito { font-size: 11px; color: var(--tinta-tenue); margin: .15rem 0 0; }
+.ficha__tags { list-style: none; display: flex; flex-wrap: wrap; gap: .25rem; margin: .35rem 0 0; padding: 0; }
+.tag {
+  font-size: 11px; letter-spacing: .01em; padding: .18rem .4rem;
+  border-radius: 999px; border: 1px solid var(--borde); color: var(--tinta-suave);
+  background: color-mix(in srgb, var(--nz-tinta, #fff) 5%, transparent);
+}
+.ficha__enlace { font-size: 12px; color: var(--tinta-suave); text-decoration: none; border-bottom: 1px solid var(--borde); align-self: flex-start; margin-top: .3rem; }
+.ficha__enlace:hover { color: var(--nz-tinta, #fff); }
+
+/* ——— tipos de túnel ——— */
+.perfil { display: flex; flex-direction: column; gap: .45rem; margin-top: .5rem; }
+.perfil__fila { display: flex; gap: .5rem; align-items: baseline; font-size: 12px; color: var(--tinta-suave); }
+.perfil__fila b { color: var(--nz-tinta, #fff); font-weight: 500; min-width: 4.6rem; font-variant-numeric: tabular-nums; }
+.perfil__barra { flex: 1; height: 3px; border-radius: 2px; background: color-mix(in srgb, var(--nz-tinta, #fff) 14%, transparent); position: relative; }
+.perfil__barra i { position: absolute; inset: 0 auto 0 0; border-radius: 2px; background: var(--nz-tinta, #fff); }
+.detalle { margin-top: .5rem; }
+.detalle summary { cursor: pointer; font-size: 12px; color: var(--tinta-suave); }
+.detalle p { font-size: 12.5px; line-height: 1.5; color: var(--tinta-tenue); margin: .45rem 0 0; }
+
+/* ——— ampliación del esquema ——— */
+#lupa {
+  position: fixed; inset: 0; z-index: 40;
+  display: none; place-items: center;
+  background: color-mix(in srgb, #000 82%, transparent);
+  padding: 2rem; cursor: zoom-out;
+}
+#lupa.is-abierta { display: grid; }
+#lupa img { max-width: min(1100px, 96vw); max-height: 88vh; border-radius: var(--nz-radio-md, 10px); background: #fff; }
+
+.bloque--ficha[hidden] { display: none; }
+.bloque--ficha { border-bottom: 1px solid var(--borde); padding-bottom: .75rem; }
+
+/* con una estación abierta, el panel deja sitio a su ficha */
+.panel--ficha .bloque--lineas, .panel--ficha .bloque--perfil { display: none; }
+.ficha__cerrar {
+  align-self: flex-end; margin: -.2rem -.2rem 0 0;
+  background: none; border: 0; color: var(--tinta-tenue);
+  font-size: 20px; line-height: 1; cursor: pointer; padding: 0 .2rem;
+}
+.ficha__cerrar:hover { color: var(--nz-tinta, #fff); }

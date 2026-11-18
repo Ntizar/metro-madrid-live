@@ -39,9 +39,26 @@ Rebuild de datos:
 python3 scripts/build_datos.py    # necesita data/gtfs/ (GTFS del CRTM)
 ```
 
+## Fichas de estación
+
+Cada una de las 268 estaciones lleva su **esquema axonométrico de niveles, andenes y transbordos**
+tomado de [stations.albertguillaumes.cat](http://stations.albertguillaumes.cat/), el proyecto de
+Albert Guillaumes que dibuja estación a estación los metros de medio mundo. De ahí salen también
+las etiquetas de cada ficha: profunda, elevada, andenes paralelos, transbordo cruzado, andén
+tresbolillo, solución Barcelona, corredores largos…
+
+Las 270 imágenes se sirven en local (`assets/esquemas/`, WebP 1000 px) porque el servidor original
+va por HTTP y su certificado no cubre el subdominio: en una página HTTPS el navegador las bloquearía.
+Se citan y enlazan en cada ficha. Si el autor prefiere que se enlacen en origen, se quitan en un minuto.
+
+Los textos de «El metro, por dentro» (perfil estrecho 1–5 y Ramal, perfil ancho 6–12, 15–25 m de
+profundidad, muros pantalla desde los 90, macrohubs de los 2000) son una adaptación al castellano
+de la sección Madrid de ese mismo proyecto.
+
 ## Atribución
 
 Datos: Consorcio Regional de Transportes de Madrid (GTFS) y © OpenStreetMap contributors.
+Esquemas de estación: Albert Guillaumes, *Stations and transfers*.
 Diseño: sistema Aurora de [Ntizar](https://github.com/Ntizar/Aurora).
 
 Hecho con ❤️ por David Antizar

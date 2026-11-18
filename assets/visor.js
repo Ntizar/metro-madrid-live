@@ -525,27 +525,76 @@ function seleccionar(st) {
   estado.seleccion = st.l[0] ?? null;
   pintarFicha(st);
   actualizarLineasUI();
+  const p = $('#panel');
+  if (p) p.scrollTop = 0;
 }
 
 function pintarFicha(st) {
   const f = $('#ficha');
+  const bloque = $('#bloque-ficha');
   if (!st) {
-    f.innerHTML = '<p class="nota">Pincha una estación en el mapa.</p>';
+    bloque.hidden = true;
+    $('#panel').classList.remove('panel--ficha');
+    f.innerHTML = '';
     return;
   }
+  bloque.hidden = false;
+  $('#panel').classList.add('panel--ficha');
+  const ficha = estado.fichas?.[st.id];
   const cercanos = estado.trenes.filter((t) =>
     st.l.includes(t.linea) && Math.hypot(t.x - st._x, t.z - st._z) < 2500).length;
+  const etiqueta = st.l.length > 1 ? 'Correspondencia' : 'Estación';
+  const tags = ficha?.tags?.length
+    ? `<ul class="ficha__tags">${ficha.tags.map((t) => `<li class="tag">${t}</li>`).join('')}</ul>`
+    : '';
+  const esquema = ficha?.esquema
+    ? `<img class="ficha__esquema" src="${ficha.esquema}" alt="Esquema de niveles y andenes de ${ficha.n}" loading="lazy">
+       <p class="ficha__credito">Esquema de niveles · Albert Guillaumes</p>`
+    : '';
   f.innerHTML = `
-    <strong class="ficha__nombre">${st.n}</strong>
-    <span class="ficha__meta">${st.l.length > 1 ? 'Correspondencia' : 'Estación'} · pozo de ${Math.round(st._prof)} m (estimado)</span>
+    <button class="ficha__cerrar" aria-label="Cerrar ficha">×</button>
+    <strong class="ficha__nombre">${ficha?.n ?? st.n}</strong>
+    <span class="ficha__meta">${etiqueta} · pozo de ${Math.round(st._prof)} m (estimado)</span>
     <div class="ficha__lineas">${st.l.map((id) => {
       const m = estado.lineas.get(id)?.meta;
       return `<span class="pastilla" style="--c:${m ? m.color : '#fff'}">${m ? m.name.replace('Línea ', 'L') : id}</span>`;
     }).join('')}</div>
-    <span class="ficha__meta">${cercanos} tren${cercanos === 1 ? '' : 'es'} de estas líneas a menos de 2,5 km</span>`;
+    ${tags}
+    ${esquema}
+    <span class="ficha__meta">${cercanos} tren${cercanos === 1 ? '' : 'es'} de estas líneas a menos de 2,5 km</span>
+    ${ficha?.fuente ? '<a class="ficha__enlace" href="' + ficha.fuente + '" target="_blank" rel="noopener">Ficha original ↗</a>' : ''}`;
+
+  f.querySelector('.ficha__cerrar').addEventListener('click', () => pintarFicha(null));
+  const img = f.querySelector('.ficha__esquema');
+  if (img) img.addEventListener('click', () => abrirLupa(img.src, img.alt));
+}
+
+function abrirLupa(src, alt) {
+  const l = $('#lupa');
+  l.querySelector('img').src = src;
+  l.querySelector('img').alt = alt || '';
+  l.classList.add('is-abierta');
 }
 
 // ————————————————————————————— UI —————————————————————————————
+const PERFIL = (id) => {
+  const n = id === 'R' ? 0 : parseInt(id, 10);
+  return n >= 1 && n <= 5 ? 'estrecho' : 'ancho';
+};
+
+function construirPerfil() {
+  const cont = $('#perfil');
+  const profMax = Math.max(...[...estado.lineas.values()].map((l) => l.meta.depth));
+  for (const [id, { meta }] of estado.lineas) {
+    const fila = document.createElement('div');
+    fila.className = 'perfil__fila';
+    fila.innerHTML = `<b>${id === 'R' ? 'Ramal' : 'L' + id}</b>
+      <span class="perfil__barra"><i style="width:${Math.round(meta.depth / profMax * 100)}%;background:${meta.color}"></i></span>
+      <span>${meta.depth} m · ${PERFIL(id)}</span>`;
+    cont.appendChild(fila);
+  }
+}
+
 function construirListaLineas() {
   const ul = $('#lineas');
   ul.innerHTML = '';
@@ -611,6 +660,9 @@ document.querySelectorAll('[data-vista]').forEach((b) => {
   });
 });
 
+$('#lupa').addEventListener('click', () => $('#lupa').classList.remove('is-abierta'));
+addEventListener('keydown', (e) => { if (e.key === 'Escape') $('#lupa').classList.remove('is-abierta'); });
+
 $('#plegar').addEventListener('click', (e) => {
   const p = $('#panel');
   const oculto = p.classList.toggle('is-oculto');
@@ -656,8 +708,12 @@ async function iniciar() {
   aviso.textContent = 'Cargando la red…';
   document.body.appendChild(aviso);
 
-  const datos = await fetch('data/metro.json').then((r) => r.json());
+  const [datos, fichas] = await Promise.all([
+    fetch('data/metro.json').then((r) => r.json()),
+    fetch('data/estaciones.json').then((r) => r.json()).catch(() => ({})),
+  ]);
   estado.datos = datos;
+  estado.fichas = fichas;
 
   // centro y bbox
   let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;
@@ -675,6 +731,7 @@ async function iniciar() {
 
   construirRed();
   construirListaLineas();
+  construirPerfil();
   await construirSuperficie({ minLat, maxLat, minLon, maxLon });
 
   estado.horaBase = horaMadridSegundos(new Date());
@@ -684,6 +741,8 @@ async function iniciar() {
   aviso.remove();
 
   window.__mm = estado; // depuración
+  window.__sel = seleccionar;
+  window.__cam = camara;
   controles.target.set(0, -1400, 0);
   irA([0, 15500, 17500], [0, -1400, 0], 2200);
   // el terreno se abre solo: de plano a corte geológico en 2,6 s
