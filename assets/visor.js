@@ -641,11 +641,19 @@ function enfocarEstacion(st) {
   }
   const y = -st._prof * EXAG;
   const d = 1150;
-  irA(
-    [st._x + d * 0.42, y + d * 0.78, st._z + d * 0.86],
-    [st._x, y - d * 0.16, st._z],
-    1300
-  );
+  const pos = new THREE.Vector3(st._x + d * 0.42, y + d * 0.78, st._z + d * 0.86);
+  const tgt = new THREE.Vector3(st._x, y - d * 0.16, st._z);
+  // la ficha ocupa la izquierda: se desplaza el encuadre para que la estación
+  // quede centrada en el trozo de mapa que sigue viéndose
+  const panel = $('#panel');
+  if (panel && !panel.classList.contains('is-oculto') && innerWidth > 720) {
+    const anchoVisible = 2 * d * Math.tan(THREE.MathUtils.degToRad(camara.fov / 2)) * camara.aspect;
+    const corrimiento = (panel.getBoundingClientRect().width / 2) * (anchoVisible / innerWidth);
+    const derecha = new THREE.Vector3().subVectors(pos, tgt).cross(camara.up).normalize();
+    pos.addScaledVector(derecha, corrimiento);
+    tgt.addScaledVector(derecha, corrimiento);
+  }
+  irA(pos.toArray(), tgt.toArray(), 1300);
   // haz vertical: se ve dónde está el pozo aunque el terreno esté opaco
   const haz = marcador.getObjectByName('haz');
   const punta = marcador.getObjectByName('punta');
