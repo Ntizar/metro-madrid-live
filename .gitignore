@@ -4,3 +4,5 @@ data/l3_overpass.json
 __pycache__/
 .DS_Store
 data/fuentes/
+# material de trabajo: los esquemas axonometricos del autor, no se publican
+esquemas/
