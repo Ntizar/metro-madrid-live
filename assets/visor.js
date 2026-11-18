@@ -221,7 +221,8 @@ function construirRed() {
   const { lines, shapes, stations } = estado.datos;
   const activos = serviciosActivos(estado.datos.calendar);
   const patterns = estado.datos.patterns.filter((p) => activos.has(p.svc));
-  estado.servicio = [...activos].join(', ');
+  const ETIQUETA = { '4_I12': 'Sábado', '4_I13': 'Domingo y festivo', '4_I14': 'Laborable', '4_I15': 'Viernes' };
+  estado.servicio = [...activos].map((s) => ETIQUETA[s] || s).join(', ');
   const colorPorLinea = new Map();
 
   for (const l of lines) {
