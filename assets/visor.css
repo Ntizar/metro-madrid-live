@@ -235,3 +235,14 @@ html, body { height: 100%; margin: 0; overflow: hidden; }
   font-size: 20px; line-height: 1; cursor: pointer; padding: 0 .2rem;
 }
 .ficha__cerrar:hover { color: var(--nz-tinta, #fff); }
+
+/* contraste y acabado */
+.ficha__meta { color: color-mix(in srgb, var(--nz-tinta, #fff) 62%, transparent); }
+.tag { color: color-mix(in srgb, var(--nz-tinta, #fff) 74%, transparent); }
+.pastilla { color: color-mix(in srgb, var(--nz-tinta, #fff) 80%, transparent); }
+.pastilla.is-clara { color: #0b0d10; border-color: color-mix(in srgb, #fff 30%, transparent); }
+.panel { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--nz-tinta, #fff) 22%, transparent) transparent; }
+.panel::-webkit-scrollbar { width: 6px; }
+.panel::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--nz-tinta, #fff) 22%, transparent); border-radius: 3px; }
+.panel::-webkit-scrollbar-track { background: transparent; }
+.ficha__cerrar { font-size: 22px; padding: 0 .3rem; color: color-mix(in srgb, var(--nz-tinta, #fff) 55%, transparent); }

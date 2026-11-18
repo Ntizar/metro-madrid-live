@@ -529,6 +529,13 @@ function seleccionar(st) {
   if (p) p.scrollTop = 0;
 }
 
+function esClaro(hex) {
+  const h = hex.replace('#', '');
+  const n = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(n.slice(i, i + 2), 16) / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.55;
+}
+
 function pintarFicha(st) {
   const f = $('#ficha');
   const bloque = $('#bloque-ficha');
@@ -558,7 +565,8 @@ function pintarFicha(st) {
     ${ficha && ficha.n !== st.n ? `<span class="ficha__meta">En el esquema: ${ficha.n}</span>` : ''}
     <div class="ficha__lineas">${st.l.map((id) => {
       const m = estado.lineas.get(id)?.meta;
-      return `<span class="pastilla" style="--c:${m ? m.color : '#fff'}">${m ? m.name.replace('Línea ', 'L') : id}</span>`;
+      const col = m ? m.color : '#fff';
+      return `<span class="pastilla${esClaro(col) ? ' is-clara' : ''}" style="--c:${col}">${m ? m.name.replace('Línea ', 'L') : id}</span>`;
     }).join('')}</div>
     ${tags}
     ${esquema}
