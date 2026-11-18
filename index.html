@@ -6,7 +6,21 @@
 <title>Metro de Madrid bajo tierra · Mastermind</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/tokens.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/packs/all.css">
-<link rel="stylesheet" href="assets/visor.css?v=48">
+<link rel="stylesheet" href="assets/visor.css?v=55">
+<script>
+// si el visor revienta, que se vea en vez de quedarse en negro
+window.addEventListener('error', function (e) {
+  var a = document.getElementById('aviso-carga');
+  if (a) { a.hidden = false; a.textContent = 'Fallo al cargar: ' + e.message; }
+  document.documentElement.dataset.errorJs = e.message;
+}, true);
+window.addEventListener('unhandledrejection', function (e) {
+  var m = (e.reason && (e.reason.stack || e.reason.message)) || String(e.reason);
+  var a = document.getElementById('aviso-carga');
+  if (a) { a.hidden = false; a.textContent = 'Fallo al cargar: ' + m; }
+  document.documentElement.dataset.errorJs = m;
+});
+</script>
 <script type="importmap">
 {
   "imports": {
@@ -101,7 +115,7 @@
 
 <div id="lupa" role="dialog" aria-label="Esquema ampliado"><img alt="Esquema de la estación ampliado"></div>
 
-<script type="module" src="assets/visor.js?v=48"></script>
+<script type="module" src="assets/visor.js?v=55"></script>
 <div class="escala" id="escala" hidden><i></i><span>100 m</span></div>
 </body>
 </html>

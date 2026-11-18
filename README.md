@@ -16,6 +16,30 @@ moviéndose en el subsuelo. Diseño con el sistema **Aurora**.
 - **Profundidad**: no es un dato oficial. Cada línea tiene una profundidad estimada y la escala
   vertical está exagerada ×200 (a escala real, 30 m de túnel no se ven en 50 km de ciudad).
 
+## Modelado en Blender
+
+Las estaciones no son puntos: son **modelos hechos en Blender**, uno por tipología, colocados en su sitio.
+
+```
+# 1. genera los modelos (18 GLB: 6 tipologías × 3 largos de andén)
+blender -b -P blender/arquetipos.py
+# 2. asigna tipología a cada estación
+python scripts/build_tipologias.py
+```
+
+Tipologías (`blender/arquetipos.py`): `lateral`, `central`, `paralelo`, `tresbolillo`,
+`dos_niveles` y `elevada`. Cada modelo sale con andén, vías, bóveda del túnel, escaleras
+y, cuando toca, vestíbulo o marquesina.
+
+El visor los coloca con la posición, el ángulo del andén y la cota reales, y los ajusta
+al largo medido en OSM. Para que 242 estaciones no cuesten 242 llamadas de dibujo, cada
+prototipo se fusiona en dos geometrías (opaco y translúcido, con el color en los vértices)
+y se pintan con `InstancedMesh`: 21 mallas en total.
+
+**Blender en la VM sin sudo:** el binario necesita `libXrender`, `libXi`, `libGL`... Se
+descargan los `.deb` de Ubuntu y se extraen en `~/.local/blender/libs`, y se lanza con
+`LD_LIBRARY_PATH` apuntando ahí. No hace falta instalar nada en el sistema.
+
 ## Las estaciones, a escala
 
 Cada estación se dibuja con **la planta de su andén**: largo, ancho y orientación reales.
@@ -47,6 +71,30 @@ Rebuild de datos:
 ```bash
 python3 scripts/build_datos.py    # necesita data/gtfs/ (GTFS del CRTM)
 ```
+
+## Modelado en Blender
+
+Las estaciones no son puntos: son **modelos hechos en Blender**, uno por tipología, colocados en su sitio.
+
+```
+# 1. genera los modelos (18 GLB: 6 tipologías × 3 largos de andén)
+blender -b -P blender/arquetipos.py
+# 2. asigna tipología a cada estación
+python scripts/build_tipologias.py
+```
+
+Tipologías (`blender/arquetipos.py`): `lateral`, `central`, `paralelo`, `tresbolillo`,
+`dos_niveles` y `elevada`. Cada modelo sale con andén, vías, bóveda del túnel, escaleras
+y, cuando toca, vestíbulo o marquesina.
+
+El visor los coloca con la posición, el ángulo del andén y la cota reales, y los ajusta
+al largo medido en OSM. Para que 242 estaciones no cuesten 242 llamadas de dibujo, cada
+prototipo se fusiona en dos geometrías (opaco y translúcido, con el color en los vértices)
+y se pintan con `InstancedMesh`: 21 mallas en total.
+
+**Blender en la VM sin sudo:** el binario necesita `libXrender`, `libXi`, `libGL`... Se
+descargan los `.deb` de Ubuntu y se extraen en `~/.local/blender/libs`, y se lanza con
+`LD_LIBRARY_PATH` apuntando ahí. No hace falta instalar nada en el sistema.
 
 ## Las estaciones, a escala
 

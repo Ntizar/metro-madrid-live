@@ -3,6 +3,8 @@
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
@@ -449,6 +451,8 @@ function construirRed() {
     return l;
   }
 
+
+
   const mallaAndenes = malla(vRelleno, 0xffffff, 0.30);
   const bordeAndenes = lineas(vContorno, 0xffffff, 0.8);
   const bordeVestibulo = lineas(vVestibulo, 0xcfd8e6, 0.22);
@@ -735,7 +739,7 @@ function enfocarEstacion(st) {
   const y = -st._prof * EXAG;
   // la cámara se planta a media altura del túnel y a ~420 m: a esa distancia el
   // andén (90-110 m) ocupa media pantalla y se lee su orientación
-  const d = 430;
+  const d = 300;
   // vista en tres cuartos alta: se lee la planta del andén, no su canto
   const pos = new THREE.Vector3(st._x + d * 0.30, y + d * 0.95, st._z + d * 0.52);
   const tgt = new THREE.Vector3(st._x, y, st._z);
@@ -1001,6 +1005,99 @@ function ajustarHuellas() {
   h.mallaAndenes.visible = d < 9000;
   h.bordeAndenes.visible = d < 9000;
   h.bordeVestibulo.visible = d < 3000;
+  if (estado._grupoModelos) estado._grupoModelos.visible = d < 2600;
+  // con el modelo encendido, la planta plana sobra
+  h.mallaAndenes.visible = estado._grupoModelos?.visible ? false : d < 9000;
+}
+
+// Los modelos de Blender (blender/arquetipos.py): seis tipologías modeladas una
+// vez y colocadas en su sitio con la posición y el ángulo reales. 18 ficheros de
+// ~40 KB (6 tipos × 3 largos).
+// Para que 242 estaciones no cuesten 242 draw calls, cada prototipo se fusiona en
+// dos geometrías (opaco y translúcido, con el color metido en los vértices) y las
+// estaciones se pintan con InstancedMesh: unas 36 llamadas en total.
+async function cargarModelos(tipologias) {
+  const grupo = new THREE.Group();
+  grupo.name = 'estaciones3d';
+  escena.add(grupo);
+  estado._grupoModelos = grupo;
+
+  // reparto de estaciones por prototipo
+  const porModelo = new Map();
+  for (const st of estado.datos.stations) {
+    const t = tipologias[st.id];
+    if (!t) continue;
+    const nombre = `estacion_${t.tipo}_${t.largo}`;
+    if (!porModelo.has(nombre)) porModelo.set(nombre, []);
+    porModelo.get(nombre).push({ st, t });
+  }
+
+  const loader = new GLTFLoader();
+
+  function fusionar(raiz) {
+    raiz.updateMatrixWorld(true);
+    const opacos = [], translucidos = [];
+    raiz.traverse((o) => {
+      if (!o.isMesh || !o.geometry) return;
+      const g = o.geometry.clone();
+      g.applyMatrix4(o.matrixWorld);
+      g.deleteAttribute('normal');
+      g.deleteAttribute('uv');
+      g.deleteAttribute('tangent');
+      const col = o.material.color || { r: 1, g: 1, b: 1 };
+      const n = g.attributes.position.count;
+      const arr = new Float32Array(n * 3);
+      for (let i = 0; i < n; i++) {
+        arr[i * 3] = col.r; arr[i * 3 + 1] = col.g; arr[i * 3 + 2] = col.b;
+      }
+      g.setAttribute('color', new THREE.Float32BufferAttribute(arr, 3));
+      (o.material.transparent && o.material.opacity < 0.9 ? translucidos : opacos).push(g);
+    });
+    return {
+      opaco: opacos.length ? mergeGeometries(opacos, false) : null,
+      translucido: translucidos.length ? mergeGeometries(translucidos, false) : null,
+    };
+  }
+
+  const matOpaco = new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false });
+  const matTrans = new THREE.MeshBasicMaterial({
+    vertexColors: true, transparent: true, opacity: 0.10,
+    depthWrite: false, side: THREE.DoubleSide, toneMapped: false,
+  });
+
+  let colocados = 0;
+  await Promise.all([...porModelo.entries()].map(async ([nombre, lista]) => {
+    let gltf;
+    try { gltf = await loader.loadAsync(`blender/salida/${nombre}.glb`); }
+    catch { return; }
+    const { opaco, translucido } = fusionar(gltf.scene);
+    for (const [geo, mat, orden] of [[opaco, matOpaco, 5], [translucido, matTrans, 6]]) {
+      if (!geo) continue;
+      const im = new THREE.InstancedMesh(geo, mat, lista.length);
+      im.renderOrder = orden;
+      im.frustumCulled = false;
+      lista.forEach(({ st, t }, i) => {
+        const andenOsm = estado.huellas[st.id]?.andenes?.[0];
+        const k = andenOsm?.largo
+          ? Math.min(1.8, Math.max(0.5, andenOsm.largo / t.largo)) : 1;
+        const m4 = new THREE.Matrix4();
+        m4.compose(
+          new THREE.Vector3(st._x, -st._prof * EXAG, st._z),
+          new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0),
+            -THREE.MathUtils.degToRad(t.ang || 0)),
+          new THREE.Vector3(k, 1, 1),
+        );
+        im.setMatrixAt(i, m4);
+        colocados++;
+      });
+      im.instanceMatrix.needsUpdate = true;
+      grupo.add(im);
+    }
+  }));
+
+  grupo.visible = false;   // se enciende al acercarse
+  console.info(`modelos Blender: ${colocados} estaciones en ${grupo.children.length} mallas`);
+  return grupo;
 }
 
 function animar(ahora) {
@@ -1056,14 +1153,16 @@ async function iniciar() {
   aviso.textContent = 'Cargando la red…';
   document.body.appendChild(aviso);
 
-  const [datos, fichas, huellas] = await Promise.all([
+  const [datos, fichas, huellas, tipologias] = await Promise.all([
     fetch('data/metro.json').then((r) => r.json()),
     fetch('data/estaciones.json').then((r) => r.json()).catch(() => ({})),
     fetch('data/estaciones_osm.json').then((r) => r.json()).catch(() => ({})),
+    fetch('data/estaciones_3d.json').then((r) => r.json()).catch(() => ({})),
   ]);
   estado.datos = datos;
   estado.fichas = fichas;
   estado.huellas = huellas;
+  estado.tipologias = tipologias;
 
   // centro y bbox
   let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;
@@ -1082,6 +1181,7 @@ async function iniciar() {
   construirRed();
   construirListaLineas();
   construirPerfil();
+  await cargarModelos(tipologias);
   await construirSuperficie({ minLat, maxLat, minLon, maxLon });
 
   estado.horaBase = horaMadridSegundos(new Date());
