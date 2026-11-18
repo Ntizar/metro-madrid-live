@@ -1,0 +1,135 @@
+{
+ "San Cristóbal": [
+  40.3416121,
+  -3.6934141,
+  "railway",
+  "station",
+  "San Cristóbal, Avenida de Andalucía, San Cristóbal, Villaver"
+ ],
+ "Villaverde Bajo-Cruce": [
+  40.351034,
+  -3.6926258,
+  "railway",
+  "station",
+  "Villaverde Bajo - Cruce, Avenida de Andalucía, Villaverde Ba"
+ ],
+ "Ciudad de los Ángeles": [
+  40.3601741,
+  -3.69343,
+  "railway",
+  "station",
+  "Ciudad de los Ángeles, Avenida de Andalucía, Los Rosales, Vi"
+ ],
+ "San Fermín-Orcasur": [
+  40.369987,
+  -3.6943864,
+  "railway",
+  "station",
+  "San Fermín-Orcasur, Avenida de Andalucía, San Fermín, Usera,"
+ ],
+ "Hospital 12 de Octubre": [
+  40.37546,
+  -3.6959057,
+  "railway",
+  "station",
+  "Hospital 12 de Octubre, Complejo Ciudad Sanitaria Doce de Oc"
+ ],
+ "Almendrales": [
+  40.3839505,
+  -3.6980105,
+  "railway",
+  "station",
+  "Almendrales, Avenida de Córdoba, Almendrales, Usera, Madrid,"
+ ],
+ "Villaverde Alto": [
+  40.3415173,
+  -3.7115865,
+  "railway",
+  "station",
+  "Villaverde Alto, 15, Calle de Domingo Párraga, Villaverde Al"
+ ],
+ "El Casar": [
+  40.3185283,
+  -3.7096898,
+  "railway",
+  "station",
+  "El Casar, Avenida El Casar, El Casar, Getafe Norte, Getafe, "
+ ],
+ "Legazpi": [
+  40.3914432,
+  -3.6949558,
+  "railway",
+  "station",
+  "Legazpi, Plaza de Legazpi, Delicias, Arganzuela, Madrid, Com"
+ ],
+ "Delicias": [
+  40.3993312,
+  -3.6941225,
+  "railway",
+  "station",
+  "Delicias, Paseo de las Delicias, Delicias, Arganzuela, Madri"
+ ],
+ "Palos de la Frontera": [
+  40.4030849,
+  -3.6947843,
+  "railway",
+  "station",
+  "Palos de la Frontera, Calle de Palos de la Frontera, Palos d"
+ ],
+ "Embajadores": [
+  40.40513,
+  -3.70268,
+  "gtfs",
+  "station",
+  "Embajadores (GTFS est_4_46)"
+ ],
+ "Lavapiés": [
+  40.4084539,
+  -3.7006613,
+  "railway",
+  "station",
+  "Lavapiés, Plaza de Lavapiés, Lavapiés, Embajadores, Centro, "
+ ],
+ "Sol": [
+  40.4178272,
+  -3.7022221,
+  "railway",
+  "station",
+  "Sol, Calle de la Montera, Barrio de los Austrias, Sol, Centr"
+ ],
+ "Callao": [
+  40.4203838,
+  -3.706136,
+  "railway",
+  "stop",
+  "Callao, Gran Vía, Universidad, Centro, Madrid, Comunidad de "
+ ],
+ "Plaza de España": [
+  40.423449,
+  -3.7108809,
+  "railway",
+  "station",
+  "Plaza de España, Universidad, Moncloa-Aravaca, Centro, Madri"
+ ],
+ "Ventura Rodríguez": [
+  40.4267606,
+  -3.713295,
+  "railway",
+  "station",
+  "Ventura Rodríguez, Duque de Liria, Universidad, Centro, Madr"
+ ],
+ "Argüelles": [
+  40.4307266,
+  -3.7161715,
+  "railway",
+  "station",
+  "Argüelles, Calle de Alberto Aguilera, Gaztambide, Chamberí, "
+ ],
+ "Moncloa": [
+  40.4350196,
+  -3.719236,
+  "railway",
+  "station",
+  "Moncloa, Calle de la Princesa, Argüelles, Moncloa-Aravaca, M"
+ ]
+}

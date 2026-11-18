@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" data-nz-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metro de Madrid bajo tierra · Mastermind</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/packs/all.css">
+<link rel="stylesheet" href="assets/visor.css?v=4">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body class="nz">
+
+<canvas id="lienzo" aria-label="Vista 3D del subsuelo de Metro de Madrid"></canvas>
+<div id="velo" class="velo" aria-hidden="true"></div>
+
+<header class="barra">
+  <div class="barra__marca">
+    <span class="rombo" aria-hidden="true"></span>
+    <div class="nz-stack nz-stack--2xs">
+      <strong class="barra__titulo">Metro de Madrid <span class="barra__sub">bajo tierra</span></strong>
+      <span class="nz-lbl" id="fuente">GTFS oficial CRTM · 2025</span>
+    </div>
+  </div>
+  <div class="nz-cluster barra__acciones">
+    <span class="nz-badge nz-badge--soft" id="badge-estado">Cargando red…</span>
+    <div class="nz-segmented" role="group" aria-label="Vista de cámara">
+      <button class="nz-btn nz-btn--ghost nz-btn--sm is-active" data-vista="plano">Plano</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" data-vista="vuelo">Vuelo</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" data-vista="tunel">Túnel</button>
+    </div>
+  </div>
+</header>
+
+<aside class="panel" id="panel">
+  <button class="panel__plegar" id="plegar" aria-label="Plegar panel" aria-expanded="true">
+    <span aria-hidden="true">‹</span>
+  </button>
+
+  <section class="bloque">
+    <p class="nz-lbl">Corte del terreno</p>
+    <label class="campo">
+      <input type="range" id="corte" min="0" max="100" value="95" step="1" aria-label="Opacidad de la superficie">
+      <output id="corte-val">95 %</output>
+    </label>
+    <p class="nota">Baja el valor para atravesar la superficie. Profundidad vertical ×200 para que se lea: a escala real 30 m no se ven en 50 km.</p>
+  </section>
+
+  <section class="bloque">
+    <p class="nz-lbl">Tiempo</p>
+    <div class="nz-cluster">
+      <button class="nz-btn nz-btn--soft nz-btn--sm" id="velocidad">×1</button>
+      <span class="reloj" id="reloj">--:--</span>
+    </div>
+    <p class="nota">Trenes calculados con las frecuencias oficiales del GTFS. No es telemetría en vivo.</p>
+  </section>
+
+  <section class="bloque bloque--lineas">
+    <div class="bloque__cabecera">
+      <p class="nz-lbl">Líneas</p>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="todas">Todas</button>
+    </div>
+    <ul class="lineas" id="lineas"></ul>
+  </section>
+
+  <section class="bloque">
+    <p class="nz-lbl">Ficha</p>
+    <div id="ficha" class="ficha">
+      <p class="nota">Pincha una estación en el mapa.</p>
+    </div>
+  </section>
+</aside>
+
+<footer class="pie">
+  <span class="nz-lbl" id="contador">—</span>
+  <span class="nz-lbl">© OpenStreetMap · GTFS CRTM · Hecho con ❤️ por David Antizar</span>
+</footer>
+
+<script type="module" src="assets/visor.js?v=8"></script>
+</body>
+</html>

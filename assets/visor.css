@@ -1,0 +1,189 @@
+/* Metro de Madrid bajo tierra — CSS de lienzo y HUD.
+   Solo geometría y capas flotantes: los colores y la tipografía vienen de tokens.css. */
+
+:root {
+  --vidrio: color-mix(in srgb, var(--nz-superficie, #0d0e10) 88%, transparent);
+  --borde: color-mix(in srgb, var(--nz-tinta, #fff) 12%, transparent);
+  --tinta-suave: color-mix(in srgb, var(--nz-tinta, #fff) 62%, transparent);
+  --tinta-tenue: color-mix(in srgb, var(--nz-tinta, #fff) 38%, transparent);
+  --acento: var(--nz-acento, #ff6a2b);
+}
+
+html, body { height: 100%; margin: 0; overflow: hidden; }
+
+#lienzo {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.velo {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 0%, transparent 40%, color-mix(in srgb, #000 55%, transparent) 100%);
+  opacity: .9;
+  transition: opacity .4s ease;
+}
+.velo.is-claro { opacity: .25; }
+
+/* barra superior */
+.barra {
+  position: fixed;
+  inset: 0 0 auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .75rem clamp(.75rem, 2vw, 1.5rem);
+  pointer-events: none;
+}
+.barra > * { pointer-events: auto; }
+.barra__marca { display: flex; align-items: center; gap: .65rem; }
+.barra__titulo { font-size: var(--nz-text-lg, 1.05rem); letter-spacing: -.01em; }
+.barra__sub { color: var(--tinta-tenue); font-weight: 500; }
+.barra__acciones { flex-wrap: wrap; justify-content: flex-end; }
+
+.rombo {
+  width: 1.6rem; height: 1.6rem;
+  display: block;
+  background: var(--acento);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--acento) 55%, transparent);
+}
+
+/* panel lateral */
+.panel {
+  position: fixed;
+  top: 4.25rem;
+  left: clamp(.5rem, 1.5vw, 1.25rem);
+  bottom: 3rem;
+  width: min(20rem, calc(100vw - 1rem));
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+  padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--borde);
+  border-radius: var(--nz-radio-lg, 14px);
+  background: var(--vidrio);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s;
+}
+.panel.is-oculto { transform: translateX(calc(-100% - 2rem)); opacity: 0; pointer-events: none; }
+
+.panel__plegar {
+  align-self: flex-end;
+  width: 2rem; height: 2rem;
+  display: grid; place-items: center;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tinta-suave);
+  cursor: pointer;
+  font-size: 1rem; line-height: 1;
+}
+.panel__plegar:hover { color: var(--acento); border-color: var(--acento); }
+
+.bloque { display: flex; flex-direction: column; gap: .45rem; }
+.bloque + .bloque { padding-top: .9rem; border-top: 1px solid var(--borde); }
+.bloque__cabecera { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+
+.campo { display: flex; align-items: center; gap: .6rem; }
+.campo input[type="range"] {
+  flex: 1; min-height: 44px; accent-color: var(--acento); background: transparent;
+}
+.campo output { font-variant-numeric: tabular-nums; color: var(--tinta-suave); font-size: 13px; min-width: 3.2rem; text-align: right; }
+
+.nota { margin: 0; font-size: 13px; line-height: 1.45; color: var(--tinta-tenue); }
+
+.reloj { font-variant-numeric: tabular-nums; font-size: 1.35rem; letter-spacing: -.02em; }
+
+/* lista de líneas */
+.lineas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.lineas li { display: flex; }
+.linea-chip {
+  flex: 1;
+  display: flex; align-items: center; gap: .55rem;
+  min-height: 44px;
+  padding: 0 .55rem;
+  border: 1px solid transparent;
+  border-radius: var(--nz-radio-md, 10px);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, opacity .2s;
+}
+.linea-chip:hover { background: color-mix(in srgb, var(--nz-tinta, #fff) 7%, transparent); }
+.linea-chip.is-apagada { opacity: .38; }
+.linea-chip.is-sel { border-color: var(--borde); background: color-mix(in srgb, var(--nz-tinta, #fff) 9%, transparent); }
+.linea-chip__color { width: .65rem; height: .65rem; border-radius: 2px; flex: none; }
+.linea-chip__nombre { font-variant-numeric: tabular-nums; min-width: 3.1rem; }
+.linea-chip__rec { color: var(--tinta-tenue); font-size: 11px; letter-spacing: .02em; }
+
+.ficha { display: flex; flex-direction: column; gap: .35rem; }
+.ficha__nombre { font-size: 1rem; line-height: 1.2; }
+.ficha__meta { font-size: 13px; color: var(--tinta-tenue); }
+.ficha__lineas { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .2rem; }
+.pastilla {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .18rem .45rem;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid var(--borde);
+  color: var(--tinta-suave);
+}
+.pastilla::before { content: ""; width: .5rem; height: .5rem; border-radius: 2px; background: var(--c, #fff); }
+
+/* pie */
+.pie {
+  position: fixed;
+  inset: auto 0 0 0;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  padding: .5rem clamp(.75rem, 2vw, 1.5rem);
+  pointer-events: none;
+}
+
+/* etiquetas 3D en HTML */
+.etiqueta {
+  position: absolute;
+  transform: translate(-50%, -140%);
+  padding: .12rem .4rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, #000 62%, transparent);
+  border: 1px solid var(--borde);
+  color: var(--nz-tinta, #fff);
+  font-size: 11px;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.etiqueta.is-visible { opacity: 1; }
+
+#aviso-carga {
+  position: fixed;
+  inset: 50% 0 auto 0;
+  text-align: center;
+  color: var(--tinta-tenue);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+@media (max-width: 719px) {
+  .panel { top: 4rem; bottom: 2.75rem; width: calc(100vw - 1rem); }
+  .barra { flex-wrap: wrap; }
+  .barra__acciones .nz-segmented { order: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel, .velo, .etiqueta { transition: none; }
+}
