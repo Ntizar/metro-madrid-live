@@ -40,6 +40,26 @@ renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.setClearColor(0x05060a, 1);
 
+// marcador de la estación elegida: un haz vertical que atraviesa el terreno
+const marcador = new THREE.Group();
+{
+  const hazMat = new THREE.MeshBasicMaterial({
+    color: 0xffffff, transparent: true, opacity: 0.13, side: THREE.DoubleSide,
+    depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
+  });
+  const haz = new THREE.Mesh(new THREE.CylinderGeometry(7, 7, 1, 12, 1, true), hazMat);
+  haz.name = 'haz';
+  const punta = new THREE.Mesh(
+    new THREE.SphereGeometry(26, 16, 12),
+    new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85, depthTest: false })
+  );
+  punta.name = 'punta';
+  marcador.add(haz, punta);
+  marcador.visible = false;
+  marcador.renderOrder = 13;
+}
+escena.add(marcador);
+
 const controles = new OrbitControls(camara, renderer.domElement);
 controles.enableDamping = true;
 controles.dampingFactor = 0.06;
@@ -278,44 +298,84 @@ function construirRed() {
     }
   }
 
-  // estaciones: disco en superficie + pozo hasta el túnel
+  // estaciones: punto de tamaño constante en pantalla + pozo hasta el túnel
   const n = stations.length;
-  const discoGeo = new THREE.CylinderGeometry(1, 1, 1, 14);
-  const discoMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.32 });
-  const discos = new THREE.InstancedMesh(discoGeo, discoMat, n);
-  discos.userData.tipo = 'estaciones';
-
   const pozoGeo = new THREE.CylinderGeometry(1, 1, 1, 10, 1, true);
   const pozoMat = new THREE.MeshBasicMaterial({
-    color: 0x8ea0bd, transparent: true, opacity: 0.13, side: THREE.DoubleSide, depthWrite: false, depthTest: false,
+    color: 0x8ea0bd, transparent: true, opacity: 0.085, side: THREE.DoubleSide, depthWrite: false, depthTest: true,
   });
   const pozos = new THREE.InstancedMesh(pozoGeo, pozoMat, n);
 
+  const posEst = new Float32Array(n * 3);
+  const tamEst = new Float32Array(n);
   const m4 = new THREE.Matrix4();
   stations.forEach((st, i) => {
     const [x, z] = aMundo(st.lat, st.lon);
-    st._x = x; st._z = z;
+    st._x = x; st._z = z; st._i = i;
     const prof = Math.max(...st.l.map((id) => estado.lineas.get(id)?.meta.depth ?? 20));
     st._prof = prof;
-    m4.compose(
-      new THREE.Vector3(x, 0.5, z),
-      new THREE.Quaternion(),
-      new THREE.Vector3(52, 2, 52)
-    );
-    discos.setMatrixAt(i, m4);
+    posEst[i * 3] = x; posEst[i * 3 + 1] = 0; posEst[i * 3 + 2] = z;
+    tamEst[i] = st.l.length > 1 ? 1 : 0;   // correspondencia = más grande
     m4.compose(
       new THREE.Vector3(x, -prof * EXAG / 2, z),
       new THREE.Quaternion(),
-      new THREE.Vector3(26, prof * EXAG, 26)
+      new THREE.Vector3(11, prof * EXAG, 11)
     );
     pozos.setMatrixAt(i, m4);
   });
-  discos.instanceMatrix.needsUpdate = true;
   pozos.instanceMatrix.needsUpdate = true;
   pozos.renderOrder = 8;
-  discos.renderOrder = 11;
-  escena.add(pozos, discos);
-  estado.discos = discos;
+  escena.add(pozos);
+
+  // las estaciones se dibujan como puntos de tamaño fijo en píxeles: a 20 km de altura
+  // un disco de 50 m mide dos píxeles y desaparece
+  const geoEst = new THREE.BufferGeometry();
+  geoEst.setAttribute('position', new THREE.BufferAttribute(posEst, 3));
+  geoEst.setAttribute('aGrande', new THREE.BufferAttribute(tamEst, 1));
+  const matEst = new THREE.ShaderMaterial({
+    uniforms: {
+      foco: { value: new THREE.Vector3() },
+      tamBase: { value: 7 },
+      escala: { value: 1 },
+    },
+    vertexShader: `
+      attribute float aGrande;
+      uniform vec3 foco;
+      uniform float tamBase;
+      uniform float escala;
+      varying float vGrande;
+      void main() {
+        vGrande = aGrande;
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        gl_Position = projectionMatrix * mv;
+        float lejos = distance(cameraPosition, position);
+        float s = (aGrande > 0.5 ? tamBase * 1.55 : tamBase) * escala;
+        s *= mix(1.0, 2.2, clamp(lejos / 30000.0, 0.0, 1.0));
+        float cerca = 1.0 - clamp(distance(position.xz, foco.xz) / 1.0, 0.0, 1.0);
+        s *= 1.0 + cerca * 1.1;
+        gl_PointSize = s;
+      }`,
+    fragmentShader: `
+      varying float vGrande;
+      void main() {
+        vec2 d = gl_PointCoord - 0.5;
+        float r = length(d);
+        if (r > 0.5) discard;
+        float nucleo = smoothstep(0.5, 0.34, r);
+        float borde = smoothstep(0.5, 0.44, r) - smoothstep(0.42, 0.30, r);
+        vec3 col = mix(vec3(1.0), vec3(1.0), vGrande);
+        float a = nucleo * 0.95 + borde * 0.55;
+        gl_FragColor = vec4(col, a);
+      }`,
+    transparent: true, depthWrite: false, depthTest: false,
+  });
+  const puntosEst = new THREE.Points(geoEst, matEst);
+  puntosEst.frustumCulled = false;
+  puntosEst.renderOrder = 10;
+  escena.add(puntosEst);
+  estado.discos = puntosEst;
+  estado._posEst = posEst;
+  estado._matEst = matEst;
 
   // trenes: puntos de tamaño constante en pantalla (visibles a cualquier zoom)
   const nMax = 1400;
@@ -452,33 +512,46 @@ function crearEtiqueta(st) {
 }
 
 function actualizarEtiquetas() {
-  const seleccion = estado.seleccion;
-  const dist = camara.position.length();
-  const cerca = dist < 32000;
-  const lista = estado.datos.stations.filter((st) => {
-    if (seleccion) return st.l.includes(seleccion);
-    return cerca ? st.l.length > 1 : st.l.length > 1;
-  }).slice(0, 70);
+  const foco = estado._foco;
+  const t = controles.target;
+  const elegida = estado._estacion;
+  let lista;
+  if (foco) {
+    // con una estación abierta solo se rotulan las de su entorno
+    lista = estado.datos.stations
+      .filter((st) => Math.hypot(st._x - t.x, st._z - t.z) < 2600)
+      .slice(0, 24);
+    if (elegida && !lista.includes(elegida)) lista.unshift(elegida);
+  } else {
+    lista = estado.datos.stations.filter((st) => st.l.length > 1).slice(0, 70);
+  }
 
   const vistas = new Set();
   const ocupadas = [];
-  // prioridad: más líneas primero (intercambiadores)
-  const orden = [...lista].sort((a, b) => b.l.length - a.l.length);
+  const orden = [...lista].sort((a, b) => {
+    if (a === elegida) return -1;
+    if (b === elegida) return 1;
+    return b.l.length - a.l.length;
+  });
   for (const st of orden) {
     const d = etiquetas.get(st.id) || crearEtiqueta(st);
     vistas.add(st.id);
-    v3.set(st._x, 0, st._z).project(camara);
+    v3.set(st._x, cotaEstacion(st), st._z).project(camara);
     const x = (v3.x * 0.5 + 0.5) * innerWidth;
     const y = (-v3.y * 0.5 + 0.5) * innerHeight;
-    const dentro = v3.z < 1 && v3.z > -1 && x > 320 && x < innerWidth - 20 && y > 60 && y < innerHeight - 40;
-    const choque = ocupadas.some(([ox, oy]) => Math.abs(ox - x) < 92 && Math.abs(oy - y) < 15);
-    const visible = dentro && !choque;
-    if (visible) ocupadas.push([x, y]);
+    const dentro = v3.z < 1 && v3.z > -1 && x > 380 && x < innerWidth - 20 && y > 60 && y < innerHeight - 40;
+    const w = d.offsetWidth || 96;
+    const choque = ocupadas.some(([ox, oy, ow]) => Math.abs(ox - x) < (w + ow) / 2 + 6 && Math.abs(oy - y) < 15);
+    const visible = dentro && (!choque || st === elegida);
+    if (visible) ocupadas.push([x, y, w]);
     d.classList.toggle('is-visible', visible);
+    d.classList.toggle('is-foco', st === elegida);
     d.style.left = x.toFixed(1) + 'px';
     d.style.top = y.toFixed(1) + 'px';
   }
-  for (const [id, d] of etiquetas) if (!vistas.has(id)) d.classList.remove('is-visible');
+  for (const [id, d] of etiquetas) {
+    if (!vistas.has(id)) { d.classList.remove('is-visible'); d.classList.remove('is-foco'); }
+  }
 }
 
 // ————————————————————————————— cámara —————————————————————————————
@@ -503,22 +576,50 @@ function vista(nombre) {
 }
 
 // ————————————————————————————— interacción —————————————————————————————
-const raycaster = new THREE.Raycaster();
-const puntero = new THREE.Vector2();
+const _v3 = new THREE.Vector3();
+
+// con la cámara bajo tierra (tras el zoom) las estaciones se anclan a la cota del túnel
+function cotaEstacion(st) {
+  return camara.position.y < -200 ? -st._prof * EXAG : 0;
+}
+
+function estacionEn(cx, cy, umbral = 20) {
+  let mejor = null, mejorD = umbral;
+  for (const st of estado.datos.stations) {
+    _v3.set(st._x, cotaEstacion(st), st._z).project(camara);
+    if (_v3.z > 1) continue;
+    const x = (_v3.x * 0.5 + 0.5) * innerWidth;
+    const y = (-_v3.y * 0.5 + 0.5) * innerHeight;
+    const d = Math.hypot(x - cx, y - cy);
+    if (d < mejorD) { mejorD = d; mejor = st; }
+  }
+  return mejor;
+}
 
 renderer.domElement.addEventListener('pointerdown', (e) => {
   estado._down = { x: e.clientX, y: e.clientY, t: performance.now() };
 });
+renderer.domElement.addEventListener('pointermove', (e) => {
+  if (estado._down) return;
+  const st = estacionEn(e.clientX, e.clientY);
+  renderer.domElement.style.cursor = st ? 'pointer' : 'grab';
+  const tip = $('#puntero-nombre');
+  if (st) {
+    tip.textContent = st.n;
+    tip.style.transform = `translate(${e.clientX + 14}px, ${e.clientY - 12}px)`;
+    tip.classList.add('is-visible');
+  } else {
+    tip.classList.remove('is-visible');
+  }
+});
 renderer.domElement.addEventListener('pointerup', (e) => {
   const d = estado._down;
+  estado._down = null;
   if (!d) return;
   if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > 6 || performance.now() - d.t > 600) return;
-  puntero.x = (e.clientX / innerWidth) * 2 - 1;
-  puntero.y = -(e.clientY / innerHeight) * 2 + 1;
-  raycaster.setFromCamera(puntero, camara);
-  const hit = raycaster.intersectObject(estado.discos, false)[0];
-  if (hit) seleccionar(estado.datos.stations[hit.instanceId]);
-  else { estado.seleccion = null; pintarFicha(null); actualizarLineasUI(); }
+  const st = estacionEn(e.clientX, e.clientY);
+  if (st) seleccionar(st);
+  else cerrarFicha();
 });
 
 function seleccionar(st) {
@@ -527,6 +628,49 @@ function seleccionar(st) {
   actualizarLineasUI();
   const p = $('#panel');
   if (p) p.scrollTop = 0;
+  enfocarEstacion(st);
+}
+
+// vuelo a la estación: se planta la cámara a su altura, mirando el pozo en tres cuartos
+function enfocarEstacion(st) {
+  if (!estado._vistaGeneral) {
+    estado._vistaGeneral = {
+      pos: camara.position.clone(),
+      target: controles.target.clone(),
+    };
+  }
+  const y = -st._prof * EXAG;
+  const d = 1150;
+  irA(
+    [st._x + d * 0.42, y + d * 0.78, st._z + d * 0.86],
+    [st._x, y - d * 0.16, st._z],
+    1300
+  );
+  // haz vertical: se ve dónde está el pozo aunque el terreno esté opaco
+  const haz = marcador.getObjectByName('haz');
+  const punta = marcador.getObjectByName('punta');
+  haz.scale.set(1, st._prof * EXAG + 600, 1);
+  haz.position.set(0, -(st._prof * EXAG + 600) / 2 + 300, 0);
+  punta.position.set(0, y, 0);
+  marcador.position.set(st._x, 0, st._z);
+  marcador.visible = true;
+  estado._foco = new THREE.Vector3(st._x, y, st._z);
+  estado._estacion = st;
+  if (estado._matEst) estado._matEst.uniforms.foco.value.copy(estado._foco);
+}
+
+function cerrarFicha() {
+  marcador.visible = false;
+  estado.seleccion = null;
+  pintarFicha(null);
+  actualizarLineasUI();
+  if (estado._vistaGeneral) {
+    const g = estado._vistaGeneral;
+    irA(g.pos.toArray(), g.target.toArray(), 1100);
+    estado._vistaGeneral = null;
+  }
+  estado._foco = null;
+  estado._estacion = null;
 }
 
 function esClaro(hex) {
@@ -555,11 +699,10 @@ function pintarFicha(st) {
     ? `<ul class="ficha__tags">${ficha.tags.map((t) => `<li class="tag">${t}</li>`).join('')}</ul>`
     : '';
   const esquema = ficha?.esquema
-    ? `<img class="ficha__esquema" src="${ficha.esquema}" alt="Esquema de niveles y andenes de ${ficha.n}" loading="lazy">
+    ? `<span class="ficha__marco"><img class="ficha__esquema" src="${ficha.esquema}" alt="Esquema de niveles y andenes de ${ficha.n}" loading="lazy"></span>
        <p class="ficha__credito">Esquema de niveles · Albert Guillaumes</p>`
     : '';
   f.innerHTML = `
-    <button class="ficha__cerrar" aria-label="Cerrar ficha">×</button>
     <strong class="ficha__nombre">${st.n}</strong>
     <span class="ficha__meta">${etiqueta} · pozo de ${Math.round(st._prof)} m (estimado)</span>
     ${ficha && ficha.n !== st.n ? `<span class="ficha__meta">En el esquema: ${ficha.n}</span>` : ''}
@@ -570,10 +713,13 @@ function pintarFicha(st) {
     }).join('')}</div>
     ${tags}
     ${esquema}
-    <span class="ficha__meta">${cercanos} tren${cercanos === 1 ? '' : 'es'} de estas líneas a menos de 2,5 km</span>
-    ${ficha?.fuente ? '<a class="ficha__enlace" href="' + ficha.fuente + '" target="_blank" rel="noopener">Ficha original ↗</a>' : ''}`;
+    <span class="ficha__meta">${cercanos} tren${cercanos === 1 ? '' : 'es'} de estas líneas a menos de 2,5 km, según horario</span>
+    <div class="ficha__pie">
+      <button class="ficha__volver" type="button">← Volver al plano</button>
+      ${ficha?.fuente ? '<a class="ficha__enlace" href="' + ficha.fuente + '" target="_blank" rel="noopener">Ficha original ↗</a>' : ''}
+    </div>`;
 
-  f.querySelector('.ficha__cerrar').addEventListener('click', () => pintarFicha(null));
+  f.querySelector('.ficha__volver').addEventListener('click', cerrarFicha);
   const img = f.querySelector('.ficha__esquema');
   if (img) img.addEventListener('click', () => abrirLupa(img.src, img.alt));
 }
@@ -612,9 +758,10 @@ function construirListaLineas() {
     const b = document.createElement('button');
     b.className = 'linea-chip';
     b.dataset.linea = id;
+    b.title = `${meta.name} · ${meta.long}${meta.reconstruida ? ' (reconstruida)' : ''}`;
     b.innerHTML = `<span class="linea-chip__color" style="background:${meta.color}"></span>
       <span class="linea-chip__nombre">${id === 'R' ? 'Ramal' : 'L' + id}</span>
-      <span>${meta.long}</span>${meta.reconstruida ? '<span class="linea-chip__rec">reconstruida</span>' : ''}`;
+      <span class="linea-chip__rec">${meta.long.split('-')[0]}</span>`;
     b.addEventListener('click', () => {
       const l = estado.lineas.get(id);
       l.visible = !l.visible;
@@ -651,8 +798,12 @@ $('#corte').addEventListener('input', (e) => {
 $('#velocidad').addEventListener('click', (e) => {
   const escala = [1, 60, 300];
   const i = (escala.indexOf(estado.velocidad) + 1) % escala.length;
+  // se congela el instante actual antes de cambiar de marcha: así el reloj no salta
+  estado.horaBase = estado.horaBase + (performance.now() - estado.t0) / 1000 * estado.velocidad;
+  estado.t0 = performance.now();
   estado.velocidad = escala[i];
   e.target.textContent = '×' + estado.velocidad;
+  estado._refrescarBadge = true;
 });
 
 $('#todas').addEventListener('click', () => {
@@ -669,14 +820,27 @@ document.querySelectorAll('[data-vista]').forEach((b) => {
   });
 });
 
+$('#ahora').addEventListener('click', () => {
+  estado.horaBase = horaMadridSegundos(new Date());
+  estado.t0 = performance.now();
+  actualizarTrenes(estado.horaBase);
+  estado._refrescarBadge = true;
+});
+
 $('#lupa').addEventListener('click', () => $('#lupa').classList.remove('is-abierta'));
 addEventListener('keydown', (e) => { if (e.key === 'Escape') $('#lupa').classList.remove('is-abierta'); });
 
-$('#plegar').addEventListener('click', (e) => {
+$('#plegar').addEventListener('click', () => {
   const p = $('#panel');
-  const oculto = p.classList.toggle('is-oculto');
-  e.currentTarget.setAttribute('aria-expanded', String(!oculto));
-  e.currentTarget.querySelector('span').textContent = oculto ? '›' : '‹';
+  p.classList.add('is-oculto');
+  $('#abrir-panel').hidden = false;
+  $('#plegar').setAttribute('aria-expanded', 'false');
+});
+
+$('#abrir-panel').addEventListener('click', () => {
+  $('#panel').classList.remove('is-oculto');
+  $('#abrir-panel').hidden = true;
+  $('#plegar').setAttribute('aria-expanded', 'true');
 });
 
 // ————————————————————————————— bucle —————————————————————————————
@@ -697,7 +861,22 @@ function animar(ahora) {
   const tSeg = estado.horaBase + (ahora - estado.t0) / 1000 * estado.velocidad;
   const h = Math.floor(tSeg / 3600) % 24;
   const m = Math.floor(tSeg / 60) % 60;
-  $('#reloj').textContent = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  const hhmm = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  $('#reloj').textContent = hhmm;
+  if (estado.velocidad === 1) {
+    $('#reloj').title = 'Hora actual de Madrid';
+    if (ahora - (estado._ultimoBadge || 0) > 5000 || estado._refrescarBadge) {
+      estado._ultimoBadge = ahora;
+      estado._refrescarBadge = false;
+      $('#badge-estado').textContent = `Ahora · ${hhmm} · ${estado.servicio.toLowerCase()}`;
+    }
+  } else {
+    $('#reloj').title = `Simulación ×${estado.velocidad}`;
+    if (estado._refrescarBadge) {
+      estado._refrescarBadge = false;
+      $('#badge-estado').textContent = `Simulación ×${estado.velocidad} · ${estado.servicio.toLowerCase()}`;
+    }
+  }
 
   if (ahora - (estado._ultimoTren || 0) > 220) {
     estado._ultimoTren = ahora;
@@ -746,11 +925,18 @@ async function iniciar() {
   estado.horaBase = horaMadridSegundos(new Date());
   estado.t0 = performance.now();
   actualizarTrenes(estado.horaBase);
-  $('#badge-estado').textContent = 'Servicio simulado · ' + estado.servicio;
+  estado._refrescarBadge = true;
   aviso.remove();
 
   window.__mm = estado; // depuración
   window.__sel = seleccionar;
+  window.__cerrar = cerrarFicha;
+  window.__pantalla = (nombre) => {
+    const st = estado.datos.stations.find((x) => x.n.toLowerCase().includes(nombre.toLowerCase()));
+    if (!st) return null;
+    _v3.set(st._x, cotaEstacion(st), st._z).project(camara);
+    return { x: Math.round((_v3.x * 0.5 + 0.5) * innerWidth), y: Math.round((-_v3.y * 0.5 + 0.5) * innerHeight), n: st.n };
+  };
   window.__cam = camara;
   controles.target.set(0, -1400, 0);
   irA([0, 15500, 17500], [0, -1400, 0], 2200);

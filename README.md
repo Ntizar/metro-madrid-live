@@ -39,6 +39,13 @@ Rebuild de datos:
 python3 scripts/build_datos.py    # necesita data/gtfs/ (GTFS del CRTM)
 ```
 
+## Cómo se usa
+
+- **Pincha una estación** (punto blanco) y la cámara vuela hasta su pozo, con un haz que marca la vertical y el nombre resaltado. «← Volver al plano» devuelve la vista general.
+- Las estaciones se dibujan como puntos de tamaño fijo en pantalla: a 20 km de altura un disco de 50 m mide dos píxeles y desaparecía.
+- El reloj arranca en la **hora real de Madrid** y el servicio se calcula con el calendario del GTFS (laborable, viernes, sábado, domingo). «Ahora» resincroniza; ×1 / ×60 / ×300 aceleran el tiempo.
+- El panel se pliega con el chevrón y vuelve con el botón «☰ Panel». En móvil se ancla abajo.
+
 ## Fichas de estación
 
 Cada una de las 268 estaciones lleva su **esquema axonométrico de niveles, andenes y transbordos**

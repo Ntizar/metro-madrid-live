@@ -6,7 +6,7 @@
 <title>Metro de Madrid bajo tierra · Mastermind</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/tokens.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/packs/all.css">
-<link rel="stylesheet" href="assets/visor.css?v=17">
+<link rel="stylesheet" href="assets/visor.css?v=34">
 <script type="importmap">
 {
   "imports": {
@@ -18,6 +18,7 @@
 </head>
 <body class="nz">
 
+<div class="puntero-nombre" id="puntero-nombre"></div>
 <canvas id="lienzo" aria-label="Vista 3D del subsuelo de Metro de Madrid"></canvas>
 <div id="velo" class="velo" aria-hidden="true"></div>
 
@@ -39,6 +40,7 @@
   </div>
 </header>
 
+<button class="abrir-panel" id="abrir-panel" aria-label="Abrir panel" hidden>☰ Panel</button>
 <aside class="panel" id="panel">
   <button class="panel__plegar" id="plegar" aria-label="Plegar panel" aria-expanded="true">
     <span aria-hidden="true">‹</span>
@@ -49,24 +51,6 @@
     <div id="ficha" class="ficha"></div>
   </section>
 
-  <section class="bloque">
-    <p class="nz-lbl">Corte del terreno</p>
-    <label class="campo">
-      <input type="range" id="corte" min="0" max="100" value="95" step="1" aria-label="Opacidad de la superficie">
-      <output id="corte-val">95 %</output>
-    </label>
-    <p class="nota">Baja el valor para atravesar la superficie. Profundidad vertical ×200: a escala real, 30 m no se verían en 50 km de ciudad.</p>
-  </section>
-
-  <section class="bloque">
-    <p class="nz-lbl">Tiempo</p>
-    <div class="nz-cluster">
-      <button class="nz-btn nz-btn--soft nz-btn--sm" id="velocidad">×1</button>
-      <span class="reloj" id="reloj">--:--</span>
-    </div>
-    <p class="nota">Trenes calculados con las frecuencias oficiales del GTFS. No es telemetría en vivo.</p>
-  </section>
-
   <section class="bloque bloque--lineas">
     <div class="bloque__cabecera">
       <p class="nz-lbl">Líneas</p>
@@ -75,24 +59,40 @@
     <ul class="lineas" id="lineas"></ul>
   </section>
 
+  <section class="bloque">
+    <p class="nz-lbl">Tiempo</p>
+    <div class="nz-cluster">
+      <span class="reloj" id="reloj">--:--</span>
+      <button class="nz-btn nz-btn--soft nz-btn--sm" id="velocidad" title="Velocidad del reloj">×1</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="ahora">Ahora</button>
+    </div>
+    <p class="nota">Trenes calculados con las frecuencias oficiales del GTFS. No es telemetría en vivo.</p>
+  </section>
+
+  <section class="bloque">
+    <p class="nz-lbl">Corte del terreno</p>
+    <label class="campo">
+      <input type="range" id="corte" min="0" max="100" value="95" step="1" aria-label="Opacidad de la superficie">
+      <output id="corte-val">95 %</output>
+    </label>
+    <p class="nota">Atraviesa la superficie. Altura ×200 para que los túneles se vean.</p>
+  </section>
+
   <section class="bloque bloque--perfil">
-    <p class="nz-lbl">El metro, por dentro</p>
-    <div class="perfil" id="perfil"></div>
-    <details class="detalle">
-      <summary>Perfil estrecho y perfil ancho</summary>
-      <p>Las líneas 1 a 5 y el Ramal son de <b>perfil estrecho</b>: se inspiraron en el metro de París,
-      con andenes laterales en la cota −2 y entreplanta en la −1. Los andenes se ampliaron de 60 a 90 m
-      y se añadieron accesos secundarios.</p>
-      <p>Las líneas 6 a 12 son de <b>perfil ancho</b>, pensadas para trenes y estaciones mayores y
-      construidas más hondo, entre 15 y 25 m bajo la calle: de 3 a 5 tramos de escaleras y escaleras
-      mecánicas, con el vestíbulo en medio. Desde los 90 se estandarizó el sistema de muros pantalla.</p>
-      <p>Los grandes nudos llegaron en los 2000: Nuevos Ministerios, Chamartín, Sol, Príncipe Pío,
-      Plaza de Castilla o Moncloa, con vestíbulos enormes y enlace directo con Cercanías y autobuses.</p>
-      <p class="ficha__credito">Texto adaptado de Albert Guillaumes, <em>Stations and transfers</em>.</p>
+    <details class="detalle" id="detalle-perfil">
+      <summary>El metro, por dentro</summary>
+      <div class="perfil" id="perfil"></div>
+      <p>Las líneas 1 a 5 y el Ramal son de <b>perfil estrecho</b>, herencia del metro de París: andenes
+      laterales y entreplanta, ampliados de 60 a 90 m. Las líneas 6 a 12 son de <b>perfil ancho</b>,
+      más hondas (15-25 m) y con muros pantalla desde los 90.</p>
+      <p class="ficha__credito">Adaptado de Albert Guillaumes, <em>Stations and transfers</em>.</p>
     </details>
   </section>
 
-/aside>
+  <section class="bloque bloque--credito solo-movil">
+    <span class="nz-lbl">© OpenStreetMap contributors · GTFS CRTM · Hecho con ❤️ por David Antizar</span>
+  </section>
+</aside>
 
 <footer class="pie">
   <span class="nz-lbl" id="contador">—</span>
@@ -101,6 +101,6 @@
 
 <div id="lupa" role="dialog" aria-label="Esquema ampliado"><img alt="Esquema de la estación ampliado"></div>
 
-<script type="module" src="assets/visor.js?v=17"></script>
+<script type="module" src="assets/visor.js?v=34"></script>
 </body>
 </html>
