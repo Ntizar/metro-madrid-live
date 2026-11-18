@@ -5,6 +5,7 @@ Fuente: GTFS Red de Metro, Consorcio Regional de Transportes de Madrid
 (arcgis item 5c7f2951962540d69ffe8f640d94c246, feed_version 20250527).
 Salida: un JSON compacto pensado para render 3D en el navegador.
 """
+import re
 import csv, json, math, os, sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -211,11 +212,19 @@ except Exception:
     geo = {}
 
 by_name = {s["n"].lower(): s for s in stations}
+ALIAS_L3 = {"sol": "puerta del sol", "plaza de espana": "plaza de espana",
+            "hospital 12 de octubre": "hospital 12 de octubre"}
 l3_pts = []
 for n in L3:
     key = n.lower()
-    if key in by_name:
-        st = by_name[key]
+    st = by_name.get(ALIAS_L3.get(key, key))
+    # si el nombre no coincide, se busca la estación existente a menos de 250 m
+    if st is None and n in geo:
+        cand = min(stations, key=lambda x: hav((x["lat"], x["lon"]), (geo[n][0], geo[n][1])),
+                   default=None)
+        if cand and hav((cand["lat"], cand["lon"]), (geo[n][0], geo[n][1])) < 250:
+            st = cand
+    if st is not None:
         l3_pts.append((st["lat"], st["lon"]))
         if "3" not in st["l"]:
             st["l"] = sorted(set(st["l"] + ["3"]))
@@ -259,7 +268,31 @@ if len(l3_pts) == len(L3):
                          "dur": DUR, "h": "El Casar" if d == 0 else "Moncloa",
                          "svc": "4_I14"})
     lines_out.sort(key=lambda x: (x["id"] == "R", int(x["id"]) if x["id"].isdigit() else 99))
-    stations.sort(key=lambda s: s["n"])
+
+# --- fusionar paradas duplicadas (el GTFS repite transbordos como stop_id distintos) ---
+import unicodedata as _ud
+
+
+def _norm(s):
+    s = _ud.normalize("NFD", s.lower())
+    s = "".join(c for c in s if _ud.category(c) != "Mn")
+    return re.sub(r"[^a-z0-9]+", " ", s).strip()
+
+
+grupos = {}
+for st in stations:
+    grupos.setdefault(_norm(st["n"]), []).append(st)
+
+fusionadas = []
+for k, g in grupos.items():
+    base = g[0]
+    lineas = sorted({l for x in g for l in x["l"]},
+                    key=lambda l: (l == "R", int(l) if l.isdigit() else 99))
+    lat = round(sum(x["lat"] for x in g) / len(g), 6)
+    lon = round(sum(x["lon"] for x in g) / len(g), 6)
+    fusionadas.append({"id": base["id"], "n": base["n"], "lat": lat, "lon": lon, "l": lineas})
+if fusionadas:
+    stations = sorted(fusionadas, key=lambda s: s["n"])
 
 data = {
     "meta": {
