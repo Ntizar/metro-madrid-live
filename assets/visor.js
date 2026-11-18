@@ -326,8 +326,8 @@ function construirRed() {
   geo.setAttribute('color', new THREE.BufferAttribute(col, 3).setUsage(THREE.DynamicDrawUsage));
   geo.setDrawRange(0, 0);
   const puntos = new THREE.Points(geo, new THREE.PointsMaterial({
-    size: 11, sizeAttenuation: false, vertexColors: true,
-    transparent: true, opacity: 1, depthWrite: false, depthTest: false,
+    size: 8, sizeAttenuation: false, color: 0xffffff,
+    transparent: true, opacity: 0.98, depthWrite: false, depthTest: false,
   }));
   puntos.frustumCulled = false;
   puntos.renderOrder = 12;
@@ -338,8 +338,8 @@ function construirRed() {
   geoHalo.setAttribute('color', new THREE.BufferAttribute(col, 3).setUsage(THREE.DynamicDrawUsage));
   geoHalo.setDrawRange(0, 0);
   const halo = new THREE.Points(geoHalo, new THREE.PointsMaterial({
-    size: 30, sizeAttenuation: false, vertexColors: true, transparent: true,
-    opacity: 0.16, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
+    size: 34, sizeAttenuation: false, vertexColors: true, transparent: true,
+    opacity: 0.34, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
   }));
   halo.frustumCulled = false;
   halo.renderOrder = 11;
