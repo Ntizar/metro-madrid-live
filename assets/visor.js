@@ -553,8 +553,9 @@ function pintarFicha(st) {
     : '';
   f.innerHTML = `
     <button class="ficha__cerrar" aria-label="Cerrar ficha">×</button>
-    <strong class="ficha__nombre">${ficha?.n ?? st.n}</strong>
+    <strong class="ficha__nombre">${st.n}</strong>
     <span class="ficha__meta">${etiqueta} · pozo de ${Math.round(st._prof)} m (estimado)</span>
+    ${ficha && ficha.n !== st.n ? `<span class="ficha__meta">En el esquema: ${ficha.n}</span>` : ''}
     <div class="ficha__lineas">${st.l.map((id) => {
       const m = estado.lineas.get(id)?.meta;
       return `<span class="pastilla" style="--c:${m ? m.color : '#fff'}">${m ? m.name.replace('Línea ', 'L') : id}</span>`;
