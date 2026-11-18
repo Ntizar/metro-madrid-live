@@ -14,7 +14,30 @@ const lienzo = $('#lienzo');
 const velo = $('#velo');
 const M_PER_DEG = 111320;
 // Escala vertical exagerada: a escala real 30 m de túnel son invisibles en 50 km de ciudad
-const EXAG = 200;
+// altura exagerada: a escala real un túnel de 30 m no se ve en 50 km de ciudad.
+// Desde que cada estación tiene su cota real, ×200 convertía cada cambio de nivel
+// en un muro vertical; ×80 mantiene el volumen y deja leer las rampas.
+const EXAG = Number(new URLSearchParams(location.search).get('exag')) || 80;
+
+// Cota de la vía en un punto del trazado: el perfil llega por estación
+// (metros de profundidad a cada distancia recorrida) y se interpola entre mesetas.
+function cotaEn(pares, s) {
+  if (!pares || !pares.length) return 20;
+  const n = pares.length;
+  if (s <= pares[0][0]) return pares[0][1];
+  if (s >= pares[n - 1][0]) return pares[n - 1][1];
+  let lo = 0, hi = n - 1;
+  while (hi - lo > 1) {
+    const mid = (lo + hi) >> 1;
+    if (pares[mid][0] <= s) lo = mid; else hi = mid;
+  }
+  const [s0, c0] = pares[lo], [s1, c1] = pares[hi];
+  if (s1 === s0) return c1;
+  const t = (s - s0) / (s1 - s0);
+  // rampa suavizada: con la altura exagerada un cambio de cota en lineal se ve como un quiebro
+  const e = t * t * (3 - 2 * t);
+  return c0 + (c1 - c0) * e;
+}
 
 // ————————————————————————————— estado —————————————————————————————
 const estado = {
@@ -155,7 +178,7 @@ async function construirSuperficie(bbox) {
   estado.superficie = plano;
 
   // bloque de terreno bajo la superficie: da volumen al diorama
-  const profMax = Math.max(...[...estado.lineas.values()].map((l) => l.meta.depth)) * EXAG;
+  const profMax = Math.max(...estado.datos.stations.map((x) => x.cota || 20)) * EXAG;
   const caja = new THREE.Mesh(
     new THREE.BoxGeometry(ancho, profMax * 1.15, alto),
     new THREE.MeshBasicMaterial({
@@ -246,27 +269,27 @@ function construirRed() {
   const ETIQUETA = { '4_I12': 'Sábado', '4_I13': 'Domingo y festivo', '4_I14': 'Laborable', '4_I15': 'Viernes' };
   estado.servicio = [...activos].map((s) => ETIQUETA[s] || s).join(', ');
   const colorPorLinea = new Map();
+  const perfiles = estado.datos.perfiles || {};
 
   for (const l of lines) {
     colorPorLinea.set(l.id, new THREE.Color(l.color));
     estado.lineas.set(l.id, { meta: l, visible: true });
   }
 
-  for (const sh of shapes) {
+  shapes.forEach((sh, indice) => {
     const pts = sh.pts;
+    const perfil = perfiles[indice] || null;
     const grupos = new Map();
     for (const p of patterns) {
-      if (p.s !== shapes.indexOf(sh)) continue;
-      const depth = estado.lineas.get(p.l).meta.depth;
-      const clave = p.l + '|' + depth;
-      if (!grupos.has(clave)) grupos.set(clave, { l: p.l, depth, dirs: [] });
-      grupos.get(clave).dirs.push(p.d);
+      if (p.s !== indice) continue;
+      if (!grupos.has(p.l)) grupos.set(p.l, { l: p.l, dirs: [] });
+      grupos.get(p.l).dirs.push(p.d);
     }
     for (const [clave, g] of grupos) {
       const posiciones = [];
-      for (const [lat, lon] of pts) {
-        const [x, z] = aMundo(lat, lon);
-        posiciones.push(x, -g.depth * EXAG, z);
+      for (let j = 0; j < pts.length; j++) {
+        const [x, z] = aMundo(pts[j][0], pts[j][1]);
+        posiciones.push(x, -cotaEn(perfil, sh.cum[j]) * EXAG, z);
       }
       const geo = new LineGeometry();
       geo.setPositions(posiciones);
@@ -298,7 +321,7 @@ function construirRed() {
       escena.add(haloLinea);
       (estado.objetosLinea ||= []).push(haloLinea);
     }
-  }
+  });
 
   // estaciones: punto de tamaño constante en pantalla + pozo hasta el túnel
   const n = stations.length;
@@ -314,7 +337,7 @@ function construirRed() {
   stations.forEach((st, i) => {
     const [x, z] = aMundo(st.lat, st.lon);
     st._x = x; st._z = z; st._i = i;
-    const prof = Math.max(...st.l.map((id) => estado.lineas.get(id)?.meta.depth ?? 20));
+    const prof = st.cota ?? Math.max(...st.l.map((id) => estado.lineas.get(id)?.meta.depth ?? 20));
     st._prof = prof;
     posEst[i * 3] = x; posEst[i * 3 + 1] = 0; posEst[i * 3 + 2] = z;
     tamEst[i] = st.l.length > 1 ? 1 : 0;   // correspondencia = más grande
@@ -505,7 +528,7 @@ function construirRed() {
   estado.patrones = patterns.map((p) => ({
     ...p,
     color: colorPorLinea.get(p.l).clone(),
-    depth: estado.lineas.get(p.l).meta.depth,
+    cota: perfiles[p.s] || null,
     shape: shapes[p.s],
   }));
 }
@@ -563,7 +586,7 @@ function actualizarTrenes(tSeg) {
           const sDist = p.sp[i] + (p.sp[j] - p.sp[i]) * f;
           const [lat, lon] = puntoEnShape(p.shape, sDist);
           const [x, z] = aMundo(lat, lon);
-          visibles.push({ x, z, y: -p.depth * EXAG - 60, color: p.color, linea: p.l });
+          visibles.push({ x, z, y: -cotaEn(p.cota, sDist) * EXAG - 60, color: p.color, linea: p.l });
         }
         if (visibles.length > 1380) break;
       }
@@ -840,7 +863,7 @@ function pintarFicha(st) {
     : '';
   f.innerHTML = `
     <strong class="ficha__nombre">${st.n}</strong>
-    <span class="ficha__meta">${etiqueta} · pozo de ${Math.round(st._prof)} m (estimado)</span>
+    <span class="ficha__meta">${etiqueta} · andén a ${st._prof} m de profundidad (estimado)</span>
     ${medida}
     ${ficha && ficha.n !== st.n ? `<span class="ficha__meta">En el esquema: ${ficha.n}</span>` : ''}
     <div class="ficha__lineas">${st.l.map((id) => {
@@ -876,13 +899,14 @@ const PERFIL = (id) => {
 
 function construirPerfil() {
   const cont = $('#perfil');
-  const profMax = Math.max(...[...estado.lineas.values()].map((l) => l.meta.depth));
+  const profMax = Math.max(...[...estado.lineas.values()].map((l) => l.meta.cotaMax || l.meta.depth));
   for (const [id, { meta }] of estado.lineas) {
     const fila = document.createElement('div');
     fila.className = 'perfil__fila';
     fila.innerHTML = `<b>${id === 'R' ? 'Ramal' : 'L' + id}</b>
       <span class="perfil__barra"><i style="width:${Math.round(meta.depth / profMax * 100)}%;background:${meta.color}"></i></span>
-      <span>${meta.depth} m · ${PERFIL(id)}</span>`;
+      <span>${Math.round(meta.depth)} m${
+        meta.cotaMin != null ? ` (${meta.cotaMin}-${meta.cotaMax})` : ''} · ${PERFIL(id)}</span>`;
     cont.appendChild(fila);
   }
 }
@@ -1135,7 +1159,7 @@ async function cargarModelosReales() {
     // los túneles reales; en el visor la z crece hacia el sur
     obj.position.set(st._x + (m.dx || 0), -st._prof * EXAG, st._z - (m.dy || 0));
     obj.rotation.y = THREE.MathUtils.degToRad(-(m.ang || 0));
-    // la red entera va con la altura x200; el modelo se levanta lo justo para que
+    // la red entera va con la altura exagerada; el modelo se levanta lo justo para que
     // se lean sus niveles sin convertirse en una torre
     obj.scale.y = 18;
     obj.userData.st = st;
@@ -1246,6 +1270,9 @@ async function iniciar() {
   estado._refrescarBadge = true;
   aviso.remove();
 
+  estado.exag = EXAG;
+  const notaExag = document.querySelector('[data-exag]');
+  if (notaExag) notaExag.textContent = '×' + EXAG;
   window.__mm = estado; // depuración
   window.__sel = seleccionar;
   window.__cerrar = cerrarFicha;
@@ -1256,6 +1283,7 @@ async function iniciar() {
     return { x: Math.round((_v3.x * 0.5 + 0.5) * innerWidth), y: Math.round((-_v3.y * 0.5 + 0.5) * innerHeight), n: st.n };
   };
   window.__cam = camara;
+  window.__ctrl = controles;
   window.__ctrl = controles;
   controles.target.set(0, -1400, 0);
   irA([0, 15500, 17500], [0, -1400, 0], 2200);

@@ -14,7 +14,8 @@ moviéndose en el subsuelo. Diseño con el sistema **Aurora**.
   reconstruido con las 19 estaciones geocodificadas (OpenStreetMap/Nominatim) y tiempos estimados
   a partir del dato público de 34 min / 17,49 km. Aparece marcada como «reconstruida».
 - **Profundidad**: no es un dato oficial. Cada línea tiene una profundidad estimada y la escala
-  vertical está exagerada ×200 (a escala real, 30 m de túnel no se ven en 50 km de ciudad).
+  vertical está exagerada ×80 (a escala real, 30 m de túnel no se ven en 50 km de ciudad);
+  con `?exag=N` se puede subir o bajar la exageración.
 
 ## Modelado en Blender
 

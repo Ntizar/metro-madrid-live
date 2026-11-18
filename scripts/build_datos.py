@@ -26,6 +26,26 @@ def hav(a, b):
     return 2 * R * math.asin(math.sqrt(h))
 
 
+def proyeccion(st, sh):
+    """(distancia en m, distancia recorrida en m) de la estación a su trazado."""
+    la0 = math.radians(st["lat"])
+    kx = 111320.0 * math.cos(la0)
+    ky = 111320.0
+    px, py = st["lon"] * kx, st["lat"] * ky
+    pts, cum = sh["pts"], sh["cum"]
+    mejor = (1e18, 0.0)
+    for j in range(len(pts) - 1):
+        ax, ay = pts[j][1] * kx, pts[j][0] * ky
+        bx, by = pts[j + 1][1] * kx, pts[j + 1][0] * ky
+        dx, dy = bx - ax, by - ay
+        L2 = dx * dx + dy * dy
+        t = 0.0 if L2 == 0 else max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / L2))
+        d = math.hypot(px - (ax + t * dx), py - (ay + t * dy))
+        if d < mejor[0]:
+            mejor = (d, cum[j] + t * (cum[j + 1] - cum[j]))
+    return mejor
+
+
 def rdp(pts, eps):
     """Douglas-Peucker sobre [(lat,lon)]."""
     if len(pts) < 3:
@@ -53,6 +73,20 @@ def rdp(pts, eps):
             keep[bi] = True
             stack += [(i, bi), (bi, j)]
     return [p for p, k in zip(pts, keep) if k]
+
+
+def rdp_anillo(pts, eps):
+    """Douglas-Peucker que no se rompe con líneas circulares (inicio == fin).
+
+    Con la cuerda degenerada el RDP normal devuelve solo los dos extremos: el
+    anillo (L12 MetroSur) perdía los 40,6 km de trazado y se reconstruía a mano.
+    Se parte el anillo por el punto más lejano al inicio y se simplifica cada mitad.
+    """
+    if len(pts) > 4 and hav(pts[0], pts[-1]) < 30:
+        k = max(range(len(pts)), key=lambda j: hav(pts[0], pts[j]))
+        if k > 1:
+            return rdp(pts[:k + 1], eps) + rdp(pts[k:], eps)[1:]
+    return rdp(pts, eps)
 
 
 def hhmmss(t):
@@ -95,7 +129,7 @@ for k in freqs:
 used_shapes = sorted({t["shape_id"] for t in trips if t["shape_id"] in shapes_raw})
 shape_index, shapes_out = {}, []
 for sid in used_shapes:
-    pts = rdp(shapes_raw[sid], 0.00018)
+    pts = rdp_anillo(shapes_raw[sid], 0.00018)
     cum = [0.0]
     for a, b in zip(pts, pts[1:]):
         cum.append(cum[-1] + hav(a, b))
@@ -288,6 +322,7 @@ for t in trips:
         "s": shape_index[sid],
         "o": offs,
         "sp": [round(x) for x in s_on_shape],
+        "_est": [station_of[x["stop_id"]] for x in sts],
         "w": freqs[tid],
         "dur": max(offs),
         "h": t.get("trip_headsign", ""),
@@ -339,6 +374,7 @@ by_name = {s["n"].lower(): s for s in stations}
 ALIAS_L3 = {"sol": "puerta del sol", "plaza de espana": "plaza de espana",
             "hospital 12 de octubre": "hospital 12 de octubre"}
 l3_pts = []
+l3_ids = []
 for n in L3:
     key = n.lower()
     st = by_name.get(ALIAS_L3.get(key, key))
@@ -350,6 +386,7 @@ for n in L3:
             st = cand
     if st is not None:
         l3_pts.append((st["lat"], st["lon"]))
+        l3_ids.append(st["id"])
         if "3" not in st["l"]:
             st["l"] = sorted(set(st["l"] + ["3"]))
     elif n in geo:
@@ -358,6 +395,7 @@ for n in L3:
         st = {"id": "l3_" + n.lower().replace(" ", "_").replace("-", "_"),
               "n": n, "lat": round(la, 6), "lon": round(lo, 6), "l": ["3"]}
         stations.append(st)
+        l3_ids.append(st["id"])
         by_name[key] = st
     else:
         print("AVISO: sin coordenadas para", n, file=sys.stderr)
@@ -387,6 +425,7 @@ if len(l3_pts) == len(L3):
         patterns.append({"l": "3", "d": d, "s": sidx,
                          "o": offs if d == 0 else [round(DUR - o) for o in reversed(offs)],
                          "sp": sp,
+                         "_est": l3_ids if d == 0 else list(reversed(l3_ids)),
                          "w": [[6 * 3600, 9 * 3600, 300], [9 * 3600, 17 * 3600, 330],
                                [17 * 3600, 21 * 3600, 300], [21 * 3600, 25 * 3600 + 1800, 420]],
                          "dur": DUR, "h": "El Casar" if d == 0 else "Moncloa",
@@ -408,8 +447,11 @@ for st in stations:
     grupos.setdefault(_norm(st["n"]), []).append(st)
 
 fusionadas = []
+fusion_de = {}
 for k, g in grupos.items():
     base = g[0]
+    for x in g:
+        fusion_de[x["id"]] = base["id"]
     lineas = sorted({l for x in g for l in x["l"]},
                     key=lambda l: (l == "R", int(l) if l.isdigit() else 99))
     lat = round(sum(x["lat"] for x in g) / len(g), 6)
@@ -418,17 +460,84 @@ for k, g in grupos.items():
 if fusionadas:
     stations = sorted(fusionadas, key=lambda s: s["n"])
 
+# --- cota por estación y perfil de cota de cada patrón ---
+# El andén y TODAS las vías que lo cruzan comparten cota. Se estima como la media
+# de las profundidades base de las líneas de la estación, redondeada a medio metro:
+# así ninguna vía pasa 10-15 m por encima del andén de un intercambiador.
+COTA = {}
+for st in stations:
+    ds = [DEPTH.get(l, 20) for l in st["l"]]
+    COTA[st["id"]] = round(sum(ds) / len(ds) * 2) / 2
+    st["cota"] = COTA[st["id"]]
+
+# perfil de cota de cada trazado. La meseta plana se centra en la proyección del
+# centro de la estación sobre la vía: es el mismo punto donde el visor planta el
+# andén, así que la vía pasa plana justo por debajo de la plataforma y solo hay
+# rampa entre estaciones.
+linea_de_shape = {}
+for p in patterns:
+    p.pop("_est", None)
+    linea_de_shape[p["s"]] = p["l"]
+shapes_de_linea = {}
+for si, lid in linea_de_shape.items():
+    shapes_de_linea.setdefault(lid, []).append(si)
+
+PARES = {si: {} for si in linea_de_shape}
+for st in stations:
+    for lid in st["l"]:
+        for si in shapes_de_linea.get(lid, ()):
+            dist, s = proyeccion(st, shapes_out[si])
+            if dist <= 300:
+                PARES[si][int(round(s))] = st["cota"]
+
+# rampa entre estaciones: la vía va plana al llegar y al salir del andén y sube o
+# baja en el tercio central del tramo (rampa máx. 400 m)
+RAMPA = 400.0
+PERFILES = {}
+for si, pares in PARES.items():
+    L = shapes_out[si]["cum"][-1]
+    ss = sorted(pares)
+    puntos = []
+    if ss:
+        puntos.append([0, pares[ss[0]]])
+    for i in range(len(ss)):
+        s, c = ss[i], pares[ss[i]]
+        puntos.append([int(s), c])
+        if i + 1 < len(ss):
+            s2, c2 = ss[i + 1], pares[ss[i + 1]]
+            g = s2 - s
+            r = min(RAMPA, max(60.0, g * 0.5))
+            ini, fin = s + (g - r) / 2, s + (g + r) / 2
+            puntos.append([int(ini), c])
+            puntos.append([int(fin), c2])
+    if ss:
+        puntos.append([int(L), pares[ss[-1]]])
+    limpio = []
+    for s, c in sorted(puntos):
+        if limpio and s - limpio[-1][0] < 1:
+            continue
+        limpio.append([s, c])
+    PERFILES[str(si)] = limpio
+
+# la profundidad de la línea pasa a ser la media real de sus estaciones
+for l in lines_out:
+    cs = [st["cota"] for st in stations if l["id"] in st["l"]]
+    if cs:
+        l["depth"] = round(sum(cs) / len(cs), 1)
+        l["cotaMin"], l["cotaMax"] = min(cs), max(cs)
+
 data = {
     "meta": {
         "fuente": "GTFS Red de Metro · CRTM (feed_version 20250527)",
         "generado": "2026-11-18",
-        "nota_profundidad": "Profundidad estimada por línea, no dato oficial",
+        "nota_profundidad": "Cota estimada por estación (media de las profundidades de sus líneas, no dato oficial); la vía interpola entre cotas",
         "nota_simulacion": "Trenes calculados con las frecuencias oficiales del GTFS",
         "nota_l3": "Línea 3 no viene en el feed: trazado reconstruido con estaciones OSM",
     },
     "lines": lines_out,
     "shapes": shapes_out,
     "patterns": patterns,
+    "perfiles": PERFILES,
     "stations": stations,
     "calendar": {r["service_id"]: {d: int(r[d]) for d in
                  ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")}
@@ -444,4 +553,5 @@ print(f"OK {OUT} {size/1024:.0f} KB")
 print(f"lineas={len(lines_out)} shapes={len(shapes_out)} patrones={len(patterns)} estaciones={len(stations)}")
 for l in lines_out:
     n = sum(1 for s in stations if l["id"] in s["l"])
-    print(f"  {l['id']:>2} {l['long'][:40]:<42} {n:>3} est  {l['color']}  {l['depth']}m")
+    print(f"  {l['id']:>2} {l['long'][:40]:<42} {n:>3} est  {l['color']}  "
+          f"{l['depth']}m ({l.get('cotaMin')}-{l.get('cotaMax')})")
