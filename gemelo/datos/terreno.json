@@ -1,0 +1,26 @@
+{
+ "x0": -17535.4,
+ "z0": -18823.8,
+ "nx": 2001,
+ "nz": 1739,
+ "paso": 21.1,
+ "ancho": 42200.5,
+ "alto": 36682.3,
+ "h_ref": 660.5,
+ "cota_min": -163.0,
+ "cota_max": 212.8,
+ "cota_abs_min": 497.5,
+ "cota_abs_max": 873.4,
+ "desnivel": 375.9,
+ "origen": {
+  "E": 440291.28,
+  "N": 4474254.6
+ },
+ "dem": {
+  "z": 13,
+  "tx0": 4006,
+  "ty0": 3082
+ },
+ "fuente_dem": "AWS terrain-tiles (terrarium) z13 ~14,6 m/px",
+ "fuente_orto": "IGN PNOA WMTS OI.OrthoimageCoverage z13"
+}

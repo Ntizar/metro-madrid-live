@@ -1,0 +1,3604 @@
+[
+ {
+  "id": "abrantes_2024_trace",
+  "estaciones": "Abrantes",
+  "station_ids": [
+   "s431"
+  ],
+  "E0": 438229.9224500004,
+  "N0": 4470310.26995,
+  "compartido": false,
+  "tri": 252,
+  "vert": 154,
+  "piezas": 14,
+  "ancho_m": 81.07578632456716,
+  "largo_m": 98.61230914201587
+ },
+ {
+  "id": "acacias_esquema_trazado",
+  "estaciones": "Acacias",
+  "station_ids": [
+   "s188"
+  ],
+  "E0": 440105.1921000001,
+  "N0": 4472849.85585,
+  "compartido": false,
+  "tri": 456,
+  "vert": 797,
+  "piezas": 47,
+  "ancho_m": 114.05670000001555,
+  "largo_m": 68.19400000013411
+ },
+ {
+  "id": "aeropuerto_t1t2t3_2024_trace",
+  "estaciones": "Aeropuerto T1-T2-T3",
+  "station_ids": [
+   "s333"
+  ],
+  "E0": 451529.25555000035,
+  "N0": 4479847.209600001,
+  "compartido": false,
+  "tri": 256,
+  "vert": 154,
+  "piezas": 13,
+  "ancho_m": 22.511184428061824,
+  "largo_m": 70.84548505395651
+ },
+ {
+  "id": "aeropuerto_t4_2020_trace",
+  "estaciones": "Aeropuerto T-4",
+  "station_ids": [
+   "s769"
+  ],
+  "E0": 449721.34690000024,
+  "N0": 4482600.8996,
+  "compartido": false,
+  "tri": 300,
+  "vert": 192,
+  "piezas": 21,
+  "ancho_m": 28.74052970233606,
+  "largo_m": 90.10702117718756
+ },
+ {
+  "id": "alameda_de_osuna",
+  "estaciones": "Alameda De Osuna",
+  "station_ids": [
+   "s701"
+  ],
+  "E0": 450185.60950000025,
+  "N0": 4478735.02405,
+  "compartido": false,
+  "tri": 1712,
+  "vert": 1606,
+  "piezas": 60,
+  "ancho_m": 62.05947795812972,
+  "largo_m": 49.04043638147414
+ },
+ {
+  "id": "alcorcon_central_2021_trace",
+  "estaciones": "Alcorcon Central",
+  "station_ids": [
+   "s439"
+  ],
+  "E0": 429297.62364999996,
+  "N0": 4466864.5154,
+  "compartido": false,
+  "tri": 3248,
+  "vert": 1698,
+  "piezas": 38,
+  "ancho_m": 69.75754499598406,
+  "largo_m": 65.13698376901448
+ },
+ {
+  "id": "alfonso_xiii_2024_trace",
+  "estaciones": "Alfonso Xiii",
+  "station_ids": [
+   "s136"
+  ],
+  "E0": 443395.4915499999,
+  "N0": 4477756.663000001,
+  "compartido": false,
+  "tri": 200,
+  "vert": 122,
+  "piezas": 11,
+  "ancho_m": 69.62546983297216,
+  "largo_m": 59.20764519833028
+ },
+ {
+  "id": "almendrales_2024_trace",
+  "estaciones": "Almendrales",
+  "station_ids": [
+   "s731"
+  ],
+  "E0": 440746.6114500002,
+  "N0": 4470652.692749999,
+  "compartido": false,
+  "tri": 248,
+  "vert": 154,
+  "piezas": 14,
+  "ancho_m": 30.613648524449673,
+  "largo_m": 57.83161125984043
+ },
+ {
+  "id": "alonso_cano_2024_trace",
+  "estaciones": "Alonso Cano",
+  "station_ids": [
+   "s301"
+  ],
+  "E0": 440693.4955500001,
+  "N0": 4476656.3238,
+  "compartido": false,
+  "tri": 416,
+  "vert": 244,
+  "piezas": 18,
+  "ancho_m": 125.62925555504626,
+  "largo_m": 39.11736961454153
+ },
+ {
+  "id": "alonso_de_mendoza_2024_trace",
+  "estaciones": "Alonso De Mendoza",
+  "station_ids": [
+   "s467"
+  ],
+  "E0": 437362.53150000004,
+  "N0": 4461331.25705,
+  "compartido": false,
+  "tri": 276,
+  "vert": 166,
+  "piezas": 14,
+  "ancho_m": 24.161965773033444,
+  "largo_m": 71.65975792147219
+ },
+ {
+  "id": "alonso_martinez",
+  "estaciones": "Alonso Martinez",
+  "station_ids": [
+   "s118"
+  ],
+  "E0": 440979.959,
+  "N0": 4475521.787266667,
+  "compartido": false,
+  "tri": 1516,
+  "vert": 2808,
+  "piezas": 31,
+  "ancho_m": 197.2541961669922,
+  "largo_m": 192.67465209960938
+ },
+ {
+  "id": "alsacia_2024_trace",
+  "estaciones": "Alsacia",
+  "station_ids": [
+   "s1151"
+  ],
+  "E0": 447046.5044999998,
+  "N0": 4474349.4688,
+  "compartido": false,
+  "tri": 300,
+  "vert": 174,
+  "piezas": 13,
+  "ancho_m": 101.7842429249431,
+  "largo_m": 58.47347425110638
+ },
+ {
+  "id": "alto_de_extremadura_2024_trace",
+  "estaciones": "Alto De Extremadura",
+  "station_ids": [
+   "s271"
+  ],
+  "E0": 437386.0874000001,
+  "N0": 4473543.268,
+  "compartido": false,
+  "tri": 284,
+  "vert": 172,
+  "piezas": 15,
+  "ancho_m": 81.24230330961291,
+  "largo_m": 34.076731831766665
+ },
+ {
+  "id": "alto_del_arenal_2024_trace",
+  "estaciones": "Alto Del Arenal",
+  "station_ids": [
+   "s49"
+  ],
+  "E0": 445238.40095000016,
+  "N0": 4471235.38065,
+  "compartido": false,
+  "tri": 384,
+  "vert": 226,
+  "piezas": 17,
+  "ancho_m": 91.12392786931014,
+  "largo_m": 57.17414163891226
+ },
+ {
+  "id": "aluche_2020_trace",
+  "estaciones": "Aluche",
+  "station_ids": [
+   "s205"
+  ],
+  "E0": 435428.2226,
+  "N0": 4470841.8166000005,
+  "compartido": false,
+  "tri": 3428,
+  "vert": 1782,
+  "piezas": 36,
+  "ancho_m": 102.49344788020244,
+  "largo_m": 50.73345725890249
+ },
+ {
+  "id": "alvarado_2024_trace",
+  "estaciones": "Alvarado",
+  "station_ids": [
+   "s13"
+  ],
+  "E0": 440343.3855499998,
+  "N0": 4477908.60145,
+  "compartido": false,
+  "tri": 324,
+  "vert": 184,
+  "piezas": 11,
+  "ancho_m": 38.08527434174903,
+  "largo_m": 104.74249092116952
+ },
+ {
+  "id": "anton_martin_2024_trace",
+  "estaciones": "Anton Martin",
+  "station_ids": [
+   "s31"
+  ],
+  "E0": 440754.4777500001,
+  "N0": 4473713.4982,
+  "compartido": false,
+  "tri": 584,
+  "vert": 322,
+  "piezas": 15,
+  "ancho_m": 137.7437395459856,
+  "largo_m": 29.840293938294053
+ },
+ {
+  "id": "antonio_machado_2024_trace",
+  "estaciones": "Antonio Machado",
+  "station_ids": [
+   "s313"
+  ],
+  "E0": 439183.08424999984,
+  "N0": 4480224.44745,
+  "compartido": false,
+  "tri": 364,
+  "vert": 220,
+  "piezas": 18,
+  "ancho_m": 82.47225613641785,
+  "largo_m": 98.59065613523126
+ },
+ {
+  "id": "arganda_del_rey_2024_trace",
+  "estaciones": "Arganda Del Rey",
+  "station_ids": [
+   "s389"
+  ],
+  "E0": 461956.42689999985,
+  "N0": 4461645.5885,
+  "compartido": false,
+  "tri": 156,
+  "vert": 96,
+  "piezas": 9,
+  "ancho_m": 19.27689067221945,
+  "largo_m": 101.17500997520983
+ },
+ {
+  "id": "arganzuela_planetario_2024_trace",
+  "estaciones": "Arganzuela-Planetario",
+  "station_ids": [
+   "s715"
+  ],
+  "E0": 441503.7668999997,
+  "N0": 4471611.6229,
+  "compartido": false,
+  "tri": 332,
+  "vert": 198,
+  "piezas": 13,
+  "ancho_m": 68.01082281541312,
+  "largo_m": 42.77737753186375
+ },
+ {
+  "id": "arguelles",
+  "estaciones": "Argüelles",
+  "station_ids": [
+   "s108"
+  ],
+  "E0": 439277.78215000004,
+  "N0": 4475792.58785,
+  "compartido": false,
+  "tri": 16799,
+  "vert": 24143,
+  "piezas": 79,
+  "ancho_m": 228.82686408638256,
+  "largo_m": 211.8048445051536
+ },
+ {
+  "id": "arroyo_culebro_2024_trace",
+  "estaciones": "Arroyo Culebro",
+  "station_ids": [
+   "s463"
+  ],
+  "E0": 435773.6982999998,
+  "N0": 4460097.8959,
+  "compartido": false,
+  "tri": 284,
+  "vert": 168,
+  "piezas": 13,
+  "ancho_m": 77.35228180984268,
+  "largo_m": 34.55733028519899
+ },
+ {
+  "id": "arroyofresno_2024_trace",
+  "estaciones": "Arroyofresno",
+  "station_ids": [
+   "s321"
+  ],
+  "E0": 438471.4213999999,
+  "N0": 4482497.14135,
+  "compartido": false,
+  "tri": 320,
+  "vert": 188,
+  "piezas": 14,
+  "ancho_m": 46.11783041595481,
+  "largo_m": 98.76979561895132
+ },
+ {
+  "id": "artilleros_2024_trace",
+  "estaciones": "Artilleros",
+  "station_ids": [
+   "s369"
+  ],
+  "E0": 445439.4681000002,
+  "N0": 4473029.2665,
+  "compartido": false,
+  "tri": 540,
+  "vert": 318,
+  "piezas": 24,
+  "ancho_m": 141.87860912724864,
+  "largo_m": 121.05901970434934
+ },
+ {
+  "id": "arturo_soria_2024_trace",
+  "estaciones": "Arturo Soria",
+  "station_ids": [
+   "s140"
+  ],
+  "E0": 444450.6063000001,
+  "N0": 4478630.4191,
+  "compartido": false,
+  "tri": 456,
+  "vert": 272,
+  "piezas": 22,
+  "ancho_m": 117.40535661095055,
+  "largo_m": 79.85419466346502
+ },
+ {
+  "id": "ascao_2024_trace",
+  "estaciones": "Ascao",
+  "station_ids": [
+   "s285"
+  ],
+  "E0": 445670.0412999997,
+  "N0": 4475723.86625,
+  "compartido": false,
+  "tri": 196,
+  "vert": 120,
+  "piezas": 11,
+  "ancho_m": 76.9783236788353,
+  "largo_m": 78.62573383003473
+ },
+ {
+  "id": "atocha_renfe_2021_trace",
+  "estaciones": "Atocha",
+  "station_ids": [
+   "s35"
+  ],
+  "E0": 441564.69070000015,
+  "N0": 4473162.0896,
+  "compartido": false,
+  "tri": 7436,
+  "vert": 3904,
+  "piezas": 99,
+  "ancho_m": 89.42026577203069,
+  "largo_m": 57.05166280828416
+ },
+ {
+  "id": "av_america",
+  "estaciones": "Avenida De America",
+  "station_ids": [
+   "s132"
+  ],
+  "E0": 442452.02548,
+  "N0": 4476572.526010001,
+  "compartido": false,
+  "tri": 22841,
+  "vert": 31904,
+  "piezas": 78,
+  "ancho_m": 362.2544406323577,
+  "largo_m": 211.64815825317055
+ },
+ {
+  "id": "avenida_de_guadalajara_2024_trace",
+  "estaciones": "Avenida De Guadalajara",
+  "station_ids": [
+   "s1153"
+  ],
+  "E0": 448032.5701000001,
+  "N0": 4474810.42005,
+  "compartido": false,
+  "tri": 252,
+  "vert": 148,
+  "piezas": 12,
+  "ancho_m": 93.67394297057763,
+  "largo_m": 48.73735502641648
+ },
+ {
+  "id": "avenida_de_la_ilustracion_2024_trace",
+  "estaciones": "Avenida De La Ilustracion",
+  "station_ids": [
+   "s317"
+  ],
+  "E0": 439105.86779999966,
+  "N0": 4481299.1577,
+  "compartido": false,
+  "tri": 348,
+  "vert": 208,
+  "piezas": 17,
+  "ancho_m": 37.80111223453423,
+  "largo_m": 63.80365792568773
+ },
+ {
+  "id": "avenida_de_la_paz_2024_trace",
+  "estaciones": "Avenida De La Paz",
+  "station_ids": [
+   "s138"
+  ],
+  "E0": 443816.9800999998,
+  "N0": 4478217.480599999,
+  "compartido": false,
+  "tri": 348,
+  "vert": 210,
+  "piezas": 18,
+  "ancho_m": 93.90530208393466,
+  "largo_m": 76.25408700481057
+ },
+ {
+  "id": "aviacion_espanola_2024_trace",
+  "estaciones": "Aviacion Española",
+  "station_ids": [
+   "s711"
+  ],
+  "E0": 433510.3029,
+  "N0": 4470720.51015,
+  "compartido": false,
+  "tri": 336,
+  "vert": 194,
+  "piezas": 13,
+  "ancho_m": 46.66495272930479,
+  "largo_m": 41.61406404245645
+ },
+ {
+  "id": "bambu_2024_trace",
+  "estaciones": "Bambu",
+  "station_ids": [
+   "s721"
+  ],
+  "E0": 442635.04125000024,
+  "N0": 4480759.9719,
+  "compartido": false,
+  "tri": 304,
+  "vert": 182,
+  "piezas": 15,
+  "ancho_m": 75.61154024599819,
+  "largo_m": 96.42667010985315
+ },
+ {
+  "id": "banco_de_espana_2024_trace",
+  "estaciones": "Banco De España",
+  "station_ids": [
+   "s70"
+  ],
+  "E0": 441047.28084999975,
+  "N0": 4474502.08885,
+  "compartido": false,
+  "tri": 392,
+  "vert": 236,
+  "piezas": 20,
+  "ancho_m": 124.59686993662035,
+  "largo_m": 47.52984003722668
+ },
+ {
+  "id": "barajas_2024_trace",
+  "estaciones": "Barajas",
+  "station_ids": [
+   "s335"
+  ],
+  "E0": 450550.8847000003,
+  "N0": 4480774.533,
+  "compartido": false,
+  "tri": 284,
+  "vert": 170,
+  "piezas": 14,
+  "ancho_m": 61.22420388739556,
+  "largo_m": 50.19799884874374
+ },
+ {
+  "id": "barrio_de_la_concepcion_2024_trace",
+  "estaciones": "Barrio De La Concepcion",
+  "station_ids": [
+   "s290"
+  ],
+  "E0": 444620.2592500001,
+  "N0": 4476731.445,
+  "compartido": false,
+  "tri": 428,
+  "vert": 254,
+  "piezas": 21,
+  "ancho_m": 145.2680099189747,
+  "largo_m": 87.08374681789428
+ },
+ {
+  "id": "barrio_del_pilar_2024_trace",
+  "estaciones": "Barrio Del Pilar",
+  "station_ids": [
+   "s339"
+  ],
+  "E0": 440379.4880500003,
+  "N0": 4480933.955700001,
+  "compartido": false,
+  "tri": 572,
+  "vert": 322,
+  "piezas": 21,
+  "ancho_m": 54.08794073096942,
+  "largo_m": 118.473653299734
+ },
+ {
+  "id": "barrio_del_puerto_2026_trace",
+  "estaciones": "Barrio Del Puerto",
+  "station_ids": [
+   "s775"
+  ],
+  "E0": 451744.41960000014,
+  "N0": 4474821.7846,
+  "compartido": false,
+  "tri": 236,
+  "vert": 144,
+  "piezas": 12,
+  "ancho_m": 60.030257341626566,
+  "largo_m": 22.47465437091887
+ },
+ {
+  "id": "batan_2024_trace",
+  "estaciones": "Batan",
+  "station_ids": [
+   "s417"
+  ],
+  "E0": 436074.3192500002,
+  "N0": 4473282.48855,
+  "compartido": false,
+  "tri": 320,
+  "vert": 184,
+  "piezas": 14,
+  "ancho_m": 60.970069200207945,
+  "largo_m": 45.12628958746791
+ },
+ {
+  "id": "baunatal_2021_trace",
+  "estaciones": "Baunatal",
+  "station_ids": [
+   "s763"
+  ],
+  "E0": 446188.24919999996,
+  "N0": 4489496.42705,
+  "compartido": false,
+  "tri": 444,
+  "vert": 256,
+  "piezas": 14,
+  "ancho_m": 79.9846638829913,
+  "largo_m": 18.228161967359483
+ },
+ {
+  "id": "begona_2026_trace",
+  "estaciones": "Begoña",
+  "station_ids": [
+   "s393"
+  ],
+  "E0": 441834.2979000001,
+  "N0": 4481560.0887,
+  "compartido": false,
+  "tri": 604,
+  "vert": 354,
+  "piezas": 28,
+  "ancho_m": 37.766350798134226,
+  "largo_m": 139.74366312287748
+ },
+ {
+  "id": "bilbao_2021_trace",
+  "estaciones": "Bilbao",
+  "station_ids": [
+   "s21"
+  ],
+  "E0": 440526.6324,
+  "N0": 4475639.40625,
+  "compartido": false,
+  "tri": 1020,
+  "vert": 578,
+  "piezas": 34,
+  "ancho_m": 159.42981201939983,
+  "largo_m": 147.80993929505348
+ },
+ {
+  "id": "buenos_aires_2024_trace",
+  "estaciones": "Buenos Aires",
+  "station_ids": [
+   "s47"
+  ],
+  "E0": 444616.88685000036,
+  "N0": 4471403.2759,
+  "compartido": false,
+  "tri": 340,
+  "vert": 196,
+  "piezas": 13,
+  "ancho_m": 130.57258957606973,
+  "largo_m": 33.587342971004546
+ },
+ {
+  "id": "callao_2021_trace",
+  "estaciones": "Callao",
+  "station_ids": [
+   "s102"
+  ],
+  "E0": 440111.4814250001,
+  "N0": 4474653.0632,
+  "compartido": false,
+  "tri": 5992,
+  "vert": 3134,
+  "piezas": 70,
+  "ancho_m": 92.32230128877563,
+  "largo_m": 38.416189952753484
+ },
+ {
+  "id": "campamento_2024_trace",
+  "estaciones": "Campamento",
+  "station_ids": [
+   "s209"
+  ],
+  "E0": 434825.2341,
+  "N0": 4471780.281066666,
+  "compartido": false,
+  "tri": 216,
+  "vert": 132,
+  "piezas": 12,
+  "ancho_m": 35.58778947702376,
+  "largo_m": 76.29483081493527
+ },
+ {
+  "id": "canal_2024_trace",
+  "estaciones": "Canal",
+  "station_ids": [
+   "s86"
+  ],
+  "E0": 440242.571825,
+  "N0": 4476712.499,
+  "compartido": false,
+  "tri": 720,
+  "vert": 414,
+  "piezas": 27,
+  "ancho_m": 72.51503187074559,
+  "largo_m": 110.22378714475781
+ },
+ {
+  "id": "canillas_2024_trace",
+  "estaciones": "Canillas",
+  "station_ids": [
+   "s144"
+  ],
+  "E0": 446122.23465,
+  "N0": 4479483.49875,
+  "compartido": false,
+  "tri": 428,
+  "vert": 252,
+  "piezas": 19,
+  "ancho_m": 38.89038327225717,
+  "largo_m": 97.16175958886743
+ },
+ {
+  "id": "canillejas_2024_trace",
+  "estaciones": "Canillejas",
+  "station_ids": [
+   "s152"
+  ],
+  "E0": 448361.18475,
+  "N0": 4477749.97095,
+  "compartido": false,
+  "tri": 352,
+  "vert": 212,
+  "piezas": 18,
+  "ancho_m": 108.63718562223949,
+  "largo_m": 69.2615522807464
+ },
+ {
+  "id": "carabanchel_2024_trace",
+  "estaciones": "Carabanchel",
+  "station_ids": [
+   "s200"
+  ],
+  "E0": 436713.3925999999,
+  "N0": 4471052.4442,
+  "compartido": false,
+  "tri": 308,
+  "vert": 180,
+  "piezas": 13,
+  "ancho_m": 73.96156647836324,
+  "largo_m": 27.16175789013505
+ },
+ {
+  "id": "carabanchel_alto_2024_trace",
+  "estaciones": "Carabanchel Alto",
+  "station_ids": [
+   "s707"
+  ],
+  "E0": 436152.9932499998,
+  "N0": 4469323.04535,
+  "compartido": false,
+  "tri": 280,
+  "vert": 168,
+  "piezas": 14,
+  "ancho_m": 73.72150704480009,
+  "largo_m": 93.25111830141395
+ },
+ {
+  "id": "carpetana_2024_trace",
+  "estaciones": "Carpetana",
+  "station_ids": [
+   "s217"
+  ],
+  "E0": 437137.05835000006,
+  "N0": 4471628.9555,
+  "compartido": false,
+  "tri": 428,
+  "vert": 248,
+  "piezas": 18,
+  "ancho_m": 55.68651650060201,
+  "largo_m": 48.01156586315483
+ },
+ {
+  "id": "cartagena_2024_trace",
+  "estaciones": "Cartagena",
+  "station_ids": [
+   "s294"
+  ],
+  "E0": 443073.8932000003,
+  "N0": 4476768.491800001,
+  "compartido": false,
+  "tri": 400,
+  "vert": 232,
+  "piezas": 18,
+  "ancho_m": 106.50562844466185,
+  "largo_m": 43.90807566605508
+ },
+ {
+  "id": "casa_de_campo_2020_trace",
+  "estaciones": "Casa De Campo",
+  "station_ids": [
+   "s212"
+  ],
+  "E0": 435350.6882750001,
+  "N0": 4472747.36195,
+  "compartido": false,
+  "tri": 5040,
+  "vert": 2572,
+  "piezas": 26,
+  "ancho_m": 87.51336718798848,
+  "largo_m": 76.66940833162516
+ },
+ {
+  "id": "casa_del_reloj_2024_trace",
+  "estaciones": "Casa Del Reloj",
+  "station_ids": [
+   "s483"
+  ],
+  "E0": 435415.87425000034,
+  "N0": 4464213.67155,
+  "compartido": false,
+  "tri": 404,
+  "vert": 230,
+  "piezas": 14,
+  "ancho_m": 61.29473428276833,
+  "largo_m": 67.16570657491684
+ },
+ {
+  "id": "chamartin_2024_trace",
+  "estaciones": "Chamartin",
+  "station_ids": [
+   "s395"
+  ],
+  "E0": 442060.14402500005,
+  "N0": 4480582.082149999,
+  "compartido": false,
+  "tri": 5284,
+  "vert": 2920,
+  "piezas": 139,
+  "ancho_m": 456.55730251036584,
+  "largo_m": 197.67992956843227
+ },
+ {
+  "id": "chueca_2024_trace",
+  "estaciones": "Chueca",
+  "station_ids": [
+   "s176"
+  ],
+  "E0": 440810.8766000001,
+  "N0": 4474884.203000001,
+  "compartido": false,
+  "tri": 236,
+  "vert": 140,
+  "piezas": 11,
+  "ancho_m": 27.610099207784515,
+  "largo_m": 50.44966915529221
+ },
+ {
+  "id": "ciudad_de_los_angeles_2024_trace",
+  "estaciones": "Ciudad De Los Angeles",
+  "station_ids": [
+   "s737"
+  ],
+  "E0": 441123.38214999996,
+  "N0": 4467896.78685,
+  "compartido": false,
+  "tri": 312,
+  "vert": 180,
+  "piezas": 12,
+  "ancho_m": 23.87141581461765,
+  "largo_m": 56.396202181465924
+ },
+ {
+  "id": "ciudad_lineal_2024_trace",
+  "estaciones": "Ciudad Lineal",
+  "station_ids": [
+   "s158"
+  ],
+  "E0": 445959.1750000003,
+  "N0": 4476576.6263500005,
+  "compartido": false,
+  "tri": 456,
+  "vert": 278,
+  "piezas": 25,
+  "ancho_m": 123.66329683829099,
+  "largo_m": 43.35332708898932
+ },
+ {
+  "id": "ciudad_universitaria_2024_trace",
+  "estaciones": "Ciudad Universitaria",
+  "station_ids": [
+   "s261"
+  ],
+  "E0": 438430.6401499999,
+  "N0": 4477294.093350001,
+  "compartido": false,
+  "tri": 488,
+  "vert": 276,
+  "piezas": 18,
+  "ancho_m": 31.614891917910427,
+  "largo_m": 67.12011560890824
+ },
+ {
+  "id": "colombia_2021_trace",
+  "estaciones": "Colombia",
+  "station_ids": [
+   "s327"
+  ],
+  "E0": 442605.7538999999,
+  "N0": 4478736.930525,
+  "compartido": false,
+  "tri": 640,
+  "vert": 362,
+  "piezas": 22,
+  "ancho_m": 48.28724994813092,
+  "largo_m": 93.78647436667234
+ },
+ {
+  "id": "colon_2024_trace",
+  "estaciones": "Colon",
+  "station_ids": [
+   "s120"
+  ],
+  "E0": 441261.08790000016,
+  "N0": 4475266.5605500005,
+  "compartido": false,
+  "tri": 316,
+  "vert": 182,
+  "piezas": 12,
+  "ancho_m": 133.81614930467913,
+  "largo_m": 64.29475395102054
+ },
+ {
+  "id": "colonia_jardin_2021_trace",
+  "estaciones": "Colonia Jardin",
+  "station_ids": [
+   "s421"
+  ],
+  "E0": 434234.3829999999,
+  "N0": 4472075.3568,
+  "compartido": false,
+  "tri": 404,
+  "vert": 244,
+  "piezas": 22,
+  "ancho_m": 62.040239495399874,
+  "largo_m": 31.646791853010654
+ },
+ {
+  "id": "concha_espina_2024_trace",
+  "estaciones": "Concha Espina",
+  "station_ids": [
+   "s351"
+  ],
+  "E0": 442538.00424999977,
+  "N0": 4478037.18925,
+  "compartido": false,
+  "tri": 464,
+  "vert": 268,
+  "piezas": 18,
+  "ancho_m": 19.985524012183305,
+  "largo_m": 153.6935430970043
+ },
+ {
+  "id": "conde_de_casal_2024_trace",
+  "estaciones": "Conde De Casal",
+  "station_ids": [
+   "s236"
+  ],
+  "E0": 443140.2249500002,
+  "N0": 4473237.90635,
+  "compartido": false,
+  "tri": 492,
+  "vert": 282,
+  "piezas": 19,
+  "ancho_m": 42.08053360512713,
+  "largo_m": 118.4596211463213
+ },
+ {
+  "id": "congosto_2024_trace",
+  "estaciones": "Congosto",
+  "station_ids": [
+   "s58"
+  ],
+  "E0": 447456.07594999997,
+  "N0": 4469275.08615,
+  "compartido": false,
+  "tri": 356,
+  "vert": 208,
+  "piezas": 15,
+  "ancho_m": 56.29531724989647,
+  "largo_m": 99.2651710389182
+ },
+ {
+  "id": "conservatorio_2024_trace",
+  "estaciones": "Conservatorio",
+  "station_ids": [
+   "s465"
+  ],
+  "E0": 436575.9215500001,
+  "N0": 4460508.3224,
+  "compartido": false,
+  "tri": 220,
+  "vert": 134,
+  "piezas": 12,
+  "ancho_m": 44.899684223521035,
+  "largo_m": 61.004248667508364
+ },
+ {
+  "id": "coslada_central_2021_trace",
+  "estaciones": "Coslada Central",
+  "station_ids": [
+   "s777"
+  ],
+  "E0": 452350.3870000001,
+  "N0": 4474937.3516,
+  "compartido": false,
+  "tri": 3032,
+  "vert": 1598,
+  "piezas": 44,
+  "ancho_m": 48.09476023341995,
+  "largo_m": 83.14866633713245
+ },
+ {
+  "id": "cruz_del_rayo_2024_trace",
+  "estaciones": "Cruz Del Rayo",
+  "station_ids": [
+   "s353"
+  ],
+  "E0": 442471.36355000036,
+  "N0": 4477321.87835,
+  "compartido": false,
+  "tri": 592,
+  "vert": 336,
+  "piezas": 20,
+  "ancho_m": 27.05960612220224,
+  "largo_m": 153.1902546994388
+ },
+ {
+  "id": "cuatro_caminos",
+  "estaciones": "Cuatro Caminos",
+  "station_ids": [
+   "s15"
+  ],
+  "E0": 440333.06876666675,
+  "N0": 4477515.4431,
+  "compartido": false,
+  "tri": 19500,
+  "vert": 26969,
+  "piezas": 61,
+  "ancho_m": 177.14994361944264,
+  "largo_m": 239.77957594487816
+ },
+ {
+  "id": "cuatro_vientos_2021_trace",
+  "estaciones": "Cuatro Vientos",
+  "station_ids": [
+   "s423"
+  ],
+  "E0": 432679.8136,
+  "N0": 4469913.21395,
+  "compartido": false,
+  "tri": 456,
+  "vert": 276,
+  "piezas": 24,
+  "ancho_m": 140.5935732940561,
+  "largo_m": 86.48608423769474
+ },
+ {
+  "id": "cuzco_2024_trace",
+  "estaciones": "Cuzco",
+  "station_ids": [
+   "s399"
+  ],
+  "E0": 441500.22820000025,
+  "N0": 4478986.54935,
+  "compartido": false,
+  "tri": 256,
+  "vert": 152,
+  "piezas": 12,
+  "ancho_m": 29.156026538985316,
+  "largo_m": 97.75040569156408
+ },
+ {
+  "id": "delicias_2021_trace",
+  "estaciones": "Delicias",
+  "station_ids": [
+   "s92"
+  ],
+  "E0": 441094.98505000025,
+  "N0": 4472289.99345,
+  "compartido": false,
+  "tri": 712,
+  "vert": 414,
+  "piezas": 29,
+  "ancho_m": 175.57387858000584,
+  "largo_m": 176.67139195930213
+ },
+ {
+  "id": "diego_de_leon_2020_trace",
+  "estaciones": "Diego De Leon",
+  "station_ids": [
+   "s130"
+  ],
+  "E0": 442832.0176999999,
+  "N0": 4476053.985383333,
+  "compartido": false,
+  "tri": 5616,
+  "vert": 2946,
+  "piezas": 71,
+  "ancho_m": 124.16603344201576,
+  "largo_m": 76.15749839600176
+ },
+ {
+  "id": "duque_de_pastrana_2024_trace",
+  "estaciones": "Duque De Pastrana",
+  "station_ids": [
+   "s345"
+  ],
+  "E0": 442306.16980000027,
+  "N0": 4479873.28905,
+  "compartido": false,
+  "tri": 272,
+  "vert": 158,
+  "piezas": 12,
+  "ancho_m": 106.81524296099087,
+  "largo_m": 18.497480153106153
+ },
+ {
+  "id": "el_bercial_2024_trace",
+  "estaciones": "El Bercial",
+  "station_ids": [
+   "s477"
+  ],
+  "E0": 438031.7489500004,
+  "N0": 4464519.4514500005,
+  "compartido": false,
+  "tri": 180,
+  "vert": 110,
+  "piezas": 10,
+  "ancho_m": 45.16240847291192,
+  "largo_m": 59.90162639133632
+ },
+ {
+  "id": "el_capricho_2024_trace",
+  "estaciones": "El Capricho",
+  "station_ids": [
+   "s703"
+  ],
+  "E0": 449619.6818499998,
+  "N0": 4478266.05945,
+  "compartido": false,
+  "tri": 364,
+  "vert": 222,
+  "piezas": 20,
+  "ancho_m": 103.6255278394674,
+  "largo_m": 75.52826481498778
+ },
+ {
+  "id": "el_carmen_2024_trace",
+  "estaciones": "El Carmen",
+  "station_ids": [
+   "s164"
+  ],
+  "E0": 444336.0796500002,
+  "N0": 4475909.120200001,
+  "compartido": false,
+  "tri": 420,
+  "vert": 248,
+  "piezas": 19,
+  "ancho_m": 124.67642651346978,
+  "largo_m": 35.07038476411253
+ },
+ {
+  "id": "el_carrascal_2024_trace",
+  "estaciones": "El Carrascal",
+  "station_ids": [
+   "s479"
+  ],
+  "E0": 437031.5352500002,
+  "N0": 4465347.61205,
+  "compartido": false,
+  "tri": 324,
+  "vert": 190,
+  "piezas": 13,
+  "ancho_m": 100.70178627752466,
+  "largo_m": 33.78051115013659
+ },
+ {
+  "id": "el_casar_2026_trace",
+  "estaciones": "El Casar",
+  "station_ids": [
+   "s473"
+  ],
+  "E0": 439684.66202499997,
+  "N0": 4463372.92575,
+  "compartido": false,
+  "tri": 11828,
+  "vert": 6032,
+  "piezas": 62,
+  "ancho_m": 78.95577711216174,
+  "largo_m": 262.68866222538054
+ },
+ {
+  "id": "embajadores_2021_trace",
+  "estaciones": "Embajadores",
+  "station_ids": [
+   "s96"
+  ],
+  "E0": 440407.5954499999,
+  "N0": 4472952.41905,
+  "compartido": false,
+  "tri": 1184,
+  "vert": 672,
+  "piezas": 39,
+  "ancho_m": 269.1354242344387,
+  "largo_m": 99.67156440671533
+ },
+ {
+  "id": "empalme_2024_trace",
+  "estaciones": "Empalme",
+  "station_ids": [
+   "s207"
+  ],
+  "E0": 435040.19504999975,
+  "N0": 4471394.3591,
+  "compartido": false,
+  "tri": 248,
+  "vert": 150,
+  "piezas": 13,
+  "ancho_m": 45.752359607606195,
+  "largo_m": 46.35009209625423
+ },
+ {
+  "id": "esperanza_2024_trace",
+  "estaciones": "Esperanza",
+  "station_ids": [
+   "s142"
+  ],
+  "E0": 445196.77205000026,
+  "N0": 4478919.132700001,
+  "compartido": false,
+  "tri": 356,
+  "vert": 210,
+  "piezas": 16,
+  "ancho_m": 55.39983218541602,
+  "largo_m": 37.88512712251395
+ },
+ {
+  "id": "estacion_del_arte",
+  "estaciones": "Estacion Del Arte",
+  "station_ids": [
+   "s33"
+  ],
+  "E0": 441331.1554999999,
+  "N0": 4473363.86385,
+  "compartido": false,
+  "tri": 8116,
+  "vert": 4128,
+  "piezas": 35,
+  "ancho_m": 143.1028856431949,
+  "largo_m": 80.24437350966036
+ },
+ {
+  "id": "estadio_metropolitano_2021_trace",
+  "estaciones": "Estadio Metropolitano",
+  "station_ids": [
+   "s771"
+  ],
+  "E0": 449108.5300500002,
+  "N0": 4476020.768375,
+  "compartido": false,
+  "tri": 392,
+  "vert": 242,
+  "piezas": 23,
+  "ancho_m": 142.88412382773822,
+  "largo_m": 91.14512166101485
+ },
+ {
+  "id": "estrecho_2024_trace",
+  "estaciones": "Estrecho",
+  "station_ids": [
+   "s11"
+  ],
+  "E0": 440411.2307500001,
+  "N0": 4478441.6931,
+  "compartido": false,
+  "tri": 552,
+  "vert": 320,
+  "piezas": 22,
+  "ancho_m": 35.5302254249691,
+  "largo_m": 136.33953642193228
+ },
+ {
+  "id": "estrella_2024_trace",
+  "estaciones": "Estrella",
+  "station_ids": [
+   "s365"
+  ],
+  "E0": 443848.4399000001,
+  "N0": 4473638.973499999,
+  "compartido": false,
+  "tri": 480,
+  "vert": 282,
+  "piezas": 19,
+  "ancho_m": 149.78257736406522,
+  "largo_m": 74.31436610966921
+ },
+ {
+  "id": "eugenia_de_montijo_2024_trace",
+  "estaciones": "Eugenia De Montijo",
+  "station_ids": [
+   "s203"
+  ],
+  "E0": 436243.43915,
+  "N0": 4470696.2508,
+  "compartido": false,
+  "tri": 228,
+  "vert": 136,
+  "piezas": 10,
+  "ancho_m": 56.75164177746046,
+  "largo_m": 43.30421056877822
+ },
+ {
+  "id": "feria_de_madrid_2024_trace",
+  "estaciones": "Feria De Madrid",
+  "station_ids": [
+   "s331"
+  ],
+  "E0": 447851.25165,
+  "N0": 4479440.0512,
+  "compartido": false,
+  "tri": 260,
+  "vert": 154,
+  "piezas": 13,
+  "ancho_m": 99.07980846881401,
+  "largo_m": 47.204389564692974
+ },
+ {
+  "id": "francos_rodriguez_2024_trace",
+  "estaciones": "Francos Rodriguez",
+  "station_ids": [
+   "s309"
+  ],
+  "E0": 439606.6546499999,
+  "N0": 4478657.61335,
+  "compartido": false,
+  "tri": 532,
+  "vert": 318,
+  "piezas": 26,
+  "ancho_m": 59.18129216390662,
+  "largo_m": 108.57549849152565
+ },
+ {
+  "id": "fuencarral_2024_trace",
+  "estaciones": "Fuencarral",
+  "station_ids": [
+   "s391"
+  ],
+  "E0": 441357.93270000024,
+  "N0": 4482898.01365,
+  "compartido": false,
+  "tri": 236,
+  "vert": 140,
+  "piezas": 11,
+  "ancho_m": 52.64830781373894,
+  "largo_m": 81.58928387518972
+ },
+ {
+  "id": "fuenlabrada_central_2021_trace",
+  "estaciones": "Fuenlabrada Central",
+  "station_ids": [
+   "s459"
+  ],
+  "E0": 432141.4931999999,
+  "N0": 4459396.112050001,
+  "compartido": false,
+  "tri": 4356,
+  "vert": 2236,
+  "piezas": 38,
+  "ancho_m": 88.97533936658874,
+  "largo_m": 46.10848891362548
+ },
+ {
+  "id": "garcia_noblejas_2024_trace",
+  "estaciones": "Garcia Noblejas",
+  "station_ids": [
+   "s283"
+  ],
+  "E0": 446286.6704000002,
+  "N0": 4475514.7676,
+  "compartido": false,
+  "tri": 396,
+  "vert": 234,
+  "piezas": 18,
+  "ancho_m": 131.16076212044572,
+  "largo_m": 71.68275128025562
+ },
+ {
+  "id": "getafe_central_2021_trace",
+  "estaciones": "Getafe Central",
+  "station_ids": [
+   "s469"
+  ],
+  "E0": 437549.7219499997,
+  "N0": 4462415.959600001,
+  "compartido": false,
+  "tri": 1720,
+  "vert": 924,
+  "piezas": 34,
+  "ancho_m": 71.8821006565704,
+  "largo_m": 59.81055943202227
+ },
+ {
+  "id": "goya_2020_trace",
+  "estaciones": "Goya",
+  "station_ids": [
+   "s64"
+  ],
+  "E0": 442602.07652500016,
+  "N0": 4475105.100575,
+  "compartido": false,
+  "tri": 872,
+  "vert": 518,
+  "piezas": 41,
+  "ancho_m": 65.2361515785451,
+  "largo_m": 102.59584023151547
+ },
+ {
+  "id": "gregorio_maranon_2020_trace",
+  "estaciones": "Gregorio Marañon",
+  "station_ids": [
+   "s299"
+  ],
+  "E0": 441345.351275,
+  "N0": 4476581.008675,
+  "compartido": false,
+  "tri": 788,
+  "vert": 448,
+  "piezas": 26,
+  "ancho_m": 42.76927351061022,
+  "largo_m": 103.5754690663889
+ },
+ {
+  "id": "guzman_el_bueno_2021_trace",
+  "estaciones": "Guzman El Bueno",
+  "station_ids": [
+   "s257"
+  ],
+  "E0": 439557.58595,
+  "N0": 4477568.931949999,
+  "compartido": false,
+  "tri": 5136,
+  "vert": 2692,
+  "piezas": 62,
+  "ancho_m": 114.99008889112156,
+  "largo_m": 35.557701921090484
+ },
+ {
+  "id": "henares_2026_trace",
+  "estaciones": "Henares",
+  "station_ids": [
+   "s785"
+  ],
+  "E0": 455224.09799999977,
+  "N0": 4474220.6272,
+  "compartido": false,
+  "tri": 252,
+  "vert": 150,
+  "piezas": 12,
+  "ancho_m": 58.90048040053807,
+  "largo_m": 25.173347908072174
+ },
+ {
+  "id": "herrera_oria_2024_trace",
+  "estaciones": "Herrera Oria",
+  "station_ids": [
+   "s337"
+  ],
+  "E0": 440004.94574999996,
+  "N0": 4481794.17315,
+  "compartido": false,
+  "tri": 536,
+  "vert": 300,
+  "piezas": 18,
+  "ancho_m": 113.34505551494658,
+  "largo_m": 105.51473672594875
+ },
+ {
+  "id": "hortaleza_2024_trace",
+  "estaciones": "Hortaleza",
+  "station_ids": [
+   "s725"
+  ],
+  "E0": 444687.5908999997,
+  "N0": 4480723.604,
+  "compartido": false,
+  "tri": 252,
+  "vert": 156,
+  "piezas": 14,
+  "ancho_m": 64.36965206766035,
+  "largo_m": 26.99620407540351
+ },
+ {
+  "id": "hospital_12_de_octubre_2024_trace",
+  "estaciones": "Hospital 12 De Octubre",
+  "station_ids": [
+   "s733"
+  ],
+  "E0": 440924.5334999999,
+  "N0": 4469626.575,
+  "compartido": false,
+  "tri": 236,
+  "vert": 142,
+  "piezas": 12,
+  "ancho_m": 19.24356489290949,
+  "largo_m": 55.111616170965135
+ },
+ {
+  "id": "hospital_de_fuenlabrada_2024_trace",
+  "estaciones": "Hospital De Fuenlabrada",
+  "station_ids": [
+   "s455"
+  ],
+  "E0": 430651.68379999977,
+  "N0": 4459805.1617,
+  "compartido": false,
+  "tri": 232,
+  "vert": 142,
+  "piezas": 13,
+  "ancho_m": 74.90586258040275,
+  "largo_m": 58.04998885188252
+ },
+ {
+  "id": "hospital_de_mostoles_2024_trace",
+  "estaciones": "Hospital De Mostoles",
+  "station_ids": [
+   "s449"
+  ],
+  "E0": 425755.9101499999,
+  "N0": 4463302.73155,
+  "compartido": false,
+  "tri": 228,
+  "vert": 138,
+  "piezas": 12,
+  "ancho_m": 44.166381933609955,
+  "largo_m": 60.21056299377233
+ },
+ {
+  "id": "hospital_del_henares_2026_trace",
+  "estaciones": "Hospital Del Henares",
+  "station_ids": [
+   "s1000"
+  ],
+  "E0": 454578.41060000006,
+  "N0": 4474303.377549999,
+  "compartido": false,
+  "tri": 272,
+  "vert": 162,
+  "piezas": 13,
+  "ancho_m": 62.144007122318726,
+  "largo_m": 39.44312380813062
+ },
+ {
+  "id": "hospital_infanta_sofia_2024_trace",
+  "estaciones": "Hospital Infanta Sofia",
+  "station_ids": [
+   "s767"
+  ],
+  "E0": 448233.80184999993,
+  "N0": 4490078.400549999,
+  "compartido": false,
+  "tri": 276,
+  "vert": 164,
+  "piezas": 13,
+  "ancho_m": 56.90846108621918,
+  "largo_m": 54.6404110789299
+ },
+ {
+  "id": "hospital_severo_ochoa_2024_trace",
+  "estaciones": "Hospital Severo Ochoa",
+  "station_ids": [
+   "s485"
+  ],
+  "E0": 434768.4692500001,
+  "N0": 4463754.5681,
+  "compartido": false,
+  "tri": 260,
+  "vert": 156,
+  "piezas": 13,
+  "ancho_m": 81.78149471787037,
+  "largo_m": 27.98860827833414
+ },
+ {
+  "id": "ibiza_2024_trace",
+  "estaciones": "Ibiza",
+  "station_ids": [
+   "s361"
+  ],
+  "E0": 442396.11779999966,
+  "N0": 4474357.9854999995,
+  "compartido": false,
+  "tri": 288,
+  "vert": 172,
+  "piezas": 13,
+  "ancho_m": 46.101205390063114,
+  "largo_m": 68.09688704647124
+ },
+ {
+  "id": "iglesia_2024_trace",
+  "estaciones": "Iglesia",
+  "station_ids": [
+   "s19"
+  ],
+  "E0": 440738.95365000004,
+  "N0": 4476279.646600001,
+  "compartido": false,
+  "tri": 716,
+  "vert": 402,
+  "piezas": 22,
+  "ancho_m": 68.18481211463222,
+  "largo_m": 129.32937939837575
+ },
+ {
+  "id": "islas_filipinas_2024_trace",
+  "estaciones": "Islas Filipinas",
+  "station_ids": [
+   "s305"
+  ],
+  "E0": 439465.7023,
+  "N0": 4476735.7736,
+  "compartido": false,
+  "tri": 588,
+  "vert": 346,
+  "piezas": 25,
+  "ancho_m": 105.44282308663242,
+  "largo_m": 22.50903312396258
+ },
+ {
+  "id": "jarama_2026_trace",
+  "estaciones": "Jarama",
+  "station_ids": [
+   "s783"
+  ],
+  "E0": 455434.75939999986,
+  "N0": 4474889.404250001,
+  "compartido": false,
+  "tri": 256,
+  "vert": 154,
+  "piezas": 12,
+  "ancho_m": 22.344065597630106,
+  "largo_m": 72.33926516864449
+ },
+ {
+  "id": "joaquin_vilumbrales_2024_trace",
+  "estaciones": "Joaquin Vilumbrales",
+  "station_ids": [
+   "s425"
+  ],
+  "E0": 431479.24574999977,
+  "N0": 4466957.47025,
+  "compartido": false,
+  "tri": 204,
+  "vert": 120,
+  "piezas": 10,
+  "ancho_m": 36.93946023925673,
+  "largo_m": 59.322548324242234
+ },
+ {
+  "id": "juan_de_la_cierva_2024_trace",
+  "estaciones": "Juan De La Cierva",
+  "station_ids": [
+   "s471"
+  ],
+  "E0": 438676.60025000013,
+  "N0": 4462699.5648,
+  "compartido": false,
+  "tri": 292,
+  "vert": 174,
+  "piezas": 13,
+  "ancho_m": 51.83810560707934,
+  "largo_m": 75.66553064621985
+ },
+ {
+  "id": "julian_besteiro_2024_trace",
+  "estaciones": "Julian Besteiro",
+  "station_ids": [
+   "s481"
+  ],
+  "E0": 435995.3602499999,
+  "N0": 4465177.33375,
+  "compartido": false,
+  "tri": 312,
+  "vert": 182,
+  "piezas": 13,
+  "ancho_m": 82.92616199626355,
+  "largo_m": 26.56286276783794
+ },
+ {
+  "id": "la_almudena_2024_trace",
+  "estaciones": "La Almudena",
+  "station_ids": [
+   "s1149"
+  ],
+  "E0": 445857.6517500002,
+  "N0": 4474923.3944999995,
+  "compartido": false,
+  "tri": 336,
+  "vert": 196,
+  "piezas": 14,
+  "ancho_m": 81.77892837219406,
+  "largo_m": 84.17908845283091
+ },
+ {
+  "id": "la_elipa_2024_trace",
+  "estaciones": "La Elipa",
+  "station_ids": [
+   "s717"
+  ],
+  "E0": 444854.90760000004,
+  "N0": 4475370.5118,
+  "compartido": false,
+  "tri": 276,
+  "vert": 166,
+  "piezas": 14,
+  "ancho_m": 146.13029830157757,
+  "largo_m": 28.196547507308424
+ },
+ {
+  "id": "la_fortuna_2024_trace",
+  "estaciones": "La Fortuna",
+  "station_ids": [
+   "s1122"
+  ],
+  "E0": 433956.19545,
+  "N0": 4467775.8546,
+  "compartido": false,
+  "tri": 300,
+  "vert": 178,
+  "piezas": 14,
+  "ancho_m": 102.65687001979677,
+  "largo_m": 67.68173010181636
+ },
+ {
+  "id": "la_gavia_2024_trace",
+  "estaciones": "La Gavia",
+  "station_ids": [
+   "s787"
+  ],
+  "E0": 447953.41695,
+  "N0": 4469020.64875,
+  "compartido": false,
+  "tri": 356,
+  "vert": 210,
+  "piezas": 15,
+  "ancho_m": 85.05461180902785,
+  "largo_m": 31.21831023413688
+ },
+ {
+  "id": "la_granja_2024_trace",
+  "estaciones": "La Granja",
+  "station_ids": [
+   "s755"
+  ],
+  "E0": 444193.4982499997,
+  "N0": 4486525.2537,
+  "compartido": false,
+  "tri": 264,
+  "vert": 160,
+  "piezas": 14,
+  "ancho_m": 38.172544948989525,
+  "largo_m": 47.551289923489094
+ },
+ {
+  "id": "la_latina_2024_trace",
+  "estaciones": "La Latina",
+  "station_ids": [
+   "s184"
+  ],
+  "E0": 439923.3819000004,
+  "N0": 4473703.1324000005,
+  "compartido": false,
+  "tri": 460,
+  "vert": 258,
+  "piezas": 14,
+  "ancho_m": 55.191873504722025,
+  "largo_m": 103.59483044128865
+ },
+ {
+  "id": "la_moraleja_2024_trace",
+  "estaciones": "La Moraleja",
+  "station_ids": [
+   "s757"
+  ],
+  "E0": 446154.81790000014,
+  "N0": 4486979.632999999,
+  "compartido": false,
+  "tri": 272,
+  "vert": 160,
+  "piezas": 12,
+  "ancho_m": 63.42743851989508,
+  "largo_m": 45.02068387437612
+ },
+ {
+  "id": "la_peseta_2024_trace",
+  "estaciones": "La Peseta",
+  "station_ids": [
+   "s709"
+  ],
+  "E0": 435746.96575,
+  "N0": 4468490.65705,
+  "compartido": false,
+  "tri": 248,
+  "vert": 148,
+  "piezas": 12,
+  "ancho_m": 65.44888004439417,
+  "largo_m": 109.3814141061157
+ },
+ {
+  "id": "la_poveda_2024_trace",
+  "estaciones": "La Poveda",
+  "station_ids": [
+   "s387"
+  ],
+  "E0": 459438.4406499998,
+  "N0": 4463274.13465,
+  "compartido": false,
+  "tri": 224,
+  "vert": 132,
+  "piezas": 10,
+  "ancho_m": 79.91191518143751,
+  "largo_m": 18.29221752937883
+ },
+ {
+  "id": "la_rambla_2026_trace",
+  "estaciones": "La Rambla",
+  "station_ids": [
+   "s779"
+  ],
+  "E0": 453462.8613499999,
+  "N0": 4475122.12825,
+  "compartido": false,
+  "tri": 268,
+  "vert": 162,
+  "piezas": 12,
+  "ancho_m": 70.02760201558704,
+  "largo_m": 38.31507690809667
+ },
+ {
+  "id": "lacoma_2024_trace",
+  "estaciones": "Lacoma",
+  "station_ids": [
+   "s319"
+  ],
+  "E0": 438719.9408499999,
+  "N0": 4481837.261,
+  "compartido": false,
+  "tri": 360,
+  "vert": 214,
+  "piezas": 17,
+  "ancho_m": 57.08933266653912,
+  "largo_m": 98.23658831138164
+ },
+ {
+  "id": "lago_2024_trace",
+  "estaciones": "Lago",
+  "station_ids": [
+   "s415"
+  ],
+  "E0": 437576.34125000006,
+  "N0": 4474234.9163999995,
+  "compartido": false,
+  "tri": 196,
+  "vert": 122,
+  "piezas": 12,
+  "ancho_m": 85.97980530146742,
+  "largo_m": 19.179115545004606
+ },
+ {
+  "id": "laguna_2020_trace",
+  "estaciones": "Laguna",
+  "station_ids": [
+   "s214"
+  ],
+  "E0": 436848.02513333346,
+  "N0": 4472223.427433333,
+  "compartido": false,
+  "tri": 6932,
+  "vert": 3582,
+  "piezas": 58,
+  "ancho_m": 70.18527867406374,
+  "largo_m": 94.84714677743614
+ },
+ {
+  "id": "las_musas_2024_trace",
+  "estaciones": "Las Musas",
+  "station_ids": [
+   "s277"
+  ],
+  "E0": 448439.0906999996,
+  "N0": 4475991.2949,
+  "compartido": false,
+  "tri": 328,
+  "vert": 192,
+  "piezas": 15,
+  "ancho_m": 56.535259693919215,
+  "largo_m": 88.99507370963693
+ },
+ {
+  "id": "las_rosas_2024_trace",
+  "estaciones": "Las Rosas",
+  "station_ids": [
+   "s1155"
+  ],
+  "E0": 448861.09180000005,
+  "N0": 4474944.95925,
+  "compartido": false,
+  "tri": 268,
+  "vert": 164,
+  "piezas": 15,
+  "ancho_m": 102.94474588095909,
+  "largo_m": 58.2715458907187
+ },
+ {
+  "id": "las_suertes_2024_trace",
+  "estaciones": "Las Suertes",
+  "station_ids": [
+   "s789"
+  ],
+  "E0": 449059.88320000004,
+  "N0": 4468324.2080500005,
+  "compartido": false,
+  "tri": 352,
+  "vert": 206,
+  "piezas": 14,
+  "ancho_m": 76.37113618932199,
+  "largo_m": 56.37635917775333
+ },
+ {
+  "id": "las_tablas_2021_trace",
+  "estaciones": "Las Tablas",
+  "station_ids": [
+   "s751"
+  ],
+  "E0": 443262.8429999999,
+  "N0": 4484450.3453,
+  "compartido": false,
+  "tri": 404,
+  "vert": 244,
+  "piezas": 20,
+  "ancho_m": 57.39883989986265,
+  "largo_m": 104.73750480264425
+ },
+ {
+  "id": "lavapies_2024_trace",
+  "estaciones": "Lavapies",
+  "station_ids": [
+   "s98"
+  ],
+  "E0": 440505.9744500001,
+  "N0": 4473358.84905,
+  "compartido": false,
+  "tri": 420,
+  "vert": 238,
+  "piezas": 13,
+  "ancho_m": 91.7691777870059,
+  "largo_m": 101.04166154842824
+ },
+ {
+  "id": "leganes_central_2021_trace",
+  "estaciones": "Leganes Central",
+  "station_ids": [
+   "s487"
+  ],
+  "E0": 434385.41695,
+  "N0": 4464459.9443,
+  "compartido": false,
+  "tri": 2824,
+  "vert": 1466,
+  "piezas": 30,
+  "ancho_m": 51.44106352166273,
+  "largo_m": 84.61345803365111
+ },
+ {
+  "id": "legazpi_2020_trace",
+  "estaciones": "Legazpi",
+  "station_ids": [
+   "s90"
+  ],
+  "E0": 441011.7991500001,
+  "N0": 4471477.43405,
+  "compartido": false,
+  "tri": 6724,
+  "vert": 3426,
+  "piezas": 34,
+  "ancho_m": 78.42955693771364,
+  "largo_m": 95.58011319488287
+ },
+ {
+  "id": "lista_2024_trace",
+  "estaciones": "Lista",
+  "station_ids": [
+   "s128"
+  ],
+  "E0": 442709.86109999986,
+  "N0": 4475609.59335,
+  "compartido": false,
+  "tri": 320,
+  "vert": 196,
+  "piezas": 18,
+  "ancho_m": 26.452618952898774,
+  "largo_m": 136.20593227259815
+ },
+ {
+  "id": "loranca_2024_trace",
+  "estaciones": "Loranca",
+  "station_ids": [
+   "s453"
+  ],
+  "E0": 428884.7527999999,
+  "N0": 4461029.07055,
+  "compartido": false,
+  "tri": 216,
+  "vert": 132,
+  "piezas": 12,
+  "ancho_m": 72.339942834049,
+  "largo_m": 20.42875541560352
+ },
+ {
+  "id": "los_espartales_2024_trace",
+  "estaciones": "Los Espartales",
+  "station_ids": [
+   "s475"
+  ],
+  "E0": 439054.1616999996,
+  "N0": 4463935.9373,
+  "compartido": false,
+  "tri": 276,
+  "vert": 164,
+  "piezas": 13,
+  "ancho_m": 65.64390260598157,
+  "largo_m": 44.566167037934065
+ },
+ {
+  "id": "lucero_2024_trace",
+  "estaciones": "Lucero",
+  "station_ids": [
+   "s273"
+  ],
+  "E0": 436755.5338999997,
+  "N0": 4472989.775450001,
+  "compartido": false,
+  "tri": 308,
+  "vert": 186,
+  "piezas": 16,
+  "ancho_m": 33.22157370072091,
+  "largo_m": 71.27383260987699
+ },
+ {
+  "id": "manoteras_2024_trace",
+  "estaciones": "Manoteras",
+  "station_ids": [
+   "s727"
+  ],
+  "E0": 443800.72715000017,
+  "N0": 4480901.098,
+  "compartido": false,
+  "tri": 260,
+  "vert": 160,
+  "piezas": 14,
+  "ancho_m": 67.49738207325572,
+  "largo_m": 42.09847970865667
+ },
+ {
+  "id": "manuel_becerra_2020_trace",
+  "estaciones": "Manuel Becerra",
+  "station_ids": [
+   "s62"
+  ],
+  "E0": 443242.3618999999,
+  "N0": 4475426.1821,
+  "compartido": false,
+  "tri": 568,
+  "vert": 338,
+  "piezas": 27,
+  "ancho_m": 126.78134861274157,
+  "largo_m": 64.14856348745525
+ },
+ {
+  "id": "manuel_de_falla_2024_trace",
+  "estaciones": "Manuel De Falla",
+  "station_ids": [
+   "s761"
+  ],
+  "E0": 445204.0907999999,
+  "N0": 4489031.992550001,
+  "compartido": false,
+  "tri": 388,
+  "vert": 226,
+  "piezas": 14,
+  "ancho_m": 50.00317519856617,
+  "largo_m": 52.28627315815538
+ },
+ {
+  "id": "manuela_malasana_2024_trace",
+  "estaciones": "Manuela Malasaña",
+  "station_ids": [
+   "s451"
+  ],
+  "E0": 426619.73455000017,
+  "N0": 4462409.69135,
+  "compartido": false,
+  "tri": 196,
+  "vert": 122,
+  "piezas": 12,
+  "ancho_m": 90.62226420117076,
+  "largo_m": 17.011095689609647
+ },
+ {
+  "id": "mar_de_cristal_2021_trace",
+  "estaciones": "Mar De Cristal",
+  "station_ids": [
+   "s146"
+  ],
+  "E0": 445875.210525,
+  "N0": 4480089.316675,
+  "compartido": false,
+  "tri": 524,
+  "vert": 308,
+  "piezas": 23,
+  "ancho_m": 53.717894611589145,
+  "largo_m": 77.16818290762603
+ },
+ {
+  "id": "marques_de_la_valdavia_2024_trace",
+  "estaciones": "Marques De La Valdavia",
+  "station_ids": [
+   "s759"
+  ],
+  "E0": 445972.6140999999,
+  "N0": 4488001.8652,
+  "compartido": false,
+  "tri": 404,
+  "vert": 236,
+  "piezas": 18,
+  "ancho_m": 84.87340875901282,
+  "largo_m": 55.51255627255887
+ },
+ {
+  "id": "marques_de_vadillo_2024_trace",
+  "estaciones": "Marques De Vadillo",
+  "station_ids": [
+   "s192"
+  ],
+  "E0": 439132.95145000005,
+  "N0": 4472068.4968,
+  "compartido": false,
+  "tri": 332,
+  "vert": 198,
+  "piezas": 15,
+  "ancho_m": 87.77250808133977,
+  "largo_m": 43.00334886740893
+ },
+ {
+  "id": "mendez_alvaro_2020_trace",
+  "estaciones": "Mendez Alvaro",
+  "station_ids": [
+   "s231"
+  ],
+  "E0": 442354.9842500002,
+  "N0": 4471905.6941,
+  "compartido": false,
+  "tri": 6788,
+  "vert": 3492,
+  "piezas": 49,
+  "ancho_m": 103.05852170259459,
+  "largo_m": 69.66628054622561
+ },
+ {
+  "id": "menendez_pelayo_2024_trace",
+  "estaciones": "Menendez Pelayo",
+  "station_ids": [
+   "s37"
+  ],
+  "E0": 442192.6694,
+  "N0": 4472860.58375,
+  "compartido": false,
+  "tri": 468,
+  "vert": 272,
+  "piezas": 19,
+  "ancho_m": 105.55998114997055,
+  "largo_m": 62.80944278091192
+ },
+ {
+  "id": "miguel_hernandez_2024_trace",
+  "estaciones": "Miguel Hernandez",
+  "station_ids": [
+   "s51"
+  ],
+  "E0": 445777.14579999977,
+  "N0": 4470913.502400001,
+  "compartido": false,
+  "tri": 480,
+  "vert": 272,
+  "piezas": 18,
+  "ancho_m": 97.65681743627647,
+  "largo_m": 55.25369071960449
+ },
+ {
+  "id": "mirasierra_2024_trace",
+  "estaciones": "Mirasierra",
+  "station_ids": [
+   "s1157"
+  ],
+  "E0": 439165.40485000005,
+  "N0": 4482606.34245,
+  "compartido": false,
+  "tri": 276,
+  "vert": 170,
+  "piezas": 16,
+  "ancho_m": 86.37428950075991,
+  "largo_m": 48.15726020652801
+ },
+ {
+  "id": "moncloa_2021_trace",
+  "estaciones": "Moncloa",
+  "station_ids": [
+   "s110"
+  ],
+  "E0": 439009.05392500013,
+  "N0": 4476280.470249999,
+  "compartido": false,
+  "tri": 8064,
+  "vert": 4250,
+  "piezas": 109,
+  "ancho_m": 95.5305025986745,
+  "largo_m": 160.4668392771855
+ },
+ {
+  "id": "montecarmelo_2021_trace",
+  "estaciones": "Montecarmelo",
+  "station_ids": [
+   "s749"
+  ],
+  "E0": 441074.7415,
+  "N0": 4484139.36215,
+  "compartido": false,
+  "tri": 264,
+  "vert": 158,
+  "piezas": 12,
+  "ancho_m": 37.874700143991504,
+  "largo_m": 45.484858978539705
+ },
+ {
+  "id": "mostoles_central_2021_trace",
+  "estaciones": "Mostoles Central",
+  "station_ids": [
+   "s445"
+  ],
+  "E0": 426678.4663,
+  "N0": 4464521.0706,
+  "compartido": false,
+  "tri": 3208,
+  "vert": 1684,
+  "piezas": 42,
+  "ancho_m": 63.09198957955232,
+  "largo_m": 75.77627663314342
+ },
+ {
+  "id": "nnmm",
+  "estaciones": "Nuevos Ministerios",
+  "station_ids": [
+   "s253"
+  ],
+  "E0": 441281.43431621266,
+  "N0": 4477458.146055563,
+  "compartido": false,
+  "tri": 65117,
+  "vert": 93141,
+  "piezas": 194,
+  "ancho_m": 379.74867523583816,
+  "largo_m": 396.3951872540638
+ },
+ {
+  "id": "nueva_numancia_2024_trace",
+  "estaciones": "Nueva Numancia",
+  "station_ids": [
+   "s43"
+  ],
+  "E0": 443619.33084999956,
+  "N0": 4471895.819399999,
+  "compartido": false,
+  "tri": 384,
+  "vert": 228,
+  "piezas": 18,
+  "ancho_m": 105.70449338346953,
+  "largo_m": 72.40044686757028
+ },
+ {
+  "id": "nunez_de_balboa_2020_trace",
+  "estaciones": "Nuñez De Balboa",
+  "station_ids": [
+   "s170"
+  ],
+  "E0": 442252.3765749999,
+  "N0": 4475951.6136,
+  "compartido": false,
+  "tri": 848,
+  "vert": 492,
+  "piezas": 33,
+  "ancho_m": 80.24907031771727,
+  "largo_m": 172.09469147399068
+ },
+ {
+  "id": "o_donnell_2024_trace",
+  "estaciones": "O'Donnell",
+  "station_ids": [
+   "s241"
+  ],
+  "E0": 443254.3722000001,
+  "N0": 4474822.94215,
+  "compartido": false,
+  "tri": 420,
+  "vert": 238,
+  "piezas": 14,
+  "ancho_m": 26.24541757174302,
+  "largo_m": 107.76502953097224
+ },
+ {
+  "id": "opanel_2024_trace",
+  "estaciones": "Opañel",
+  "station_ids": [
+   "s222"
+  ],
+  "E0": 438590.0087000001,
+  "N0": 4470967.2714,
+  "compartido": false,
+  "tri": 340,
+  "vert": 198,
+  "piezas": 16,
+  "ancho_m": 76.13009922293713,
+  "largo_m": 44.96576359309256
+ },
+ {
+  "id": "opera",
+  "estaciones": "Opera",
+  "station_ids": [
+   "s1"
+  ],
+  "E0": 439809.2513000003,
+  "N0": 4474393.703683333,
+  "compartido": false,
+  "tri": 15908,
+  "vert": 20682,
+  "piezas": 49,
+  "ancho_m": 88.73898143379483,
+  "largo_m": 110.96361699234694
+ },
+ {
+  "id": "oporto_2020_trace",
+  "estaciones": "Oporto",
+  "station_ids": [
+   "s196"
+  ],
+  "E0": 437902.8605799999,
+  "N0": 4471169.59426,
+  "compartido": false,
+  "tri": 7876,
+  "vert": 4020,
+  "piezas": 41,
+  "ancho_m": 119.0425016322406,
+  "largo_m": 21.83523714635521
+ },
+ {
+  "id": "pacifico_2021_trace",
+  "estaciones": "Pacifico",
+  "station_ids": [
+   "s39"
+  ],
+  "E0": 442737.3101399999,
+  "N0": 4472588.609819999,
+  "compartido": false,
+  "tri": 8980,
+  "vert": 4674,
+  "piezas": 58,
+  "ancho_m": 93.70313990837894,
+  "largo_m": 69.65904452465475
+ },
+ {
+  "id": "paco_de_lucia_2021_trace",
+  "estaciones": "Paco De Lucia",
+  "station_ids": [
+   "s1207"
+  ],
+  "E0": 439826.55654999986,
+  "N0": 4483423.8289,
+  "compartido": false,
+  "tri": 524,
+  "vert": 316,
+  "piezas": 26,
+  "ancho_m": 115.84465634729713,
+  "largo_m": 54.75336648337543
+ },
+ {
+  "id": "palos_de_la_frontera_2021_trace",
+  "estaciones": "Palos De La Frontera",
+  "station_ids": [
+   "s94"
+  ],
+  "E0": 441037.11274999985,
+  "N0": 4472729.3133,
+  "compartido": false,
+  "tri": 388,
+  "vert": 220,
+  "piezas": 13,
+  "ancho_m": 102.96576165431179,
+  "largo_m": 34.64540559705347
+ },
+ {
+  "id": "pan_bendito_2024_trace",
+  "estaciones": "Pan Bendito",
+  "station_ids": [
+   "s433"
+  ],
+  "E0": 437678.9998999997,
+  "N0": 4469755.05265,
+  "compartido": false,
+  "tri": 340,
+  "vert": 192,
+  "piezas": 13,
+  "ancho_m": 77.25662807095796,
+  "largo_m": 89.98479985632002
+ },
+ {
+  "id": "parque_de_las_avenidas_2026_trace",
+  "estaciones": "Parque De Las Avenidas",
+  "station_ids": [
+   "s292"
+  ],
+  "E0": 443754.04055000003,
+  "N0": 4476697.10585,
+  "compartido": false,
+  "tri": 372,
+  "vert": 216,
+  "piezas": 17,
+  "ancho_m": 84.47121548693394,
+  "largo_m": 58.11011743824929
+ },
+ {
+  "id": "parque_de_los_estados_2024_trace",
+  "estaciones": "Parque De Los Estados",
+  "station_ids": [
+   "s461"
+  ],
+  "E0": 433179.3773000003,
+  "N0": 4459899.12205,
+  "compartido": false,
+  "tri": 280,
+  "vert": 168,
+  "piezas": 13,
+  "ancho_m": 83.59109937387984,
+  "largo_m": 37.519465835765004
+ },
+ {
+  "id": "parque_de_santa_maria_2024_trace",
+  "estaciones": "Parque De Santa Maria",
+  "station_ids": [
+   "s150"
+  ],
+  "E0": 445357.6074999999,
+  "N0": 4480904.0924,
+  "compartido": false,
+  "tri": 320,
+  "vert": 198,
+  "piezas": 18,
+  "ancho_m": 88.21432623668807,
+  "largo_m": 21.297813185490668
+ },
+ {
+  "id": "parque_europa_2024_trace",
+  "estaciones": "Parque Europa",
+  "station_ids": [
+   "s457"
+  ],
+  "E0": 431366.50524999993,
+  "N0": 4459728.029800001,
+  "compartido": false,
+  "tri": 248,
+  "vert": 150,
+  "piezas": 13,
+  "ancho_m": 83.26827875064919,
+  "largo_m": 18.949270558543503
+ },
+ {
+  "id": "parque_lisboa_2024_trace",
+  "estaciones": "Parque Lisboa",
+  "station_ids": [
+   "s437"
+  ],
+  "E0": 430337.2295499998,
+  "N0": 4466843.74015,
+  "compartido": false,
+  "tri": 244,
+  "vert": 148,
+  "piezas": 13,
+  "ancho_m": 72.6543727175449,
+  "largo_m": 51.151341506280005
+ },
+ {
+  "id": "parque_oeste_2024_trace",
+  "estaciones": "Parque Oeste",
+  "station_ids": [
+   "s441"
+  ],
+  "E0": 427955.9863,
+  "N0": 4466508.779,
+  "compartido": false,
+  "tri": 212,
+  "vert": 130,
+  "piezas": 12,
+  "ancho_m": 73.28505298617529,
+  "largo_m": 29.785601813346148
+ },
+ {
+  "id": "pavones_2024_trace",
+  "estaciones": "Pavones",
+  "station_ids": [
+   "s371"
+  ],
+  "E0": 446109.15665000025,
+  "N0": 4472413.137100001,
+  "compartido": false,
+  "tri": 476,
+  "vert": 270,
+  "piezas": 17,
+  "ancho_m": 72.59976250643376,
+  "largo_m": 31.92075345851481
+ },
+ {
+  "id": "penagrande_2024_trace",
+  "estaciones": "Peñagrande",
+  "station_ids": [
+   "s315"
+  ],
+  "E0": 439320.6732000001,
+  "N0": 4480798.4276,
+  "compartido": false,
+  "tri": 232,
+  "vert": 146,
+  "piezas": 15,
+  "ancho_m": 45.597816444642376,
+  "largo_m": 102.87783292215317
+ },
+ {
+  "id": "pinar_de_chamartin",
+  "estaciones": "Pinar De Chamartin",
+  "station_ids": [
+   "s723"
+  ],
+  "E0": 443452.93469999987,
+  "N0": 4481276.1715750005,
+  "compartido": false,
+  "tri": 4120,
+  "vert": 3918,
+  "piezas": 152,
+  "ancho_m": 82.96615143900272,
+  "largo_m": 59.91781838890165
+ },
+ {
+  "id": "pinar_del_rey_2024_trace",
+  "estaciones": "Pinar Del Rey",
+  "station_ids": [
+   "s713"
+  ],
+  "E0": 445010.15950000007,
+  "N0": 4479887.5435999995,
+  "compartido": false,
+  "tri": 240,
+  "vert": 148,
+  "piezas": 14,
+  "ancho_m": 68.1403734019841,
+  "largo_m": 26.644805738702416
+ },
+ {
+  "id": "pio_xii_2024_trace",
+  "estaciones": "Pio Xii",
+  "station_ids": [
+   "s347"
+  ],
+  "E0": 442699.16170000006,
+  "N0": 4479456.576599999,
+  "compartido": false,
+  "tri": 428,
+  "vert": 248,
+  "piezas": 18,
+  "ancho_m": 30.72773667727597,
+  "largo_m": 137.93114892579615
+ },
+ {
+  "id": "piramides_2021_trace",
+  "estaciones": "Piramides",
+  "station_ids": [
+   "s190"
+  ],
+  "E0": 439601.1263000001,
+  "N0": 4472629.3876,
+  "compartido": false,
+  "tri": 532,
+  "vert": 324,
+  "piezas": 29,
+  "ancho_m": 154.55292638618266,
+  "largo_m": 70.84967222996056
+ },
+ {
+  "id": "pitis_2021_trace",
+  "estaciones": "Pitis",
+  "station_ids": [
+   "s323"
+  ],
+  "E0": 438554.23340000026,
+  "N0": 4483010.4015999995,
+  "compartido": false,
+  "tri": 548,
+  "vert": 330,
+  "piezas": 28,
+  "ancho_m": 88.64203460130375,
+  "largo_m": 92.44102925248444
+ },
+ {
+  "id": "pl_castilla",
+  "estaciones": "Plaza De Castilla",
+  "station_ids": [
+   "s5"
+  ],
+  "E0": 441633.0238666668,
+  "N0": 4479791.942666667,
+  "compartido": false,
+  "tri": 7338,
+  "vert": 9199,
+  "piezas": 109,
+  "ancho_m": 452.33285943907686,
+  "largo_m": 241.86631031800061
+ },
+ {
+  "id": "plaza_eliptica_2021_trace",
+  "estaciones": "Plaza Eliptica",
+  "station_ids": [
+   "s224"
+  ],
+  "E0": 439139.3156799998,
+  "N0": 4470738.13254,
+  "compartido": false,
+  "tri": 4380,
+  "vert": 2336,
+  "piezas": 76,
+  "ancho_m": 98.86762715817895,
+  "largo_m": 36.8991000270471
+ },
+ {
+  "id": "plaza_noviciado_2021_trace",
+  "estaciones": "Plaza De España",
+  "station_ids": [
+   "s104",
+   "s80"
+  ],
+  "E0": 439725.9692249999,
+  "N0": 4475047.4791,
+  "compartido": false,
+  "tri": 4348,
+  "vert": 2346,
+  "piezas": 86,
+  "ancho_m": 639.0575025221333,
+  "largo_m": 209.4455980937928
+ },
+ {
+  "id": "portazgo_2024_trace",
+  "estaciones": "Portazgo",
+  "station_ids": [
+   "s45"
+  ],
+  "E0": 444093.7334500002,
+  "N0": 4471563.225500001,
+  "compartido": false,
+  "tri": 532,
+  "vert": 324,
+  "piezas": 29,
+  "ancho_m": 102.98277712927666,
+  "largo_m": 67.71371421497315
+ },
+ {
+  "id": "pradillo_2024_trace",
+  "estaciones": "Pradillo",
+  "station_ids": [
+   "s447"
+  ],
+  "E0": 426564.2888000002,
+  "N0": 4463873.93215,
+  "compartido": false,
+  "tri": 244,
+  "vert": 150,
+  "piezas": 14,
+  "ancho_m": 49.09017338958802,
+  "largo_m": 56.25655198190361
+ },
+ {
+  "id": "principe_de_vergara_2021_trace",
+  "estaciones": "Principe De Vergara",
+  "station_ids": [
+   "s66"
+  ],
+  "E0": 442280.69500000007,
+  "N0": 4474972.499375001,
+  "compartido": false,
+  "tri": 684,
+  "vert": 406,
+  "piezas": 32,
+  "ancho_m": 58.94719390600221,
+  "largo_m": 97.04901176411659
+ },
+ {
+  "id": "principe_pio_2020_trace",
+  "estaciones": "Principe Pio",
+  "station_ids": [
+   "s3"
+  ],
+  "E0": 438960.18986666686,
+  "N0": 4474726.307616666,
+  "compartido": false,
+  "tri": 13928,
+  "vert": 7144,
+  "piezas": 91,
+  "ancho_m": 151.50305599230342,
+  "largo_m": 79.73179938923568
+ },
+ {
+  "id": "prosperidad_2024_trace",
+  "estaciones": "Prosperidad",
+  "station_ids": [
+   "s134"
+  ],
+  "E0": 442749.5425499999,
+  "N0": 4477199.8666,
+  "compartido": false,
+  "tri": 260,
+  "vert": 156,
+  "piezas": 13,
+  "ancho_m": 68.57379334920552,
+  "largo_m": 78.50750647298992
+ },
+ {
+  "id": "pueblo_nuevo_2020_trace",
+  "estaciones": "Pueblo Nuevo",
+  "station_ids": [
+   "s160"
+  ],
+  "E0": 445381.34076000005,
+  "N0": 4476324.979719999,
+  "compartido": false,
+  "tri": 904,
+  "vert": 526,
+  "piezas": 40,
+  "ancho_m": 137.8729066256201,
+  "largo_m": 87.06763932295144
+ },
+ {
+  "id": "puente_de_vallecas_2024_trace",
+  "estaciones": "Puente De Vallecas",
+  "station_ids": [
+   "s41"
+  ],
+  "E0": 443234.0523999999,
+  "N0": 4472167.35575,
+  "compartido": false,
+  "tri": 404,
+  "vert": 236,
+  "piezas": 17,
+  "ancho_m": 87.97113279055338,
+  "largo_m": 70.41883763764054
+ },
+ {
+  "id": "puerta_de_toledo_2024_trace",
+  "estaciones": "Puerta De Toledo",
+  "station_ids": [
+   "s186"
+  ],
+  "E0": 439665.6949500004,
+  "N0": 4473181.31375,
+  "compartido": false,
+  "tri": 436,
+  "vert": 244,
+  "piezas": 13,
+  "ancho_m": 49.365739049739204,
+  "largo_m": 91.43214687332511
+ },
+ {
+  "id": "puerta_del_angel_2024_trace",
+  "estaciones": "Puerta Del Angel",
+  "station_ids": [
+   "s269"
+  ],
+  "E0": 438332.81204999983,
+  "N0": 4473943.89555,
+  "compartido": false,
+  "tri": 252,
+  "vert": 156,
+  "piezas": 15,
+  "ancho_m": 71.14883072301745,
+  "largo_m": 26.06614168919623
+ },
+ {
+  "id": "puerta_del_sur_2021_trace",
+  "estaciones": "Puerta Del Sur",
+  "station_ids": [
+   "s427"
+  ],
+  "E0": 431034.722575,
+  "N0": 4466389.250875,
+  "compartido": false,
+  "tri": 6452,
+  "vert": 3330,
+  "piezas": 55,
+  "ancho_m": 81.05289877863834,
+  "largo_m": 78.96575316879898
+ },
+ {
+  "id": "quevedo_2024_trace",
+  "estaciones": "Quevedo",
+  "station_ids": [
+   "s84"
+  ],
+  "E0": 440237.35369999986,
+  "N0": 4476032.898,
+  "compartido": false,
+  "tri": 268,
+  "vert": 156,
+  "piezas": 11,
+  "ancho_m": 31.164964030846022,
+  "largo_m": 119.4481682498008
+ },
+ {
+  "id": "quintana_2024_trace",
+  "estaciones": "Quintana",
+  "station_ids": [
+   "s162"
+  ],
+  "E0": 445036.7749000001,
+  "N0": 4476040.7789,
+  "compartido": false,
+  "tri": 2044,
+  "vert": 1060,
+  "piezas": 19,
+  "ancho_m": 131.69816504546907,
+  "largo_m": 58.96308625396341
+ },
+ {
+  "id": "republica_argentina_2024_trace",
+  "estaciones": "Republica Argentina",
+  "station_ids": [
+   "s251"
+  ],
+  "E0": 441963.3692999999,
+  "N0": 4477272.0521,
+  "compartido": false,
+  "tri": 468,
+  "vert": 268,
+  "piezas": 19,
+  "ancho_m": 77.35100236331346,
+  "largo_m": 86.39734306931496
+ },
+ {
+  "id": "retiro_2024_trace",
+  "estaciones": "Retiro",
+  "station_ids": [
+   "s68"
+  ],
+  "E0": 441777.4932499998,
+  "N0": 4474650.1779,
+  "compartido": false,
+  "tri": 416,
+  "vert": 242,
+  "piezas": 17,
+  "ancho_m": 103.99395689519588,
+  "largo_m": 61.70856088772416
+ },
+ {
+  "id": "reyes_catolicos_2024_trace",
+  "estaciones": "Reyes Catolicos",
+  "station_ids": [
+   "s765"
+  ],
+  "E0": 447163.78874999983,
+  "N0": 4489091.5493,
+  "compartido": false,
+  "tri": 304,
+  "vert": 174,
+  "piezas": 11,
+  "ancho_m": 66.42295347776962,
+  "largo_m": 34.604907067492604
+ },
+ {
+  "id": "rios_rosas_2024_trace",
+  "estaciones": "Rios Rosas",
+  "station_ids": [
+   "s17"
+  ],
+  "E0": 440511.76049999986,
+  "N0": 4476989.4973,
+  "compartido": false,
+  "tri": 380,
+  "vert": 224,
+  "piezas": 17,
+  "ancho_m": 45.213448757247534,
+  "largo_m": 149.4988268148154
+ },
+ {
+  "id": "rivas_futura_2024_trace",
+  "estaciones": "Rivas Futura",
+  "station_ids": [
+   "s1031"
+  ],
+  "E0": 455425.5762,
+  "N0": 4465783.518,
+  "compartido": false,
+  "tri": 228,
+  "vert": 134,
+  "piezas": 11,
+  "ancho_m": 50.617263686901424,
+  "largo_m": 78.24447401612997
+ },
+ {
+  "id": "rivas_urbanizaciones_2024_trace",
+  "estaciones": "Rivas Urbanizaciones",
+  "station_ids": [
+   "s383"
+  ],
+  "E0": 453526.9904,
+  "N0": 4468619.7313,
+  "compartido": false,
+  "tri": 124,
+  "vert": 76,
+  "piezas": 7,
+  "ancho_m": 66.31058225297602,
+  "largo_m": 66.12715188600123
+ },
+ {
+  "id": "rivas_vaciamadrid_2024_trace",
+  "estaciones": "Rivas Vaciamadrid",
+  "station_ids": [
+   "s385"
+  ],
+  "E0": 455775.57995000016,
+  "N0": 4464333.630150001,
+  "compartido": false,
+  "tri": 224,
+  "vert": 132,
+  "piezas": 10,
+  "ancho_m": 35.54723276133882,
+  "largo_m": 72.92387190274894
+ },
+ {
+  "id": "ronda_de_la_comunicacion_2021_trace",
+  "estaciones": "Ronda De La Comunicacion",
+  "station_ids": [
+   "s753"
+  ],
+  "E0": 443895.7963999999,
+  "N0": 4485174.910499999,
+  "compartido": false,
+  "tri": 244,
+  "vert": 148,
+  "piezas": 12,
+  "ancho_m": 38.520942960865796,
+  "largo_m": 45.3306108340621
+ },
+ {
+  "id": "ruben_dario_2024_trace",
+  "estaciones": "Ruben Dario",
+  "station_ids": [
+   "s172"
+  ],
+  "E0": 441483.3088499997,
+  "N0": 4476047.12755,
+  "compartido": false,
+  "tri": 448,
+  "vert": 252,
+  "piezas": 14,
+  "ancho_m": 143.8589318121667,
+  "largo_m": 45.87071222439408
+ },
+ {
+  "id": "sainz_de_baranda_2020_trace",
+  "estaciones": "Sainz De Baranda",
+  "station_ids": [
+   "s238"
+  ],
+  "E0": 443170.30856,
+  "N0": 4474028.723540001,
+  "compartido": false,
+  "tri": 960,
+  "vert": 560,
+  "piezas": 41,
+  "ancho_m": 92.98817778279772,
+  "largo_m": 67.99399659968913
+ },
+ {
+  "id": "san_bernardo_2020_trace",
+  "estaciones": "San Bernardo",
+  "station_ids": [
+   "s82"
+  ],
+  "E0": 440151.9907249999,
+  "N0": 4475716.004875,
+  "compartido": false,
+  "tri": 508,
+  "vert": 300,
+  "piezas": 23,
+  "ancho_m": 68.10590561298886,
+  "largo_m": 84.12939555570483
+ },
+ {
+  "id": "san_blas_2024_trace",
+  "estaciones": "San Blas",
+  "station_ids": [
+   "s279"
+  ],
+  "E0": 447808.2638000003,
+  "N0": 4475435.4506,
+  "compartido": false,
+  "tri": 280,
+  "vert": 170,
+  "piezas": 16,
+  "ancho_m": 98.14166841702536,
+  "largo_m": 50.00080726202577
+ },
+ {
+  "id": "san_cipriano_2024_trace",
+  "estaciones": "San Cipriano",
+  "station_ids": [
+   "s377"
+  ],
+  "E0": 448802.7965000002,
+  "N0": 4472768.4487,
+  "compartido": false,
+  "tri": 276,
+  "vert": 164,
+  "piezas": 13,
+  "ancho_m": 79.36685571208363,
+  "largo_m": 24.29072277713567
+ },
+ {
+  "id": "san_cristobal_2024_trace",
+  "estaciones": "San Cristobal",
+  "station_ids": [
+   "s741"
+  ],
+  "E0": 441074.9639499998,
+  "N0": 4465870.832950001,
+  "compartido": false,
+  "tri": 352,
+  "vert": 204,
+  "piezas": 14,
+  "ancho_m": 67.70405228354502,
+  "largo_m": 48.17737781256437
+ },
+ {
+  "id": "san_fermin_orcasur_2024_trace",
+  "estaciones": "San Fermin-Orcasur",
+  "station_ids": [
+   "s735"
+  ],
+  "E0": 441049.12370000035,
+  "N0": 4469031.939800001,
+  "compartido": false,
+  "tri": 284,
+  "vert": 172,
+  "piezas": 14,
+  "ancho_m": 25.066108541213907,
+  "largo_m": 60.711619530804455
+ },
+ {
+  "id": "san_fernando_2026_trace",
+  "estaciones": "San Fernando",
+  "station_ids": [
+   "s781"
+  ],
+  "E0": 454554.6875,
+  "N0": 4475022.506100001,
+  "compartido": false,
+  "tri": 268,
+  "vert": 160,
+  "piezas": 14,
+  "ancho_m": 56.33123383502243,
+  "largo_m": 25.940450713969767
+ },
+ {
+  "id": "san_francisco_2024_trace",
+  "estaciones": "San Francisco",
+  "station_ids": [
+   "s705"
+  ],
+  "E0": 437194.5593000003,
+  "N0": 4469501.0007,
+  "compartido": false,
+  "tri": 280,
+  "vert": 166,
+  "piezas": 13,
+  "ancho_m": 138.40348553832155,
+  "largo_m": 33.02647255640477
+ },
+ {
+  "id": "san_lorenzo_2024_trace",
+  "estaciones": "San Lorenzo",
+  "station_ids": [
+   "s148"
+  ],
+  "E0": 445779.5880999998,
+  "N0": 4480520.75005,
+  "compartido": false,
+  "tri": 1840,
+  "vert": 950,
+  "piezas": 15,
+  "ancho_m": 19.10303455981193,
+  "largo_m": 111.00097644608468
+ },
+ {
+  "id": "san_nicasio_2024_trace",
+  "estaciones": "San Nicasio",
+  "station_ids": [
+   "s489"
+  ],
+  "E0": 434022.1849000002,
+  "N0": 4465420.6655,
+  "compartido": false,
+  "tri": 248,
+  "vert": 150,
+  "piezas": 13,
+  "ancho_m": 63.51007289678091,
+  "largo_m": 56.24256596248597
+ },
+ {
+  "id": "santiago_bernabeu_2024_trace",
+  "estaciones": "Santiago Bernabeu",
+  "station_ids": [
+   "s401"
+  ],
+  "E0": 441435.09569999995,
+  "N0": 4478193.0697,
+  "compartido": false,
+  "tri": 548,
+  "vert": 320,
+  "piezas": 22,
+  "ancho_m": 35.29568379186094,
+  "largo_m": 106.75413074251264
+ },
+ {
+  "id": "santo_domingo_2024_trace",
+  "estaciones": "Santo Domingo",
+  "station_ids": [
+   "s78"
+  ],
+  "E0": 439932.7479000003,
+  "N0": 4474751.65115,
+  "compartido": false,
+  "tri": 448,
+  "vert": 262,
+  "piezas": 19,
+  "ancho_m": 60.07573415793013,
+  "largo_m": 125.92317955940962
+ },
+ {
+  "id": "serrano_2024_trace",
+  "estaciones": "Serrano",
+  "station_ids": [
+   "s122"
+  ],
+  "E0": 441737.47175,
+  "N0": 4475189.9937,
+  "compartido": false,
+  "tri": 448,
+  "vert": 266,
+  "piezas": 21,
+  "ancho_m": 141.37472279462963,
+  "largo_m": 32.781391406431794
+ },
+ {
+  "id": "sevilla_2024_trace",
+  "estaciones": "Sevilla",
+  "station_ids": [
+   "s72"
+  ],
+  "E0": 440620.36939999973,
+  "N0": 4474362.1951,
+  "compartido": false,
+  "tri": 284,
+  "vert": 168,
+  "piezas": 13,
+  "ancho_m": 101.27936077141203,
+  "largo_m": 45.58723465912044
+ },
+ {
+  "id": "simancas_2024_trace",
+  "estaciones": "Simancas",
+  "station_ids": [
+   "s281"
+  ],
+  "E0": 447032.1779499999,
+  "N0": 4475406.5243,
+  "compartido": false,
+  "tri": 512,
+  "vert": 302,
+  "piezas": 22,
+  "ancho_m": 148.91495188121917,
+  "largo_m": 63.3785045677796
+ },
+ {
+  "id": "sol_gran_via_2021_trace",
+  "estaciones": "Gran Via",
+  "station_ids": [
+   "s25",
+   "s27"
+  ],
+  "E0": 440473.30914999987,
+  "N0": 4474595.845,
+  "compartido": false,
+  "tri": 11912,
+  "vert": 6404,
+  "piezas": 225,
+  "ancho_m": 313.0061242231168,
+  "largo_m": 510.80948641337454
+ },
+ {
+  "id": "suanzes_2024_trace",
+  "estaciones": "Suanzes",
+  "station_ids": [
+   "s156"
+  ],
+  "E0": 446850.1228,
+  "N0": 4476886.2896,
+  "compartido": false,
+  "tri": 292,
+  "vert": 182,
+  "piezas": 18,
+  "ancho_m": 78.74546810466563,
+  "largo_m": 62.9494734890759
+ },
+ {
+  "id": "tetuan_2024_trace",
+  "estaciones": "Tetuan",
+  "station_ids": [
+   "s9"
+  ],
+  "E0": 440772.08510000026,
+  "N0": 4479095.03225,
+  "compartido": false,
+  "tri": 312,
+  "vert": 188,
+  "piezas": 16,
+  "ancho_m": 102.32878678565612,
+  "largo_m": 137.33797474391758
+ },
+ {
+  "id": "tirso_de_molina_2024_trace",
+  "estaciones": "Tirso De Molina",
+  "station_ids": [
+   "s29"
+  ],
+  "E0": 440264.05544999987,
+  "N0": 4473775.24605,
+  "compartido": false,
+  "tri": 484,
+  "vert": 272,
+  "piezas": 15,
+  "ancho_m": 125.36291736370185,
+  "largo_m": 32.41719362232834
+ },
+ {
+  "id": "torre_arias_2024_trace",
+  "estaciones": "Torre Arias",
+  "station_ids": [
+   "s154"
+  ],
+  "E0": 447590.6244999999,
+  "N0": 4477145.973900001,
+  "compartido": false,
+  "tri": 288,
+  "vert": 174,
+  "piezas": 15,
+  "ancho_m": 107.51643550529843,
+  "largo_m": 56.06659867800772
+ },
+ {
+  "id": "tres_olivos_2021_trace",
+  "estaciones": "Tres Olivos",
+  "station_ids": [
+   "s745"
+  ],
+  "E0": 441081.2409000003,
+  "N0": 4483622.6951,
+  "compartido": false,
+  "tri": 280,
+  "vert": 172,
+  "piezas": 16,
+  "ancho_m": 34.61838319024537,
+  "largo_m": 67.04323942773044
+ },
+ {
+  "id": "tribunal_2021_trace",
+  "estaciones": "Tribunal",
+  "station_ids": [
+   "s23"
+  ],
+  "E0": 440477.89017500007,
+  "N0": 4475272.046399999,
+  "compartido": false,
+  "tri": 1188,
+  "vert": 674,
+  "piezas": 40,
+  "ancho_m": 123.0718839239562,
+  "largo_m": 42.39195563271642
+ },
+ {
+  "id": "universidad_rey_juan_carlos_2024_trace",
+  "estaciones": "Universidad Rey Juan Carlos",
+  "station_ids": [
+   "s443"
+  ],
+  "E0": 425913.4318500003,
+  "N0": 4465366.38385,
+  "compartido": false,
+  "tri": 220,
+  "vert": 134,
+  "piezas": 12,
+  "ancho_m": 19.083274833101314,
+  "largo_m": 73.6751383272931
+ },
+ {
+  "id": "urgel_2024_trace",
+  "estaciones": "Urgel",
+  "station_ids": [
+   "s194"
+  ],
+  "E0": 438508.5152500002,
+  "N0": 4471627.7285,
+  "compartido": false,
+  "tri": 440,
+  "vert": 260,
+  "piezas": 19,
+  "ancho_m": 87.88223622489022,
+  "largo_m": 77.94721750821918
+ },
+ {
+  "id": "usera_2024_trace",
+  "estaciones": "Usera",
+  "station_ids": [
+   "s227"
+  ],
+  "E0": 440116.10550000006,
+  "N0": 4471027.387399999,
+  "compartido": false,
+  "tri": 680,
+  "vert": 370,
+  "piezas": 21,
+  "ancho_m": 114.64911141066113,
+  "largo_m": 96.85621963255107
+ },
+ {
+  "id": "valdeacederas_2024_trace",
+  "estaciones": "Valdeacederas",
+  "station_ids": [
+   "s7"
+  ],
+  "E0": 441080.3498999998,
+  "N0": 4479548.3003,
+  "compartido": false,
+  "tri": 276,
+  "vert": 172,
+  "piezas": 17,
+  "ancho_m": 129.30928047554335,
+  "largo_m": 66.3299212558195
+ },
+ {
+  "id": "valdebernardo_2024_trace",
+  "estaciones": "Valdebernardo",
+  "station_ids": [
+   "s373"
+  ],
+  "E0": 447255.0702499999,
+  "N0": 4472340.1341,
+  "compartido": false,
+  "tri": 484,
+  "vert": 282,
+  "piezas": 19,
+  "ancho_m": 52.831234579207376,
+  "largo_m": 135.81046265829355
+ },
+ {
+  "id": "valdecarros_2024_trace",
+  "estaciones": "Valdecarros",
+  "station_ids": [
+   "s791"
+  ],
+  "E0": 449766.46675000014,
+  "N0": 4467864.38585,
+  "compartido": false,
+  "tri": 348,
+  "vert": 202,
+  "piezas": 14,
+  "ancho_m": 75.12149482680252,
+  "largo_m": 57.08201860636473
+ },
+ {
+  "id": "valdezarza_2024_trace",
+  "estaciones": "Valdezarza",
+  "station_ids": [
+   "s311"
+  ],
+  "E0": 439308.3984500002,
+  "N0": 4479592.12025,
+  "compartido": false,
+  "tri": 832,
+  "vert": 466,
+  "piezas": 27,
+  "ancho_m": 130.51560646580765,
+  "largo_m": 32.385417186655104
+ },
+ {
+  "id": "vallecas_2024_trace",
+  "estaciones": "Sierra De Guadalupe",
+  "station_ids": [
+   "s54"
+  ],
+  "E0": 446942.94634999987,
+  "N0": 4470421.57025,
+  "compartido": false,
+  "tri": 4456,
+  "vert": 2340,
+  "piezas": 60,
+  "ancho_m": 90.26069041684968,
+  "largo_m": 41.04744066204876
+ },
+ {
+  "id": "velazquez_2024_trace",
+  "estaciones": "Velazquez",
+  "station_ids": [
+   "s124"
+  ],
+  "E0": 442098.8392500002,
+  "N0": 4475164.271600001,
+  "compartido": false,
+  "tri": 372,
+  "vert": 222,
+  "piezas": 18,
+  "ancho_m": 137.10623962129466,
+  "largo_m": 27.0885942094028
+ },
+ {
+  "id": "ventas_2020_trace",
+  "estaciones": "Ventas",
+  "station_ids": [
+   "s60"
+  ],
+  "E0": 443674.445875,
+  "N0": 4475814.611625,
+  "compartido": false,
+  "tri": 548,
+  "vert": 318,
+  "piezas": 22,
+  "ancho_m": 66.9034631352406,
+  "largo_m": 93.79737588111311
+ },
+ {
+  "id": "ventilla_2024_trace",
+  "estaciones": "Ventilla",
+  "station_ids": [
+   "s341"
+  ],
+  "E0": 440975.6613499997,
+  "N0": 4480145.72365,
+  "compartido": false,
+  "tri": 284,
+  "vert": 172,
+  "piezas": 14,
+  "ancho_m": 70.68547625502106,
+  "largo_m": 48.7482485845685
+ },
+ {
+  "id": "ventura_rodriguez_2024_trace",
+  "estaciones": "Ventura Rodriguez",
+  "station_ids": [
+   "s106"
+  ],
+  "E0": 439436.9164,
+  "N0": 4475435.2985,
+  "compartido": false,
+  "tri": 4620,
+  "vert": 2374,
+  "piezas": 35,
+  "ancho_m": 58.61688080395106,
+  "largo_m": 63.33839239180088
+ },
+ {
+  "id": "vicalvaro_2021_trace",
+  "estaciones": "Puerta De Arganda",
+  "station_ids": [
+   "s379"
+  ],
+  "E0": 449358.32485,
+  "N0": 4472494.96535,
+  "compartido": false,
+  "tri": 440,
+  "vert": 268,
+  "piezas": 24,
+  "ancho_m": 50.75372180453269,
+  "largo_m": 128.5747314868495
+ },
+ {
+  "id": "vicalvaro_metro_2024_trace",
+  "estaciones": "Vicalvaro",
+  "station_ids": [
+   "s375"
+  ],
+  "E0": 448291.48589999974,
+  "N0": 4472801.6197999995,
+  "compartido": false,
+  "tri": 308,
+  "vert": 182,
+  "piezas": 14,
+  "ancho_m": 71.93593660491752,
+  "largo_m": 28.115844774991274
+ },
+ {
+  "id": "vicente_aleixandre_2024_trace",
+  "estaciones": "Vicente Aleixandre",
+  "station_ids": [
+   "s259"
+  ],
+  "E0": 439006.4068499999,
+  "N0": 4477552.9738,
+  "compartido": false,
+  "tri": 536,
+  "vert": 308,
+  "piezas": 22,
+  "ancho_m": 100.72731783642666,
+  "largo_m": 43.054633003659546
+ },
+ {
+  "id": "villa_de_vallecas_2024_trace",
+  "estaciones": "Villa De Vallecas",
+  "station_ids": [
+   "s56"
+  ],
+  "E0": 447256.2547500003,
+  "N0": 4470054.334749999,
+  "compartido": false,
+  "tri": 324,
+  "vert": 196,
+  "piezas": 17,
+  "ancho_m": 61.23891659552464,
+  "largo_m": 82.22896291874349
+ },
+ {
+  "id": "villaverde_alto_2021_trace",
+  "estaciones": "Villaverde Alto",
+  "station_ids": [
+   "s743"
+  ],
+  "E0": 439520.3369499999,
+  "N0": 4465850.72525,
+  "compartido": false,
+  "tri": 620,
+  "vert": 368,
+  "piezas": 34,
+  "ancho_m": 130.4785538081196,
+  "largo_m": 56.2517453385517
+ },
+ {
+  "id": "villaverde_bajo_cruce_2024_trace",
+  "estaciones": "Villaverde Bajo Cruce",
+  "station_ids": [
+   "s739"
+  ],
+  "E0": 441172.6108500003,
+  "N0": 4466910.9449000005,
+  "compartido": false,
+  "tri": 332,
+  "vert": 198,
+  "piezas": 15,
+  "ancho_m": 32.77706898766337,
+  "largo_m": 56.114685121923685
+ },
+ {
+  "id": "vinateros_2024_trace",
+  "estaciones": "Vinateros",
+  "station_ids": [
+   "s367"
+  ],
+  "E0": 444725.8994999998,
+  "N0": 4473479.33935,
+  "compartido": false,
+  "tri": 536,
+  "vert": 312,
+  "piezas": 22,
+  "ancho_m": 147.89903452125145,
+  "largo_m": 62.99715573526919
+ },
+ {
+  "id": "vista_alegre_2024_trace",
+  "estaciones": "Vista Alegre",
+  "station_ids": [
+   "s198"
+  ],
+  "E0": 437316.43209999986,
+  "N0": 4471211.4001,
+  "compartido": false,
+  "tri": 340,
+  "vert": 202,
+  "piezas": 16,
+  "ancho_m": 125.95747457694961,
+  "largo_m": 38.87930816877633
+ }
+]
