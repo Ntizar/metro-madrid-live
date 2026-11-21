@@ -8,3 +8,5 @@ data/fuentes/
 esquemas/
 # modelos de otras ciudades: referencia de modelado, no se publican
 referencias/
+datos/gtfs_ctorres/
+__pycache__/

@@ -1,121 +1,199 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" data-nz-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Metro de Madrid bajo tierra · Mastermind</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/tokens.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/packs/all.css">
-<link rel="stylesheet" href="assets/visor.css?v=63">
-<script>
-// si el visor revienta, que se vea en vez de quedarse en negro
-window.addEventListener('error', function (e) {
-  var a = document.getElementById('aviso-carga');
-  if (a) { a.hidden = false; a.textContent = 'Fallo al cargar: ' + e.message; }
-  document.documentElement.dataset.errorJs = e.message;
-}, true);
-window.addEventListener('unhandledrejection', function (e) {
-  var m = (e.reason && (e.reason.stack || e.reason.message)) || String(e.reason);
-  var a = document.getElementById('aviso-carga');
-  if (a) { a.hidden = false; a.textContent = 'Fallo al cargar: ' + m; }
-  document.documentElement.dataset.errorJs = m;
-});
-</script>
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+<title>Metro de Madrid · gemelo digital</title>
+<meta name="description" content="Gemelo digital del Metro de Madrid: 240 estaciones modeladas a su cota real, 48 vías del CRTM a la profundidad que define cada estación y la corteza del terreno con el PNOA y el LiDAR.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p1-layout.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p2-navigation.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p3-typography.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p4-actions.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p5-forms.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p6-feedback.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p7-overlays.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p8-data.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p16-cristal.css">
+<style>
+  /* Geometría del lienzo 3D: solo medidas y colocación; el color manda en tokens. */
+  .mm-main { padding: 0; height: calc(100dvh - 57px); display: flex; flex-direction: column; }
+  .mm-escena { position: relative; flex: 1 1 auto; min-height: 0; }
+  .mm-escena canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+  .mm-panel { position: absolute; border-radius: var(--nz-radius-lg); }
+  .mm-panel--izq { left: var(--nz-space-4); top: var(--nz-space-4); width: 286px; padding: var(--nz-space-4);
+                   max-height: calc(100% - 2rem); overflow: auto; }
+  .mm-panel--der { right: var(--nz-space-4); top: var(--nz-space-4); width: 270px; padding: var(--nz-space-4);
+                   max-height: calc(100% - 2rem); overflow: auto; }
+  .mm-mandos { position: absolute; left: 50%; transform: translateX(-50%); bottom: var(--nz-space-4);
+               display: flex; gap: var(--nz-space-2); align-items: center; flex-wrap: wrap;
+               justify-content: center; padding: var(--nz-space-2) var(--nz-space-3);
+               border-radius: var(--nz-radius-full); max-width: calc(100% - 2rem); }
+  .mm-chispa { display: inline-flex; align-items: center; gap: var(--nz-space-2); font-size: 12px;
+               min-height: 28px; padding: 2px 8px; border: var(--nz-border-w) solid transparent;
+               border-radius: var(--nz-radius-full); background: transparent; color: var(--nz-text);
+               cursor: pointer; }
+  .mm-chispa:hover, .mm-chispa:focus-visible { border-color: var(--nz-border-strong); }
+  .mm-chispa.is-on { border-color: var(--nz-text); background: var(--nz-bg-inset); }
+  .mm-chispa i { width: 14px; height: 4px; border-radius: var(--nz-radius-full); display: inline-block; }
+  .mm-carga { position: absolute; inset: 0; display: grid; place-content: center; gap: var(--nz-space-3);
+              text-align: center; padding: var(--nz-space-6); z-index: 5; }
+  .mm-carga[hidden] { display: none; }
+  .mm-barra { width: min(340px, 70vw); height: 6px; border-radius: var(--nz-radius-full);
+              background: var(--nz-bg-inset); overflow: hidden; }
+  .mm-barra > i { display: block; height: 100%; width: 0; background: var(--nz-brand);
+                  border-radius: var(--nz-radius-full); }
+  .mm-ficha { display: none; }
+  .mm-ficha.is-on { display: block; }
+  .mm-paso { display: flex; align-items: center; justify-content: space-between; gap: var(--nz-space-3); }
+  .mm-paso output { font-variant-numeric: tabular-nums; font-size: 12px; min-width: 4.2rem; text-align: right; }
+  .mm-paso input[type="range"] { width: 100%; accent-color: var(--nz-brand); min-height: 32px; }
+  @media (max-width: 900px) {
+    .mm-panel--izq, .mm-panel--der { display: none; }
+    .mm-panel-movil { position: absolute; inset: auto 0 0 0; max-height: 62%; overflow: auto;
+                      background: var(--nz-surface); border-top: var(--nz-border-w) solid var(--nz-border);
+                      padding: var(--nz-space-3); z-index: 4; display: none; }
+    .mm-panel-movil.is-on { display: block; }
   }
-}
-</script>
+</style>
 </head>
 <body class="nz">
 
-<div class="puntero-nombre" id="puntero-nombre"></div>
-<canvas id="lienzo" aria-label="Vista 3D del subsuelo de Metro de Madrid"></canvas>
-<div id="velo" class="velo" aria-hidden="true"></div>
+<div class="nz-navbar nz-navbar--compact">
+  <span class="nz-navbar__brand"><i></i>Metro de Madrid · gemelo digital</span>
+  <span class="nz-navbar__links">
+    <span class="nz-badge nz-badge--neutral" id="chip-estaciones">240 estaciones</span>
+    <span class="nz-badge nz-badge--neutral" id="chip-tri">—</span>
+    <button class="nz-btn nz-btn--ghost nz-btn--sm" id="btn-acerca">El proyecto</button>
+    <button class="nz-btn nz-btn--ghost nz-btn--sm" id="btn-panel">Capas</button>
+  </span>
+</div>
 
-<header class="barra">
-  <div class="barra__marca">
-    <span class="rombo" aria-hidden="true"></span>
-    <div class="nz-stack nz-stack--2xs">
-      <strong class="barra__titulo">Metro de Madrid <span class="barra__sub">bajo tierra</span></strong>
-      <span class="nz-lbl" id="fuente">GTFS oficial CRTM · 2025</span>
+<main class="nz-container nz-container--app mm-main">
+  <div class="mm-escena" id="escena">
+    <canvas id="lienzo" aria-label="Escena 3D del metro de Madrid"></canvas>
+
+    <div class="mm-panel mm-panel--izq nz-cristal nz-cristal--fuente" id="panel-izq">
+      <div class="nz-stack nz-stack--sm">
+        <span class="nz-lbl">Capas</span>
+        <label class="nz-switch"><input type="checkbox" id="c-estaciones" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Estaciones modeladas</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-metro" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Túneles de Metro</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-ligero" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Metro Ligero</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-cercanias" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Cercanías</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-trenes" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Trenes 9000</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-corteza" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Corteza del terreno</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-salidas" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Salidas a superficie</span></label>
+        <div class="nz-divider"></div>
+        <div class="mm-paso"><span class="nz-lbl">Opacidad del suelo</span><output id="o-opacidad">55 %</output></div>
+        <input type="range" id="r-opacidad" min="8" max="100" value="55" aria-label="Opacidad del terreno">
+        <div class="mm-paso"><span class="nz-lbl">Velocidad de los trenes</span><output id="o-velocidad">x30</output></div>
+        <input type="range" id="r-velocidad" min="0" max="120" step="10" value="30" aria-label="Velocidad de los trenes">
+        <div class="nz-divider"></div>
+        <div class="mm-leyenda nz-cluster" id="leyenda"></div>
+        <span class="nz-lbl nz-lbl--accent">Arrastra para desplazar · rueda acerca · botón derecho orbita</span>
+      </div>
+    </div>
+
+    <div class="mm-panel mm-panel--der nz-cristal nz-cristal--fuente">
+      <div class="nz-stack nz-stack--sm">
+        <span class="nz-lbl">Ficha</span>
+        <div class="mm-ficha" id="ficha">
+          <span class="nz-h1" id="f-nombre" style="font-size:var(--nz-text-lg)">—</span>
+          <div class="nz-cluster" id="f-lineas" style="margin:.35rem 0 .5rem"></div>
+          <div class="nz-grid-auto nz-grid-auto--compact" style="grid-template-columns:1fr 1fr 1fr">
+            <div class="nz-kpi"><span class="nz-kpi__label">Triángulos</span><span class="nz-kpi__value" id="f-tri">—</span></div>
+            <div class="nz-kpi"><span class="nz-kpi__label">Encaje</span><span class="nz-kpi__value nz-kpi--accent" id="f-eje">—</span></div>
+            <div class="nz-kpi"><span class="nz-kpi__label">Andén a</span><span class="nz-kpi__value" id="f-profundidad">—</span></div>
+          </div>
+          <span class="nz-lbl" id="f-nota" style="margin-top:.5rem">Pasa el cursor por una estación.</span>
+        </div>
+        <div class="nz-divider"></div>
+        <span class="nz-lbl">Estado del montaje</span>
+        <div class="nz-grid-auto nz-grid-auto--compact" style="grid-template-columns:1fr 1fr">
+          <div class="nz-kpi"><span class="nz-kpi__label">Estaciones modeladas</span><span class="nz-kpi__value" id="k-est">—</span></div>
+          <div class="nz-kpi"><span class="nz-kpi__label">Vías trazadas</span><span class="nz-kpi__value" id="k-vias">—</span></div>
+          <div class="nz-kpi"><span class="nz-kpi__label">Andén (mediana)</span><span class="nz-kpi__value" id="k-profundidad">—</span></div>
+          <div class="nz-kpi"><span class="nz-kpi__label">Encaje (mediana)</span><span class="nz-kpi__value" id="k-reg">—</span></div>
+        </div>
+        <span class="nz-lbl">Línea: <span id="k-linea">toda la red</span></span>
+        <span class="nz-lbl" id="k-fps">—</span>
+      </div>
+    </div>
+
+    <div class="mm-mandos nz-cristal nz-cristal--fuente">
+      <button class="nz-btn nz-btn--sm" id="b-sol">Sol</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="b-red">Toda la red</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="b-orbita">Plano</button>
+    </div>
+
+    <div class="mm-panel-movil" id="panel-movil"></div>
+
+    <div class="mm-carga" id="carga">
+      <span class="nz-h1" style="font-size:var(--nz-text-xl)">Montando el gemelo</span>
+      <span class="nz-lbl" id="carga-txt">Leyendo el terreno…</span>
+      <div class="mm-barra"><i id="carga-barra"></i></div>
     </div>
   </div>
-  <div class="nz-cluster barra__acciones">
-    <span class="nz-badge nz-badge--soft" id="badge-estado">Cargando red…</span>
-    <div class="nz-segmented" role="group" aria-label="Vista de cámara">
-      <button class="nz-btn nz-btn--ghost nz-btn--sm is-active" data-vista="plano">Plano</button>
-      <button class="nz-btn nz-btn--ghost nz-btn--sm" data-vista="vuelo">Vuelo</button>
-      <button class="nz-btn nz-btn--ghost nz-btn--sm" data-vista="tunel">Túnel</button>
+</main>
+
+<!-- El proyecto: fuentes, método y límites -->
+<div class="nz-modal">
+  <input class="nz-vh" type="checkbox" id="modal-acerca" aria-label="El proyecto">
+  <label class="nz-modal__velo" for="modal-acerca"></label>
+  <div class="nz-modal__caja">
+    <label class="nz-modal__cerrar" for="modal-acerca" aria-label="Cerrar">✕</label>
+    <div class="mm-modal-cuerpo">
+      <h1 class="nz-h1">Un gemelo digital del Metro de Madrid</h1>
+      <p class="nz-lead">240 estaciones modeladas, colocadas a su cota real sobre una corteza de terreno medida con LiDAR, y las 48 vías del CRTM pasando por debajo a la profundidad que cada estación define.</p>
+
+      <h2 class="nz-h2">De dónde sale cada pieza</h2>
+      <div class="nz-table-wrap nz-table-wrap--apilable">
+        <table class="nz-table nz-table--apilable">
+          <thead><tr><th scope="col">Pieza</th><th scope="col">Fuente</th><th scope="col">Cifra</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Estaciones 3D</th><td data-etiqueta="Fuente">Resaldo propio del 20-11-2026 (240 paquetes), reconstrucción interpretativa desde croquis de Albert Guillaumes</td><td data-etiqueta="Cifra">352.013 vértices · 408.103 triángulos</td></tr>
+            <tr><th scope="row">Ubicación</th><td data-etiqueta="Fuente">Anclaje EPSG:25830 de cada paquete, alineado a la red real del CRTM</td><td data-etiqueta="Cifra">desvío mediano 2,1 m · giro 27°</td></tr>
+            <tr><th scope="row">Trazado de vías</th><td data-etiqueta="Fuente">GTFS oficial del CRTM (shapes por dirección: un carril por shape)</td><td data-etiqueta="Cifra">48 vías · remuestreo cada 6 m</td></tr>
+            <tr><th scope="row">Profundidad</th><td data-etiqueta="Fuente">La define cada estación: su vestíbulo queda a nivel de calle y su andén a la cota del propio modelo</td><td data-etiqueta="Cifra">mediana 22 m (rango 6–40 m)</td></tr>
+            <tr><th scope="row">Terreno</th><td data-etiqueta="Fuente">LiDAR compositado (AWS terrain-tiles, z13) + ortofoto PNOA del IGN</td><td data-etiqueta="Cifra">desnivel medido 375,9 m · cota 0 = Puerta del Sol</td></tr>
+            <tr><th scope="row">Tren</th><td data-etiqueta="Fuente">Serie 9000, modelo de trabajo del 20-11-2026 (6 coches, en revisión)</td><td data-etiqueta="Cifra">114,4 m · 75.748 triángulos · 31 circulando</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="nz-h2">Cómo está encajado</h2>
+      <p class="nz-prose">Cada estación se ancla al <strong>punto medio de las dos vías</strong> (una por dirección de marcha, separadas 4,4–6,2 m en los andenes laterales) y se gira al rumbo de la vía. El vestíbulo se deja a nivel de la calle del terreno y el andén cae a la profundidad que dicta el propio modelo: de ahí sale la cota del túnel, que <strong>se interpola entre estaciones</strong> a lo largo de cada carril. Trazado, túnel y tren comparten la misma polilínea: no pueden desviarse el uno del otro.</p>
+
+      <h2 class="nz-h2">Lo que no es exacto (y se dice)</h2>
+      <ul class="nz-list nz-list--check">
+        <li>Los modelos son <strong>esquemáticos</strong>: andén, vestíbulo y escala aproximada, no arquitectura (382 triángulos de mediana).</li>
+        <li>La <strong>profundidad</strong> no está certificada por el operador: sale del modelo, no de un levantamiento. Se puede regenerar con <code>hornear.py estaciones --factor=0.7</code>.</li>
+        <li>El <strong>anclaje</strong> es interpretado (el propio paquete lo declara): la cifra de 2,1 m mide coherencia con la red del CRTM, no topografía.</li>
+        <li>La <strong>línea 3</strong> no está en el feed del CRTM: su eje se reconstruye uniendo sus 18 paradas oficiales, y va marcada como reconstruida.</li>
+        <li>Los <strong>trenes</strong> son ilustrativos, no horarios del GTFS.</li>
+      </ul>
+
+      <h2 class="nz-h2">Atribución</h2>
+      <p class="nz-prose">Red y horarios: <strong>CRTM</strong> (datos abiertos). Modelado de estaciones: reconstrucción propia desde croquis de <strong>Albert Guillaumes</strong>. Elevación: AWS terrain-tiles. Ortofoto: <strong>IGN · PNOA</strong>. Escena: three.js r170. Diseño: sistema <strong>Aurora</strong> de Ntizar. La versión anterior de este visor (planos por tipologías, 268 fichas) sigue disponible en <a href="./archivo/">/archivo/</a>.</p>
     </div>
   </div>
-</header>
+</div>
 
-<button class="abrir-panel" id="abrir-panel" aria-label="Abrir panel" hidden>☰ Panel</button>
-<aside class="panel" id="panel">
-  <button class="panel__plegar" id="plegar" aria-label="Plegar panel" aria-expanded="true">
-    <span aria-hidden="true">‹</span>
-  </button>
-
-  <section class="bloque bloque--ficha" id="bloque-ficha" hidden>
-    <p class="nz-lbl">Ficha</p>
-    <div id="ficha" class="ficha"></div>
-  </section>
-
-  <section class="bloque bloque--lineas">
-    <div class="bloque__cabecera">
-      <p class="nz-lbl">Líneas</p>
-      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="todas">Todas</button>
-    </div>
-    <ul class="lineas" id="lineas"></ul>
-  </section>
-
-  <section class="bloque">
-    <p class="nz-lbl">Tiempo</p>
-    <div class="nz-cluster">
-      <span class="reloj" id="reloj">--:--</span>
-      <button class="nz-btn nz-btn--soft nz-btn--sm" id="velocidad" title="Velocidad del reloj">×1</button>
-      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="ahora">Ahora</button>
-    </div>
-    <p class="nota">Trenes calculados con las frecuencias oficiales del GTFS. No es telemetría en vivo.</p>
-  </section>
-
-  <section class="bloque">
-    <p class="nz-lbl">Corte del terreno</p>
-    <label class="campo">
-      <input type="range" id="corte" min="0" max="100" value="95" step="1" aria-label="Opacidad de la superficie">
-      <output id="corte-val">95 %</output>
-    </label>
-    <p class="nota">Atraviesa la superficie. Altura <span data-exag>×80</span> para que los túneles se vean.</p>
-  </section>
-
-  <section class="bloque bloque--perfil">
-    <details class="detalle" id="detalle-perfil">
-      <summary>El metro, por dentro</summary>
-      <div class="perfil" id="perfil"></div>
-      <p>Las líneas 1 a 5 y el Ramal son de <b>perfil estrecho</b>, herencia del metro de París: andenes
-      laterales y entreplanta, ampliados de 60 a 90 m. Las líneas 6 a 12 son de <b>perfil ancho</b>,
-      más hondas (15-25 m) y con muros pantalla desde los 90.</p>
-      <p class="ficha__credito">Adaptado de Albert Guillaumes, <em>Stations and transfers</em>.</p>
-    </details>
-  </section>
-
-  <section class="bloque bloque--credito solo-movil">
-    <span class="nz-lbl">© OpenStreetMap contributors · GTFS CRTM · Modelos 3D: Albert Guillaumes · Hecho con ❤️ por David Antizar</span>
-  </section>
-</aside>
-
-<footer class="pie">
-  <span class="nz-lbl" id="contador">—</span>
-  <span class="nz-lbl">© OpenStreetMap contributors · GTFS CRTM · Modelos 3D: Albert Guillaumes · Hecho con ❤️ por David Antizar</span>
-</footer>
-
-<div id="lupa" role="dialog" aria-label="Esquema ampliado"><img alt="Esquema de la estación ampliado"></div>
-
-<script type="module" src="assets/visor.js?v=69"></script>
-<div class="escala" id="escala" hidden><i></i><span>100 m</span></div>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="app.js"></script>
+<noscript><p class="nz-prose">Esta escena necesita JavaScript: carga 240 modelos de estación, el terreno medido (497–873 m) y las 48 vías del CRTM en 3D.</p></noscript>
+<script>
+  document.getElementById('btn-acerca').addEventListener('click', () => {
+    document.getElementById('modal-acerca').checked = true;
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" data-nz-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metro de Madrid bajo tierra · Mastermind</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10/packs/all.css">
+<link rel="stylesheet" href="assets/visor.css?v=63">
+<script>
+// si el visor revienta, que se vea en vez de quedarse en negro
+window.addEventListener('error', function (e) {
+  var a = document.getElementById('aviso-carga');
+  if (a) { a.hidden = false; a.textContent = 'Fallo al cargar: ' + e.message; }
+  document.documentElement.dataset.errorJs = e.message;
+}, true);
+window.addEventListener('unhandledrejection', function (e) {
+  var m = (e.reason && (e.reason.stack || e.reason.message)) || String(e.reason);
+  var a = document.getElementById('aviso-carga');
+  if (a) { a.hidden = false; a.textContent = 'Fallo al cargar: ' + m; }
+  document.documentElement.dataset.errorJs = m;
+});
+</script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body class="nz">
+
+<div class="puntero-nombre" id="puntero-nombre"></div>
+<canvas id="lienzo" aria-label="Vista 3D del subsuelo de Metro de Madrid"></canvas>
+<div id="velo" class="velo" aria-hidden="true"></div>
+
+<header class="barra">
+  <div class="barra__marca">
+    <span class="rombo" aria-hidden="true"></span>
+    <div class="nz-stack nz-stack--2xs">
+      <strong class="barra__titulo">Metro de Madrid <span class="barra__sub">bajo tierra</span></strong>
+      <span class="nz-lbl" id="fuente">GTFS oficial CRTM · 2025</span>
+    </div>
+  </div>
+  <div class="nz-cluster barra__acciones">
+    <span class="nz-badge nz-badge--soft" id="badge-estado">Cargando red…</span>
+    <div class="nz-segmented" role="group" aria-label="Vista de cámara">
+      <button class="nz-btn nz-btn--ghost nz-btn--sm is-active" data-vista="plano">Plano</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" data-vista="vuelo">Vuelo</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" data-vista="tunel">Túnel</button>
+    </div>
+  </div>
+</header>
+
+<button class="abrir-panel" id="abrir-panel" aria-label="Abrir panel" hidden>☰ Panel</button>
+<aside class="panel" id="panel">
+  <button class="panel__plegar" id="plegar" aria-label="Plegar panel" aria-expanded="true">
+    <span aria-hidden="true">‹</span>
+  </button>
+
+  <section class="bloque bloque--ficha" id="bloque-ficha" hidden>
+    <p class="nz-lbl">Ficha</p>
+    <div id="ficha" class="ficha"></div>
+  </section>
+
+  <section class="bloque bloque--lineas">
+    <div class="bloque__cabecera">
+      <p class="nz-lbl">Líneas</p>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="todas">Todas</button>
+    </div>
+    <ul class="lineas" id="lineas"></ul>
+  </section>
+
+  <section class="bloque">
+    <p class="nz-lbl">Tiempo</p>
+    <div class="nz-cluster">
+      <span class="reloj" id="reloj">--:--</span>
+      <button class="nz-btn nz-btn--soft nz-btn--sm" id="velocidad" title="Velocidad del reloj">×1</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="ahora">Ahora</button>
+    </div>
+    <p class="nota">Trenes calculados con las frecuencias oficiales del GTFS. No es telemetría en vivo.</p>
+  </section>
+
+  <section class="bloque">
+    <p class="nz-lbl">Corte del terreno</p>
+    <label class="campo">
+      <input type="range" id="corte" min="0" max="100" value="95" step="1" aria-label="Opacidad de la superficie">
+      <output id="corte-val">95 %</output>
+    </label>
+    <p class="nota">Atraviesa la superficie. Altura <span data-exag>×80</span> para que los túneles se vean.</p>
+  </section>
+
+  <section class="bloque bloque--perfil">
+    <details class="detalle" id="detalle-perfil">
+      <summary>El metro, por dentro</summary>
+      <div class="perfil" id="perfil"></div>
+      <p>Las líneas 1 a 5 y el Ramal son de <b>perfil estrecho</b>, herencia del metro de París: andenes
+      laterales y entreplanta, ampliados de 60 a 90 m. Las líneas 6 a 12 son de <b>perfil ancho</b>,
+      más hondas (15-25 m) y con muros pantalla desde los 90.</p>
+      <p class="ficha__credito">Adaptado de Albert Guillaumes, <em>Stations and transfers</em>.</p>
+    </details>
+  </section>
+
+  <section class="bloque bloque--credito solo-movil">
+    <span class="nz-lbl">© OpenStreetMap contributors · GTFS CRTM · Modelos 3D: Albert Guillaumes · Hecho con ❤️ por David Antizar</span>
+  </section>
+</aside>
+
+<footer class="pie">
+  <span class="nz-lbl" id="contador">—</span>
+  <span class="nz-lbl">© OpenStreetMap contributors · GTFS CRTM · Modelos 3D: Albert Guillaumes · Hecho con ❤️ por David Antizar</span>
+</footer>
+
+<div id="lupa" role="dialog" aria-label="Esquema ampliado"><img alt="Esquema de la estación ampliado"></div>
+
+<script type="module" src="assets/visor.js?v=69"></script>
+<div class="escala" id="escala" hidden><i></i><span>100 m</span></div>
+</body>
+</html>
