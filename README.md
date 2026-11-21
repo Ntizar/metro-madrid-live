@@ -2,14 +2,14 @@
 
 Visor 3D del Metro de Madrid: las **240 estaciones modeladas** del respaldo del 20-nov-2026, las **12 líneas + Ramal** del CRTM con sus ramas reales (MetroEste, Rivas, norte), el **Metro Ligero** y **Cercanías**, todo colocado sobre la **corteza del terreno medida con LiDAR** (497–873 m de cota absoluta) que se puede hacer semitransparente para ver el subsuelo.
 
-**En vivo:** https://ntizar.github.io/metro-gemelo/
+**En vivo:** https://ntizar.github.io/metro-madrid-live/ · la versión clásica (planos por tipologías y las 268 fichas de estación) vive en [`/archivo/`](https://ntizar.github.io/metro-madrid-live/archivo/)
 
 ## Qué hay montado
 
 | Pieza | Fuente | Cifra |
 |---|---|---|
 | Estaciones modeladas | 240 glTF del respaldo `METRO_LOTE_01..05` | 352.013 vértices · 408.103 triángulos · 14,1 MB de GLB |
-| Anclaje geográfico | `colocacion_interpretada.json` (EPSG:25830) | **error mediano 2,6 m** respecto al eje GTFS de su línea |
+| Anclaje geográfico | `colocacion_interpretada.json` (EPSG:25830) | desvío mediano **2,1 m** al punto medio de las dos vías · giro mediano 27° |
 | Trazados | GTFS oficial del CRTM (`datos.crtm.es`) | 13 líneas de metro (29 tramos con ramas) + 3 de Metro Ligero + 11 de Cercanías |
 | Terreno | DEM terrarium z13 (≈14,6 m/px) | 2.001 × 1.739 px · desnivel 375,9 m |
 | Ortofoto | IGN PNOA WMTS `OI.OrthoimageCoverage` z13 | 1 MB JPEG |
@@ -69,3 +69,21 @@ Requiere `numpy` y `Pillow`. Descarga 182 teselas de elevación y 182 de ortofot
 - Escena: three.js r170 · interfaz: Aurora v10.10.0.
 
 Hecho con ❤️ por David Antizar
+
+
+## Fuentes, método y límites
+
+Todo el detalle (de dónde sale cada pieza, cómo funciona el encaje, qué NO es exacto) está en el
+botón **«El proyecto»** del propio visor, y en `scripts/hornear.py`, que es la definición ejecutable
+de las reglas:
+
+1. las trazas del GTFS van **por dirección** — son los dos carriles, separados 4,4–6,2 m;
+2. cada estación **define su cota**: su vestíbulo se coloca a nivel de la calle del terreno y su
+   andén a la profundidad que dicta el propio modelo (mediana 22 m);
+3. el túnel —traza, tubo y tren comparten la MISMA polilínea— pasa 2,2 m por debajo de cada andén
+   y su altura se interpola entre estaciones a lo largo del carril;
+4. hay una **corrección global** del desfase horizontal de los anclajes contra la red real del CRTM
+   (la mediana de los 240 desvíos), porque Madrid manda sobre los croquis.
+
+`python3 scripts/hornear.py estaciones --factor=0.7` regenera el binario con todos los andenes al
+70 % de su profundidad nominal. Requiere las cotas de `terreno.png` (hay que hornear el terreno antes).
