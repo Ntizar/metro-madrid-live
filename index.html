@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Metro de Madrid · gemelo digital</title>
-<meta name="description" content="Gemelo digital del Metro de Madrid: 240 estaciones modeladas a su cota real, 48 vías del CRTM a la profundidad que define cada estación y la corteza del terreno con el PNOA y el LiDAR.">
+<meta name="description" content="Gemelo digital del Metro de Madrid: 240 estaciones reales encajadas sobre el catálogo funcional de la red (560 tramos, 13 líneas), con los trenes de la flota circulando por sus vías.">
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/tokens.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p1-layout.css">
@@ -17,15 +17,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p8-data.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Ntizar/Aurora@v10.10.0/packs/p16-cristal.css">
 <style>
-  /* Geometría del lienzo 3D: solo medidas y colocación; el color manda en tokens. */
-  html, body.nz { overflow: hidden; height: 100%; }  /* visor inmersivo: nada de scroll de página */
+  html, body.nz { overflow: hidden; height: 100%; }
   .mm-main { padding: 0; height: calc(100dvh - 57px); display: flex; flex-direction: column; }
   .mm-escena { position: relative; flex: 1 1 auto; min-height: 0; }
   .mm-escena canvas { display: block; width: 100%; height: 100%; touch-action: none; }
   .mm-panel { position: absolute; border-radius: var(--nz-radius-lg); }
-  .mm-panel--izq { left: var(--nz-space-4); top: var(--nz-space-4); width: 286px; padding: var(--nz-space-4);
+  .mm-panel--izq { left: var(--nz-space-4); top: var(--nz-space-4); width: 280px; padding: var(--nz-space-4);
                    max-height: calc(100% - 2rem); overflow: auto; }
-  .mm-panel--der { right: var(--nz-space-4); top: var(--nz-space-4); width: 270px; padding: var(--nz-space-4);
+  .mm-panel--der { right: var(--nz-space-4); top: var(--nz-space-4); width: 264px; padding: var(--nz-space-4);
                    max-height: calc(100% - 2rem); overflow: auto; }
   .mm-mandos { position: absolute; left: 50%; transform: translateX(-50%); bottom: var(--nz-space-4);
                display: flex; gap: var(--nz-space-2); align-items: center; flex-wrap: wrap;
@@ -50,6 +49,7 @@
   .mm-paso { display: flex; align-items: center; justify-content: space-between; gap: var(--nz-space-3); }
   .mm-paso output { font-variant-numeric: tabular-nums; font-size: 12px; min-width: 4.2rem; text-align: right; }
   .mm-paso input[type="range"] { width: 100%; accent-color: var(--nz-brand); min-height: 32px; }
+  .mm-modal-cuerpo { max-width: 70ch; max-height: 74vh; overflow: auto; padding-right: var(--nz-space-3); }
   @media (max-width: 900px) {
     .mm-panel--izq, .mm-panel--der { display: none; }
     .mm-panel-movil { position: absolute; inset: auto 0 0 0; max-height: 62%; overflow: auto;
@@ -64,8 +64,7 @@
 <div class="nz-navbar nz-navbar--compact">
   <span class="nz-navbar__brand"><i></i>Metro de Madrid · gemelo digital</span>
   <span class="nz-navbar__links">
-    <span class="nz-badge nz-badge--neutral" id="chip-estaciones">240 estaciones</span>
-    <span class="nz-badge nz-badge--neutral" id="chip-tri">—</span>
+    <span class="nz-badge nz-badge--neutral" id="chip-estaciones">— estaciones</span>
     <button class="nz-btn nz-btn--ghost nz-btn--sm" id="btn-acerca">El proyecto</button>
     <button class="nz-btn nz-btn--ghost nz-btn--sm" id="btn-panel">Capas</button>
   </span>
@@ -75,70 +74,67 @@
   <div class="mm-escena" id="escena">
     <canvas id="lienzo" aria-label="Escena 3D del metro de Madrid"></canvas>
 
-    <div class="mm-panel mm-panel--izq nz-cristal nz-cristal--fuente" id="panel-izq">
+    <div class="mm-panel mm-panel--izq nz-cristal" id="panel-izq">
       <div class="nz-stack nz-stack--sm">
         <span class="nz-lbl">Capas</span>
-        <label class="nz-switch"><input type="checkbox" id="c-estaciones" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Estaciones modeladas</span></label>
-        <label class="nz-switch"><input type="checkbox" id="c-metro" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Túneles de Metro</span></label>
-        <label class="nz-switch"><input type="checkbox" id="c-ligero" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Metro Ligero</span></label>
-        <label class="nz-switch"><input type="checkbox" id="c-cercanias" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Cercanías</span></label>
-        <label class="nz-switch"><input type="checkbox" id="c-trenes" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Trenes 9000</span></label>
-        <label class="nz-switch"><input type="checkbox" id="c-corteza" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Corteza del terreno</span></label>
-        <label class="nz-switch"><input type="checkbox" id="c-salidas" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Salidas a superficie</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-estaciones" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Estaciones reales (240)</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-vias" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Vías (560 tramos)</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-andenes" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Andenes del catálogo</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-trenes" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Trenes</span></label>
+        <label class="nz-switch"><input type="checkbox" id="c-suelo" checked><span class="nz-switch__track"><span class="nz-switch__thumb"></span></span><span class="nz-switch__label">Superficie</span></label>
         <div class="nz-divider"></div>
-        <div class="mm-paso"><span class="nz-lbl">Opacidad del suelo</span><output id="o-opacidad">55 %</output></div>
-        <input type="range" id="r-opacidad" min="8" max="100" value="55" aria-label="Opacidad del terreno">
+        <div class="mm-paso"><span class="nz-lbl">Superficie</span><output id="o-opacidad">55 %</output></div>
+        <input type="range" id="r-opacidad" min="10" max="100" value="55" aria-label="Opacidad de la superficie">
         <div class="mm-paso"><span class="nz-lbl">Velocidad de los trenes</span><output id="o-velocidad">x30</output></div>
         <input type="range" id="r-velocidad" min="0" max="120" step="10" value="30" aria-label="Velocidad de los trenes">
         <div class="nz-divider"></div>
-        <div class="mm-leyenda nz-cluster" id="leyenda"></div>
+        <div class="nz-cluster" id="leyenda"></div>
         <span class="nz-lbl nz-lbl--accent">Arrastra para desplazar · rueda acerca · botón derecho orbita</span>
       </div>
     </div>
 
-    <div class="mm-panel mm-panel--der nz-cristal nz-cristal--fuente">
+    <div class="mm-panel mm-panel--der nz-cristal">
       <div class="nz-stack nz-stack--sm">
         <span class="nz-lbl">Ficha</span>
         <div class="mm-ficha" id="ficha">
           <span class="nz-h1" id="f-nombre" style="font-size:var(--nz-text-lg)">—</span>
           <div class="nz-cluster" id="f-lineas" style="margin:.35rem 0 .5rem"></div>
-          <div class="nz-grid-auto nz-grid-auto--compact" style="grid-template-columns:1fr 1fr 1fr">
-            <div class="nz-kpi"><span class="nz-kpi__label">Triángulos</span><span class="nz-kpi__value" id="f-tri">—</span></div>
-            <div class="nz-kpi"><span class="nz-kpi__label">Encaje</span><span class="nz-kpi__value nz-kpi--accent" id="f-eje">—</span></div>
-            <div class="nz-kpi"><span class="nz-kpi__label">Andén a</span><span class="nz-kpi__value" id="f-profundidad">—</span></div>
+          <div class="nz-grid-auto nz-grid-auto--compact" style="grid-template-columns:1fr 1fr">
+            <div class="nz-kpi"><span class="nz-kpi__label">Bloques</span><span class="nz-kpi__value nz-kpi--accent" id="f-rail">—</span></div>
+            <div class="nz-kpi"><span class="nz-kpi__label">Andenes</span><span class="nz-kpi__value" id="f-andenes">—</span></div>
           </div>
           <span class="nz-lbl" id="f-nota" style="margin-top:.5rem">Pasa el cursor por una estación.</span>
         </div>
         <div class="nz-divider"></div>
         <span class="nz-lbl">Estado del montaje</span>
         <div class="nz-grid-auto nz-grid-auto--compact" style="grid-template-columns:1fr 1fr">
-          <div class="nz-kpi"><span class="nz-kpi__label">Estaciones modeladas</span><span class="nz-kpi__value" id="k-est">—</span></div>
-          <div class="nz-kpi"><span class="nz-kpi__label">Vías trazadas</span><span class="nz-kpi__value" id="k-vias">—</span></div>
-          <div class="nz-kpi"><span class="nz-kpi__label">Andén (mediana)</span><span class="nz-kpi__value" id="k-profundidad">—</span></div>
-          <div class="nz-kpi"><span class="nz-kpi__label">Encaje (mediana)</span><span class="nz-kpi__value" id="k-reg">—</span></div>
+          <div class="nz-kpi"><span class="nz-kpi__label">Estaciones reales</span><span class="nz-kpi__value" id="k-est">—</span></div>
+          <div class="nz-kpi"><span class="nz-kpi__label">Tramos</span><span class="nz-kpi__value" id="k-vias">—</span></div>
+          <div class="nz-kpi"><span class="nz-kpi__label">Andenes</span><span class="nz-kpi__value" id="k-andenes">—</span></div>
+          <div class="nz-kpi"><span class="nz-kpi__label">Trenes</span><span class="nz-kpi__value" id="k-trenes">—</span></div>
         </div>
         <span class="nz-lbl">Línea: <span id="k-linea">toda la red</span></span>
         <span class="nz-lbl" id="k-fps">—</span>
       </div>
     </div>
 
-    <div class="mm-mandos nz-cristal nz-cristal--fuente">
-      <button class="nz-btn nz-btn--sm" id="b-sol">Sol</button>
+    <div class="mm-mandos nz-cristal">
+      <button class="nz-btn nz-btn--sm" id="b-bilbao">Bilbao</button>
       <button class="nz-btn nz-btn--ghost nz-btn--sm" id="b-red">Toda la red</button>
-      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="b-orbita">Plano</button>
+      <button class="nz-btn nz-btn--ghost nz-btn--sm" id="b-plano">Plano</button>
     </div>
 
     <div class="mm-panel-movil" id="panel-movil"></div>
 
     <div class="mm-carga" id="carga">
       <span class="nz-h1" style="font-size:var(--nz-text-xl)">Montando el gemelo</span>
-      <span class="nz-lbl" id="carga-txt">Leyendo el terreno…</span>
+      <span class="nz-lbl" id="carga-txt">Leyendo el catálogo…</span>
       <div class="mm-barra"><i id="carga-barra"></i></div>
     </div>
   </div>
 </main>
 
-<!-- El proyecto: fuentes, método y límites -->
+<!-- El proyecto -->
 <div class="nz-modal">
   <input class="nz-vh" type="checkbox" id="modal-acerca" aria-label="El proyecto">
   <label class="nz-modal__velo" for="modal-acerca"></label>
@@ -146,37 +142,36 @@
     <label class="nz-modal__cerrar" for="modal-acerca" aria-label="Cerrar">✕</label>
     <div class="mm-modal-cuerpo">
       <h1 class="nz-h1">Un gemelo digital del Metro de Madrid</h1>
-      <p class="nz-lead">240 estaciones modeladas, colocadas a su cota real sobre una corteza de terreno medida con LiDAR, y las 48 vías del CRTM pasando por debajo a la profundidad que cada estación define.</p>
+      <p class="nz-lead">240 estaciones reales —encajadas al punto medio de su andén, giradas a su rumbo y con la calle como cota cero— sobre el catálogo funcional de la red: 560 tramos dirigidos, 587 andenes y 13 líneas con sus cotas de railhead resueltas.</p>
 
       <h2 class="nz-h2">De dónde sale cada pieza</h2>
       <div class="nz-table-wrap nz-table-wrap--apilable">
         <table class="nz-table nz-table--apilable">
           <thead><tr><th scope="col">Pieza</th><th scope="col">Fuente</th><th scope="col">Cifra</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Estaciones 3D</th><td data-etiqueta="Fuente">Resaldo propio del 20-11-2026 (240 paquetes), reconstrucción interpretativa desde croquis de Albert Guillaumes</td><td data-etiqueta="Cifra">352.013 vértices · 408.103 triángulos</td></tr>
-            <tr><th scope="row">Ubicación</th><td data-etiqueta="Fuente">Anclaje EPSG:25830 de cada paquete, alineado a la red real del CRTM</td><td data-etiqueta="Cifra">desvío mediano 2,1 m · giro 27°</td></tr>
-            <tr><th scope="row">Trazado de vías</th><td data-etiqueta="Fuente">GTFS oficial del CRTM (shapes por dirección: un carril por shape)</td><td data-etiqueta="Cifra">48 vías · remuestreo cada 6 m</td></tr>
-            <tr><th scope="row">Profundidad</th><td data-etiqueta="Fuente">La define cada estación: su vestíbulo queda a nivel de calle y su andén a la cota del propio modelo</td><td data-etiqueta="Cifra">mediana 22 m (rango 6–40 m)</td></tr>
-            <tr><th scope="row">Terreno</th><td data-etiqueta="Fuente">LiDAR compositado (AWS terrain-tiles, z13) + ortofoto PNOA del IGN</td><td data-etiqueta="Cifra">desnivel medido 375,9 m · cota 0 = Puerta del Sol</td></tr>
-            <tr><th scope="row">Tren</th><td data-etiqueta="Fuente">Serie 9000, modelo de trabajo del 20-11-2026 (6 coches, en revisión)</td><td data-etiqueta="Cifra">114,4 m · 75.748 triángulos · 31 circulando</td></tr>
+            <tr><th scope="row">Red (vías y cotas)</th><td data-etiqueta="Fuente">Catálogo funcional del Metro (r2, 21-11-2026), elaborado sobre datos del CRTM con redondeos circulares derivados y cuerpos planos en estación</td><td data-etiqueta="Cifra">560 tramos · 587 andenes · 242 estaciones</td></tr>
+            <tr><th scope="row">Modelos 3D de estación</th><td data-etiqueta="Fuente">240 paquetes del 20-11-2026 (reconstrucción desde croquis de Albert Guillaumes)</td><td data-etiqueta="Cifra">352.013 vértices · 408.103 triángulos</td></tr>
+            <tr><th scope="row">Encaje de estación</th><td data-etiqueta="Fuente">ancla al punto medio del andén del catálogo · giro al rumbo del andén · escalado vertical hasta la calle</td><td data-etiqueta="Cifra">giro mediano 5,4° · 240/240 emparejadas</td></tr>
+            <tr><th scope="row">Trenes</th><td data-etiqueta="Fuente">Flota del propio catálogo (modelos de trabajo, en revisión)</td><td data-etiqueta="Cifra">3000 (perfil estrecho), 9000 (ancho), 9700 (L9)</td></tr>
+            <tr><th scope="row">Movimiento</th><td data-etiqueta="Fuente">Simulado: cadena de tramos por continuidad de terminales, ida y vuelta</td><td data-etiqueta="Cifra">no es horario ni tiempo real</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 class="nz-h2">Cómo está encajado</h2>
-      <p class="nz-prose">Cada estación se ancla al <strong>punto medio de las dos vías</strong> (una por dirección de marcha, separadas 4,4–6,2 m en los andenes laterales) y se gira al rumbo de la vía. El vestíbulo se deja a nivel de la calle del terreno y el andén cae a la profundidad que dicta el propio modelo: de ahí sale la cota del túnel, que <strong>se interpola entre estaciones</strong> a lo largo de cada carril. Trazado, túnel y tren comparten la misma polilínea: no pueden desviarse el uno del otro.</p>
+      <p class="nz-prose">Cada modelo real se ancla al <strong>punto medio de su andén</strong> del catálogo, se gira al rumbo de ese andén (giro mediano 5,4°) y se <strong>estira verticalmente</strong> hasta que su andén alcanza la cota de railhead y su vestíbulo la calle (cota 0, la del catálogo). La escala vertical de cada modelo se muestra en su ficha al pasar el cursor. La geometría de vías y andenes no se recalcula: se dibuja tal como la produce el catálogo.</p>
 
       <h2 class="nz-h2">Lo que no es exacto (y se dice)</h2>
       <ul class="nz-list nz-list--check">
-        <li>Los modelos son <strong>esquemáticos</strong>: andén, vestíbulo y escala aproximada, no arquitectura (382 triángulos de mediana).</li>
-        <li>La <strong>profundidad</strong> no está certificada por el operador: sale del modelo, no de un levantamiento. Se puede regenerar con <code>hornear.py estaciones --factor=0.7</code>.</li>
-        <li>El <strong>anclaje</strong> es interpretado (el propio paquete lo declara): la cifra de 2,1 m mide coherencia con la red del CRTM, no topografía.</li>
-        <li>La <strong>línea 3</strong> no está en el feed del CRTM: su eje se reconstruye uniendo sus 18 paradas oficiales, y va marcada como reconstruida.</li>
-        <li>Los <strong>trenes</strong> son ilustrativos, no horarios del GTFS.</li>
+        <li>Los modelos de estación son <strong>reconstrucciones desde croquis</strong>, no arquitectura medida (382 triángulos de mediana).</li>
+        <li>La <strong>cota de railhead</strong> es estimada por el catálogo (<code>MODEL_RELATIVE_ESTIMATED_NOT_SURVEYED</code>, rango −72…−6 m), no un levantamiento.</li>
+        <li>El <strong>movimiento de los trenes</strong> es ilustrativo; no hay horarios ni posiciones en vivo.</li>
+        <li>El <strong>desvío horizontal</strong> del catálogo puede llegar a 35,75 m en tramos locales (lo declaran sus propios avisos).</li>
+        <li>La <strong>escala vertical estirada</strong> es un compromiso (los croquis no traían cota real): se recorta en 55–220 %.</li>
       </ul>
 
       <h2 class="nz-h2">Atribución</h2>
-      <p class="nz-prose">Red y horarios: <strong>CRTM</strong> (datos abiertos). Modelado de estaciones: reconstrucción propia desde croquis de <strong>Albert Guillaumes</strong>. Elevación: AWS terrain-tiles. Ortofoto: <strong>IGN · PNOA</strong>. Escena: three.js r170. Diseño: sistema <strong>Aurora</strong> de Ntizar. La versión anterior de este visor (planos por tipologías, 268 fichas) sigue disponible en <a href="./archivo/">/archivo/</a>.</p>
+      <p class="nz-prose">Red: catálogo funcional del Metro sobre datos del <strong>CRTM</strong>. Croquis de estación: <strong>Albert Guillaumes</strong> (<em>Stations and transfers</em>). Trenes: flota del catálogo. Diseño: sistema <strong>Aurora</strong> de Ntizar. La versión anterior (planos por tipologías, 268 fichas) está en <a href="./archivo/">/archivo/</a>; la del LiDAR con compañías, en <a href="./gemelo/">/gemelo/</a>.</p>
     </div>
   </div>
 </div>
@@ -190,7 +185,7 @@
 }
 </script>
 <script type="module" src="app.js"></script>
-<noscript><p class="nz-prose">Esta escena necesita JavaScript: carga 240 modelos de estación, el terreno medido (497–873 m) y las 48 vías del CRTM en 3D.</p></noscript>
+<noscript><p class="nz-prose">Esta escena necesita JavaScript: carga 240 modelos de estación, 560 tramos de vía y la flota de trenes del catálogo.</p></noscript>
 <script>
   document.getElementById('btn-acerca').addEventListener('click', () => {
     document.getElementById('modal-acerca').checked = true;
