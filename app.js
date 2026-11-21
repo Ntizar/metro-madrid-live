@@ -242,6 +242,19 @@ async function montarEstaciones(mm) {
   grupoEstaciones.add(new THREE.LineSegments(geoP2, new THREE.LineBasicMaterial({
     color: 0x7f96b5, transparent: true, opacity: 0.45,
   })));
+  // remate del pozo en la calle: disco plano por estación
+  const discos = [];
+  for (const e of cab.estaciones) {
+    const [x, , z] = e.pozo;
+    if (e.pozo_y < 0) { discos.push(x, 0.5, z); }
+  }
+  const geoD = new THREE.BufferGeometry();
+  geoD.setAttribute('position', new THREE.BufferAttribute(new Float32Array(discos), 3));
+  const puntosDisco = new THREE.Points(geoD, new THREE.PointsMaterial({
+    color: 0xd9e6f6, size: 26, sizeAttenuation: true, transparent: true, opacity: 0.85,
+  }));
+  puntosDisco.renderOrder = 6;
+  grupoEstaciones.add(puntosDisco);
 }
 
 /* ---------------- trenes del catálogo sobre sus polilíneas ---------------- */
@@ -283,6 +296,12 @@ async function montarTrenes() {
     try {
       const gltf = await cargador.loadAsync(url);
       const modelo = gltf.scene;
+      modelo.traverse((o) => {
+        if (o.isMesh && o.material) {
+          o.material = o.material.clone();
+          if (o.material.emissive) { o.material.emissive.set(0x39516e); o.material.emissiveIntensity = 0.55; }
+        }
+      });
       const caja = new THREE.Box3().setFromObject(modelo);
       const centro = caja.getCenter(new THREE.Vector3());
       const tam = caja.getSize(new THREE.Vector3());
