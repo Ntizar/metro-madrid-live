@@ -9,11 +9,11 @@ Visor 3D del Metro de Madrid: las **240 estaciones modeladas** del respaldo del 
 | Pieza | Fuente | Cifra |
 |---|---|---|
 | Estaciones modeladas | 240 glTF del respaldo `METRO_LOTE_01..05` | 352.013 vértices · 408.103 triángulos · 14,1 MB de GLB |
-| Anclaje geográfico | `colocacion_interpretada.json` (EPSG:25830) | **error mediano 2,6 m** respecto al eje GTFS de su línea |
-| Trazados | GTFS oficial del CRTM (`datos.crtm.es`) | 13 líneas de metro (29 tramos con ramas) + 3 de Metro Ligero + 11 de Cercanías |
+| Anclaje geográfico | `colocacion_interpretada.json` (EPSG:25830) | desplazamiento mediano **2,5 m** al punto medio de las dos vías · giro mediano **15,4°** · separación de vías **4,9 m** |
+| Trazados | GTFS oficial del CRTM (`datos.crtm.es`) | 13 líneas de metro + 3 de Metro Ligero + 11 de Cercanías = **48 vías**, una por carril y dirección |
 | Terreno | DEM terrarium z13 (≈14,6 m/px) | 2.001 × 1.739 px · desnivel 375,9 m |
 | Ortofoto | IGN PNOA WMTS `OI.OrthoimageCoverage` z13 | 1 MB JPEG |
-| Tren | `SERIE_9000_ORIGINAL.glb` (6 coches) | 114,4 × 4,4 × 5,4 m · 75.748 triángulos · 16 circulando |
+| Tren | `SERIE_9000_ORIGINAL.glb` (6 coches) | 114,4 × 4,4 × 5,4 m · 75.748 triángulos · 31 circulando por su carril |
 
 ## Las tres decisiones que importan
 
@@ -32,6 +32,27 @@ y = cota relativa a la Puerta del Sol (metros)
 ```
 
 Conversión WGS84 ↔ UTM 30N implementada a mano en `scripts/geo.py` (sin pyproj): ida y vuelta con error de 0,1 mm.
+
+
+## Una sola verdad geométrica por carril
+
+Los cuatro defectos que se veían (trenes verticales, estaciones cruzadas, vías desplazadas y la traza
+despegada del túnel) tenían la misma raíz: **cada capa usaba una geometría distinta**. Ahora manda una
+sola polilínea densa (remuestreada cada 6 m del `shapes.txt`) por carril, y de ella salen:
+
+- el **tubo** del túnel (`TubeGeometry` sobre la curva),
+- la **traza** (`Line2` con muestras `getSpacedPoints` de esa misma curva: coinciden al milímetro),
+- la **posición y el rumbo del tren** (`getPointAt` + base ortogonal `makeBasis`, nunca `lookAt` a 2 m),
+- el **anclaje de la estación**: punto medio de las dos trazas (una por dirección, separadas 4,4–6,2 m)
+  y giro del andén al rumbo de la vía, medido con PCA del propio modelo.
+
+Números del último horneado: desplazamiento mediano **2,5 m**, giro mediano **15,4°**, separación de
+vías **4,9 m** — dentro del rango real (4,4–5,0 m) que separa un andén lateral de su vía.
+
+## Navegación
+
+Controles de mapa, no de maqueta: arrastrar desplaza, botón derecho orbita, rueda hace zoom **al cursor**,
+doble clic acerca, flechas del teclado desplazan. Hay una vista **Plano** cenital con el norte arriba.
 
 ## Cómo se regenera
 
